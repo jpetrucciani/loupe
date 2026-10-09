@@ -1,0 +1,18 @@
+[questions.same_entity]
+type = "noul"
+instructions = "Do left.record and right.record identify the same real-world entity? Conflicting identity fields mean different entities."
+
+[questions.similarity]
+type = "score"
+instructions = "How strong is the evidence that these records identify the same entity?"
+criteria = ["Different entities", "Ambiguous possible match", "Clear identity match"]
+
+[[variants]]
+id = "direct"
+field = "same_entity"
+instructions = "Are these two records about one entity, allowing equivalent spellings but requiring consistent identity fields?"
+
+[[variants]]
+id = "direct"
+field = "similarity"
+instructions = "Rate the evidence for a shared entity, accounting for conflicts and missing information."

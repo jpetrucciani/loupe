@@ -1,0 +1,9 @@
+type = "noul"
+instructions = "Which line describes a current checkout outage?"
+
+[[variants]]
+id = "alt"
+instructions = "Which listed candidate describes checkout currently being unavailable?"
+
+[policy]
+min_agreement = 1.0

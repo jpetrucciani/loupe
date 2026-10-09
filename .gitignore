@@ -1,0 +1,18 @@
+.db
+.direnv
+result*
+
+# rust
+debug/
+target/
+dist/
+.venv/
+__pycache__/
+**/*.rs.bk
+*.pdb
+.env
+tmp
+nixcache.log
+
+# Local endpoint configuration and qualification reports
+.private/

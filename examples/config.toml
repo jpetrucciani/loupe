@@ -1,0 +1,55 @@
+[profile.local]
+base_url = "http://127.0.0.1:8015"
+path = "/v1/systemone"
+model = "clef-flash"
+encoder = "clef-v1"
+tokenizer = "hf:Cloudflare/clef-flash"
+tokenizer_revision = "17f0b0ad64efb65d273590632833508766b2aae6"
+concurrency = 4
+
+[profile.server]
+base_url = "http://127.0.0.1:8015"
+path = "/v1/systemone"
+model = "clef-flash"
+encoder = "clef-v1"
+tokenizer = "hf:Cloudflare/clef-flash"
+tokenizer_revision = "17f0b0ad64efb65d273590632833508766b2aae6"
+concurrency = 4
+max_length = 16384
+max_questions = 128
+max_options = 512
+max_total_options = 2048
+max_batch = 4
+
+[profile.jev]
+backend = "jev"
+base_url = "https://api.typesafe.ai"
+path = "/v1/systemone"
+model = "jev-1.13.0"
+encoder = "estimate"
+api_key_env = "TYPESAFE_API_KEY"
+max_length = 32768
+max_state_tokens = 32768
+max_options = 255
+max_batch = 1
+
+[profile.litellm-decisions]
+backend = "jev"
+api_format = "decisions"
+base_url = "https://llm.example.com"
+model = "h2o-lightning-4b"
+encoder = "estimate"
+api_key_env = "LLM_API_KEY"
+
+# Keep the provider prefix on base_url so discovery and classification use it.
+[profile.litellm]
+backend = "jev"
+base_url = "https://llm.example.com/typesafe"
+path = "/v1/systemone"
+model = "jev-latest"
+encoder = "estimate"
+api_key_env = "LITELLM_API_KEY"
+max_length = 32768
+max_state_tokens = 32768
+max_options = 255
+max_batch = 1

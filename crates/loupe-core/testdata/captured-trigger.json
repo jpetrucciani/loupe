@@ -1,0 +1,36 @@
+{
+  "endpoint": "http://127.0.0.1:8015/v1/systemone",
+  "captured_at_utc": "2026-10-06T12:57:30.942510+00:00",
+  "source_artifact": "private qualification capture: on",
+  "source_artifact_sha256": "5ee1394da213789c6ea8bd62f86762762e92f73ebb88e3acd8733cb4957e55fb",
+  "input": "ALPHA\r\nBRAVO\r\n",
+  "request": {
+    "state": "ALPHA",
+    "model": "clef-flash",
+    "questions": {
+      "decision": {
+        "type": "noul",
+        "instructions": "Does this text explicitly mention ALPHA?"
+      }
+    }
+  },
+  "counts": {
+    "state_tokens": 2,
+    "question_tokens": 143,
+    "input_tokens": 145,
+    "exact": true
+  },
+  "response": {
+    "model": "clef-flash",
+    "answers": {
+      "decision": {
+        "type": "noul",
+        "noul": 0.9497
+      }
+    },
+    "usage": {
+      "input_tokens": 145,
+      "output_tokens": 0
+    }
+  }
+}

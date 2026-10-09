@@ -1,0 +1,27 @@
+schema_version = 1
+id = "join/seed"
+revision = "catalog-v1"
+preset = "join-default"
+task = "join"
+splits = "splits.json"
+metrics = ["blocking-recall", "accuracy", "f1", "auroc", "brier", "ece", "coverage", "assignment-accuracy", "latency-p50-ms", "latency-p95-ms", "units-per-second"]
+
+[cases]
+path = "cases.jsonl"
+revision = "fictional-catalogs-v1"
+blake3 = "3cc120ac10a1163d26edd71de5c5a3af1c3a24ba6a743a71e0e20eac7eee8189"
+
+[split]
+seed = 42
+calibrate_percent = 50
+
+[provenance]
+source = "Handwritten fictional name/city catalogs; labels follow documented normalization rules; human review pending"
+license = "MIT"
+
+[join]
+fields = ["name", "city"]
+blocking = "hybrid"
+max_candidates = 2
+max_pairs = 10000
+cardinalities = ["1:1", "1:n", "n:m"]

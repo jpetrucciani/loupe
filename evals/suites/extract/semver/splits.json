@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "suite_id": "extract/semver/seed",
+  "suite_revision": "selection-v1",
+  "dataset_revision": "fictional-selection-v1",
+  "cases_blake3": "d8a80731e26f94f1427f6bec81c1d0a07bdcf5cf51a33b6d658bc67ea3287321",
+  "config": {
+    "seed": 42,
+    "calibrate_percent": 50
+  },
+  "calibrate": [
+    "semver-absent-a",
+    "semver-positive-b"
+  ],
+  "test": [
+    "semver-absent-b",
+    "semver-positive-a"
+  ],
+  "captured": []
+}

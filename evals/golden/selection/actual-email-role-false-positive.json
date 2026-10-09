@@ -1,0 +1,375 @@
+{
+  "source": "actual server 8015 native evaluation; drafted fictional labels; no production ratification",
+  "binary_sha256": "722ed7de25238893adaec14d9518186243a2d457107ce184f69ac8d85e41e62b",
+  "case": {
+    "case_id": "emails-absent-a",
+    "index": 2,
+    "source": "handwritten-fictional",
+    "reviewed": false,
+    "sampling": null,
+    "source_location": {
+      "source": "/path/to/loupe/evals/suites/extract/emails/cases.jsonl",
+      "byte_start": 542,
+      "byte_end": 921,
+      "line_start": 2,
+      "line_end": 2
+    },
+    "text": "Résumé ☀. Support: help@example.com.\r\nSales: bills@example.org.\r\n",
+    "mode": "extract",
+    "preset": {
+      "name": "selection-query",
+      "document": {
+        "version": 1,
+        "type": "noul",
+        "instructions": "Which email address is for billing?"
+      },
+      "origin": {
+        "kind": "builtin"
+      },
+      "trusted": true,
+      "content_hash": ""
+    },
+    "effective_document": {
+      "version": 1,
+      "type": "noul",
+      "instructions": "Which email address is for billing?"
+    },
+    "template": {
+      "value": {
+        "model": "clef-flash",
+        "state": null,
+        "question": "Which email address is for billing?",
+        "presence_criteria": null,
+        "descriptions": {
+          "C1": {
+            "verbatim": "help@example.com",
+            "source_line": "Résumé ☀. Support: help@example.com.",
+            "location": {
+              "source": null,
+              "byte_start": 23,
+              "byte_end": 39,
+              "line_start": 1,
+              "line_end": 1
+            }
+          },
+          "C2": {
+            "verbatim": "bills@example.org",
+            "source_line": "Sales: bills@example.org.",
+            "location": {
+              "source": null,
+              "byte_start": 49,
+              "byte_end": 66,
+              "line_start": 2,
+              "line_end": 2
+            }
+          }
+        },
+        "companions": {}
+      },
+      "companion_order": []
+    },
+    "policy": {
+      "presence_threshold": 0.5,
+      "presence_margin": 0.0,
+      "min_confidence": 0.0,
+      "min_gap": 0.0,
+      "on_uncertain": "Drop"
+    },
+    "candidate_parser": {
+      "version": "extract-v1",
+      "kind": "emails"
+    },
+    "normalization": {
+      "version": "normalize-v1",
+      "options": {
+        "now": null,
+        "tz": null,
+        "currency": null,
+        "decimal_separator": null,
+        "date_order": null
+      },
+      "timezone_data": "2025b"
+    },
+    "expected": [],
+    "expected_spans": [],
+    "catalog": [
+      {
+        "id": "C1",
+        "verbatim": "help@example.com",
+        "location": {
+          "source": null,
+          "byte_start": 23,
+          "byte_end": 39,
+          "line_start": 1,
+          "line_end": 1
+        }
+      },
+      {
+        "id": "C2",
+        "verbatim": "bills@example.org",
+        "location": {
+          "source": null,
+          "byte_start": 49,
+          "byte_end": 66,
+          "line_start": 2,
+          "line_end": 2
+        }
+      }
+    ],
+    "plan": {
+      "number": 1,
+      "capacity": 2,
+      "final_round": true,
+      "brackets": [
+        {
+          "index": 0,
+          "candidate_ids": [
+            "C1",
+            "C2"
+          ],
+          "request": {
+            "state": "REFERENCE CONTEXT:\nnull<|file_sep|>{\"evidence\":{\"location\":{\"byte_end\":39,\"byte_start\":23,\"line_end\":1,\"line_start\":1,\"source\":null},\"source_line\":\"Résumé ☀. Support: help@example.com.\",\"verbatim\":\"help@example.com\"},\"id\":\"C1\"}<|file_sep|>{\"evidence\":{\"location\":{\"byte_end\":66,\"byte_start\":49,\"line_end\":2,\"line_start\":2,\"source\":null},\"source_line\":\"Sales: bills@example.org.\",\"verbatim\":\"bills@example.org\"},\"id\":\"C2\"}",
+            "model": "clef-flash",
+            "questions": {
+              "selection-present": {
+                "type": "noul",
+                "instructions": {
+                  "question": "Which email address is for billing?",
+                  "task": "Does at least one candidate option in the selection field answer or match this question? Consider only the listed candidates, using state as reference context."
+                }
+              },
+              "selection": {
+                "type": "choice",
+                "instructions": "Which email address is for billing?",
+                "criteria": {
+                  "C1": {
+                    "verbatim": "help@example.com",
+                    "source_line": "Résumé ☀. Support: help@example.com.",
+                    "location": {
+                      "source": null,
+                      "byte_start": 23,
+                      "byte_end": 39,
+                      "line_start": 1,
+                      "line_end": 1
+                    }
+                  },
+                  "C2": {
+                    "verbatim": "bills@example.org",
+                    "source_line": "Sales: bills@example.org.",
+                    "location": {
+                      "source": null,
+                      "byte_start": 49,
+                      "byte_end": 66,
+                      "line_start": 2,
+                      "line_end": 2
+                    }
+                  },
+                  "none": "None of these candidates answers or matches the question."
+                }
+              }
+            }
+          },
+          "question_order": [
+            "selection-present",
+            "selection"
+          ],
+          "counts": {
+            "state_tokens": 117,
+            "question_tokens": 358,
+            "input_tokens": 475,
+            "exact": true
+          }
+        }
+      ]
+    },
+    "requests": [
+      {
+        "round": 1,
+        "bracket": 0,
+        "request": {
+          "state": "REFERENCE CONTEXT:\nnull<|file_sep|>{\"evidence\":{\"location\":{\"byte_end\":39,\"byte_start\":23,\"line_end\":1,\"line_start\":1,\"source\":null},\"source_line\":\"Résumé ☀. Support: help@example.com.\",\"verbatim\":\"help@example.com\"},\"id\":\"C1\"}<|file_sep|>{\"evidence\":{\"location\":{\"byte_end\":66,\"byte_start\":49,\"line_end\":2,\"line_start\":2,\"source\":null},\"source_line\":\"Sales: bills@example.org.\",\"verbatim\":\"bills@example.org\"},\"id\":\"C2\"}",
+          "model": "clef-flash",
+          "questions": {
+            "selection-present": {
+              "type": "noul",
+              "instructions": {
+                "question": "Which email address is for billing?",
+                "task": "Does at least one candidate option in the selection field answer or match this question? Consider only the listed candidates, using state as reference context."
+              }
+            },
+            "selection": {
+              "type": "choice",
+              "instructions": "Which email address is for billing?",
+              "criteria": {
+                "C1": {
+                  "verbatim": "help@example.com",
+                  "source_line": "Résumé ☀. Support: help@example.com.",
+                  "location": {
+                    "source": null,
+                    "byte_start": 23,
+                    "byte_end": 39,
+                    "line_start": 1,
+                    "line_end": 1
+                  }
+                },
+                "C2": {
+                  "verbatim": "bills@example.org",
+                  "source_line": "Sales: bills@example.org.",
+                  "location": {
+                    "source": null,
+                    "byte_start": 49,
+                    "byte_end": 66,
+                    "line_start": 2,
+                    "line_end": 2
+                  }
+                },
+                "none": "None of these candidates answers or matches the question."
+              }
+            }
+          }
+        },
+        "question_order": [
+          "selection-present",
+          "selection"
+        ],
+        "counts": {
+          "state_tokens": 117,
+          "question_tokens": 358,
+          "input_tokens": 475,
+          "exact": true
+        },
+        "evaluation": {
+          "response": {
+            "model": "clef-flash",
+            "answers": {
+              "selection-present": {
+                "type": "noul",
+                "noul": 0.9598
+              },
+              "selection": {
+                "type": "choice",
+                "choice": "C2",
+                "confidence": 0.9636,
+                "probabilities": {
+                  "C1": 0.0162,
+                  "C2": 0.9636,
+                  "none": 0.0202
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 475,
+              "output_tokens": 0
+            }
+          },
+          "warning": null,
+          "cached": false
+        },
+        "decision": {
+          "status": "selected",
+          "reason": "candidate",
+          "presence_probability": 0.9598,
+          "presence": {
+            "selected": {
+              "boolean": true
+            },
+            "confidence": 0.9598,
+            "gap": null,
+            "uncertain": false
+          },
+          "choice": {
+            "selected": {
+              "choice": "C2"
+            },
+            "confidence": 0.9636,
+            "gap": 0.9434,
+            "uncertain": false
+          },
+          "ranking": {
+            "ranked": [
+              {
+                "id": "C2",
+                "probability": 0.9636
+              },
+              {
+                "id": "C1",
+                "probability": 0.0162
+              }
+            ],
+            "probabilities": {
+              "C1": 0.0162,
+              "C2": 0.9636,
+              "none": 0.0202
+            },
+            "none_wins": false,
+            "tied": false
+          }
+        }
+      }
+    ],
+    "outcome": {
+      "tournament": {
+        "round": 1,
+        "original_candidates": 2,
+        "surviving_candidates": [
+          "C1",
+          "C2"
+        ],
+        "selected": [
+          {
+            "id": "C2",
+            "probability": 0.9636
+          }
+        ],
+        "probability_scope": "all-candidates",
+        "ranking": {
+          "ranked": [
+            {
+              "id": "C2",
+              "probability": 0.9636
+            },
+            {
+              "id": "C1",
+              "probability": 0.0162
+            }
+          ],
+          "probabilities": {
+            "C1": 0.0162,
+            "C2": 0.9636,
+            "none": 0.0202
+          },
+          "none_wins": false,
+          "tied": false
+        }
+      },
+      "status": "selected",
+      "destination": "stdout",
+      "exit_code": 0,
+      "uncertain_brackets": 0
+    },
+    "selected": [
+      {
+        "id": "C2",
+        "unit": "bills@example.org",
+        "location": {
+          "source": null,
+          "byte_start": 49,
+          "byte_end": 66,
+          "line_start": 2,
+          "line_end": 2
+        },
+        "probability": 0.9636,
+        "normalized": {
+          "value": "bills@example.org",
+          "text": "bills@example.org"
+        },
+        "normalization_error": null,
+        "offset_correct": null,
+        "normalization_correct": null
+      }
+    ],
+    "complete": true,
+    "uncertain": false,
+    "error": null
+  }
+}

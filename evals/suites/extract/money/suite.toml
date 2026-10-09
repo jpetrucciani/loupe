@@ -1,0 +1,29 @@
+schema_version = 1
+id = "extract/money/seed"
+revision = "selection-v1"
+preset = "selection-query"
+task = "retrieval"
+splits = "splits.json"
+metrics = ["accuracy", "f1", "coverage", "latency-p50-ms", "latency-p95-ms", "units-per-second"]
+
+[cases]
+path = "cases.jsonl"
+revision = "fictional-selection-v1"
+blake3 = "96a54198798df1409289cce819a8eb077787d4d3cb6b725dbf93b51c435356a2"
+
+[split]
+seed = 42
+calibrate_percent = 50
+
+[provenance]
+source = "Handwritten fictional selection examples; human verification pending"
+license = "MIT"
+
+[selection]
+mode = "extract"
+take = 1
+max_rounds = 64
+
+[selection.normalize]
+currency = "USD"
+decimal_separator = "dot"

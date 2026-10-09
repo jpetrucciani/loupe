@@ -1,0 +1,326 @@
+{
+  "reviewed": "2026-10-05",
+  "source": "https://crates.io/api/v1/crates/{name}",
+  "crates": [
+    {
+      "name": "clap",
+      "version": "4.6.7",
+      "updated": "2026-09-14T18:40:28.474794Z",
+      "downloads": 1194580640,
+      "recent_downloads": 246411347,
+      "repository": "https://github.com/clap-rs/clap",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.85"
+    },
+    {
+      "name": "clap_complete",
+      "version": "4.6.11",
+      "updated": "2026-09-15T16:32:44.599836Z",
+      "downloads": 121164273,
+      "recent_downloads": 30468481,
+      "repository": "https://github.com/clap-rs/clap",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.85"
+    },
+    {
+      "name": "clap_mangen",
+      "version": "0.3.3",
+      "updated": "2026-08-12T21:15:45.513390Z",
+      "downloads": 16531253,
+      "recent_downloads": 4342212,
+      "repository": "https://github.com/clap-rs/clap",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.85"
+    },
+    {
+      "name": "tokio",
+      "version": "1.53.2",
+      "updated": "2026-10-03T11:18:32.487780Z",
+      "downloads": 1029755519,
+      "recent_downloads": 245679292,
+      "repository": "https://github.com/tokio-rs/tokio",
+      "license": "MIT",
+      "rust_version": "1.71"
+    },
+    {
+      "name": "reqwest",
+      "version": "0.13.5",
+      "updated": "2026-09-08T20:55:26.479356Z",
+      "downloads": 769640775,
+      "recent_downloads": 203514405,
+      "repository": "https://github.com/seanmonstar/reqwest",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.85.0"
+    },
+    {
+      "name": "serde",
+      "version": "1.0.229",
+      "updated": "2026-07-18T23:05:13.266456Z",
+      "downloads": 1482842659,
+      "recent_downloads": 341917445,
+      "repository": "https://github.com/serde-rs/serde",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.56"
+    },
+    {
+      "name": "serde_json",
+      "version": "1.0.151",
+      "updated": "2026-07-20T05:54:44.078083Z",
+      "downloads": 1385568889,
+      "recent_downloads": 342726917,
+      "repository": "https://github.com/serde-rs/json",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.71"
+    },
+    {
+      "name": "toml",
+      "version": "1.1.6+spec-1.1.0",
+      "updated": "2026-09-10T20:28:39.522017Z",
+      "downloads": 970821044,
+      "recent_downloads": 242535930,
+      "repository": "https://github.com/toml-rs/toml",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.85"
+    },
+    {
+      "name": "indexmap",
+      "version": "2.14.2",
+      "updated": "2026-09-05T01:53:48.019655Z",
+      "downloads": 1635206953,
+      "recent_downloads": 386294914,
+      "repository": "https://github.com/indexmap-rs/indexmap",
+      "license": "Apache-2.0 OR MIT",
+      "rust_version": "1.85"
+    },
+    {
+      "name": "thiserror",
+      "version": "2.0.21",
+      "updated": "2026-09-23T20:24:07.771104Z",
+      "downloads": 1565645368,
+      "recent_downloads": 401368926,
+      "repository": "https://github.com/dtolnay/thiserror",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.77"
+    },
+    {
+      "name": "tokenizers",
+      "version": "0.23.2",
+      "updated": "2026-09-03T08:49:28.624173Z",
+      "downloads": 36681564,
+      "recent_downloads": 15082072,
+      "repository": "https://github.com/huggingface/tokenizers",
+      "license": "Apache-2.0",
+      "rust_version": null
+    },
+    {
+      "name": "hf-hub",
+      "version": "1.0.0",
+      "updated": "2026-07-10T17:22:37.625346Z",
+      "downloads": 19758619,
+      "recent_downloads": 8242096,
+      "repository": "https://github.com/huggingface/hf-hub",
+      "license": "Apache-2.0",
+      "rust_version": null
+    },
+    {
+      "name": "futures",
+      "version": "0.3.34",
+      "updated": "2026-08-11T12:13:28.064590Z",
+      "downloads": 830034056,
+      "recent_downloads": 184229906,
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.71"
+    },
+    {
+      "name": "blake3",
+      "version": "1.8.7",
+      "updated": "2026-08-20T09:09:56.903547Z",
+      "downloads": 194535010,
+      "recent_downloads": 48567314,
+      "repository": "https://github.com/BLAKE3-team/BLAKE3",
+      "license": "CC0-1.0 OR Apache-2.0 OR Apache-2.0 WITH LLVM-exception",
+      "rust_version": null
+    },
+    {
+      "name": "redb",
+      "version": "4.3.0",
+      "updated": "2026-09-15T03:46:14.636605Z",
+      "downloads": 12577614,
+      "recent_downloads": 5606642,
+      "repository": "https://github.com/cberner/redb",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.90"
+    },
+    {
+      "name": "regex",
+      "version": "1.13.1",
+      "updated": "2026-07-15T20:19:35.162139Z",
+      "downloads": 1221576188,
+      "recent_downloads": 267840872,
+      "repository": "https://github.com/rust-lang/regex",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.65"
+    },
+    {
+      "name": "csv",
+      "version": "1.4.0",
+      "updated": "2025-10-17T13:56:07.013801Z",
+      "downloads": 258628689,
+      "recent_downloads": 53068945,
+      "repository": "https://github.com/BurntSushi/rust-csv",
+      "license": "Unlicense/MIT",
+      "rust_version": "1.73"
+    },
+    {
+      "name": "minijinja",
+      "version": "2.24.0",
+      "updated": "2026-08-12T17:22:48.897685Z",
+      "downloads": 36860793,
+      "recent_downloads": 11914776,
+      "repository": "https://github.com/mitsuhiko/minijinja",
+      "license": "Apache-2.0",
+      "rust_version": "1.70"
+    },
+    {
+      "name": "ratatui",
+      "version": "0.30.2",
+      "updated": "2026-06-19T08:56:46.628604Z",
+      "downloads": 56861901,
+      "recent_downloads": 20378597,
+      "repository": "https://github.com/ratatui/ratatui",
+      "license": "MIT",
+      "rust_version": "1.88.0"
+    },
+    {
+      "name": "crossterm",
+      "version": "0.29.0",
+      "updated": "2025-04-05T15:21:48.500601Z",
+      "downloads": 202943971,
+      "recent_downloads": 47556933,
+      "repository": "https://github.com/crossterm-rs/crossterm",
+      "license": "MIT",
+      "rust_version": "1.63.0"
+    },
+    {
+      "name": "rmcp",
+      "version": "3.5.0",
+      "updated": "2026-09-28T00:16:06.911025Z",
+      "downloads": 32259544,
+      "recent_downloads": 17283084,
+      "repository": "https://github.com/modelcontextprotocol/rust-sdk/",
+      "license": "Apache-2.0",
+      "rust_version": "1.88"
+    },
+    {
+      "name": "arrow-array",
+      "version": "60.0.0",
+      "updated": "2026-09-15T15:30:02.038482Z",
+      "downloads": 102241697,
+      "recent_downloads": 25865880,
+      "repository": "https://github.com/apache/arrow-rs",
+      "license": "Apache-2.0 AND MIT",
+      "rust_version": "1.88"
+    },
+    {
+      "name": "arrow-schema",
+      "version": "60.0.0",
+      "updated": "2026-09-15T15:29:51.009401Z",
+      "downloads": 102420150,
+      "recent_downloads": 25892347,
+      "repository": "https://github.com/apache/arrow-rs",
+      "license": "Apache-2.0",
+      "rust_version": "1.88"
+    },
+    {
+      "name": "parquet",
+      "version": "60.0.0",
+      "updated": "2026-09-15T15:32:03.910524Z",
+      "downloads": 81426445,
+      "recent_downloads": 19219151,
+      "repository": "https://github.com/apache/arrow-rs",
+      "license": "Apache-2.0",
+      "rust_version": "1.88"
+    },
+    {
+      "name": "chrono",
+      "version": "0.4.45",
+      "updated": "2026-06-04T12:16:42.063037Z",
+      "downloads": 853331517,
+      "recent_downloads": 190474765,
+      "repository": "https://github.com/chronotope/chrono",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.62.0"
+    },
+    {
+      "name": "chrono-tz",
+      "version": "0.10.4",
+      "updated": "2025-07-11T19:08:33.700056Z",
+      "downloads": 164977470,
+      "recent_downloads": 38403587,
+      "repository": "https://github.com/chronotope/chrono-tz",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.65"
+    },
+    {
+      "name": "rust_decimal",
+      "version": "1.43.0",
+      "updated": "2026-09-02T00:43:11.457502Z",
+      "downloads": 153108151,
+      "recent_downloads": 36969980,
+      "repository": "https://github.com/paupino/rust-decimal",
+      "license": "MIT",
+      "rust_version": "1.67.1"
+    },
+    {
+      "name": "semver",
+      "version": "1.0.28",
+      "updated": "2026-04-04T00:25:14.379075Z",
+      "downloads": 1047994462,
+      "recent_downloads": 223427855,
+      "repository": "https://github.com/dtolnay/semver",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.68"
+    },
+    {
+      "name": "tempfile",
+      "version": "3.27.0",
+      "updated": "2026-03-11T00:20:04.812840Z",
+      "downloads": 860508630,
+      "recent_downloads": 198072525,
+      "repository": "https://github.com/Stebalien/tempfile",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.63"
+    },
+    {
+      "name": "proptest",
+      "version": "1.11.0",
+      "updated": "2026-03-24T11:01:38.993611Z",
+      "downloads": 201525752,
+      "recent_downloads": 52877556,
+      "repository": "https://github.com/proptest-rs/proptest",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.85"
+    },
+    {
+      "name": "assert_cmd",
+      "version": "2.2.2",
+      "updated": "2026-05-11T14:12:46.232740Z",
+      "downloads": 88406929,
+      "recent_downloads": 18761462,
+      "repository": "https://github.com/assert-rs/assert_cmd.git",
+      "license": "MIT OR Apache-2.0",
+      "rust_version": "1.85"
+    },
+    {
+      "name": "insta",
+      "version": "1.49.0",
+      "updated": "2026-10-03T01:12:59.795476Z",
+      "downloads": 107219040,
+      "recent_downloads": 29708211,
+      "repository": "https://github.com/mitsuhiko/insta",
+      "license": "Apache-2.0",
+      "rust_version": "1.66.0"
+    }
+  ]
+}

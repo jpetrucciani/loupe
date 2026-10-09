@@ -1,0 +1,137 @@
+[
+  {
+    "source_artifact": "private qualification capture: on",
+    "source_artifact_sha256": "5ee1394da213789c6ea8bd62f86762762e92f73ebb88e3acd8733cb4957e55fb",
+    "capture": "choice-labels",
+    "captured_at_utc": "2026-10-06T12:57:30.942510+00:00",
+    "endpoint": "http://127.0.0.1:8015/v1/systemone",
+    "input": "The checkout service is completely down for all customers, returning HTTP 503.\n",
+    "format": "lines",
+    "field": "severity",
+    "request": {
+      "state": "The checkout service is completely down for all customers, returning HTTP 503.",
+      "model": "clef-flash",
+      "questions": {
+        "severity": {
+          "type": "choice",
+          "instructions": "How should an on-call engineer treat this event?",
+          "criteria": {
+            "page": "Service down, data loss or user impact; act now",
+            "ticket": "Real unresolved defect, but not urgent",
+            "noise": "Expected, transient, recovered, successfully retried or informational"
+          }
+        }
+      }
+    },
+    "counts": {
+      "state_tokens": 17,
+      "question_tokens": 171,
+      "input_tokens": 188,
+      "exact": true
+    },
+    "response": {
+      "model": "clef-flash",
+      "answers": {
+        "severity": {
+          "type": "choice",
+          "choice": "page",
+          "confidence": 0.9598,
+          "probabilities": {
+            "page": 0.9598,
+            "ticket": 0.0195,
+            "noise": 0.0207
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 188,
+        "output_tokens": 0
+      }
+    },
+    "external_selection": {
+      "choice": "noise"
+    }
+  },
+  {
+    "source_artifact": "private qualification capture: explain",
+    "source_artifact_sha256": "32cd6a8cca0ac874be99b4c27b070f861eda85484be53940fc8ab7043ec824fe",
+    "capture": "whole-json",
+    "captured_at_utc": "2026-10-06T13:07:45.939426+00:00",
+    "endpoint": "http://127.0.0.1:8015/v1/systemone",
+    "input": "Checkout is down for all customers and no retry has recovered it.\n",
+    "format": "whole",
+    "field": "factor:scope",
+    "request": {
+      "state": "Checkout is down for all customers and no retry has recovered it.\n",
+      "model": "clef-flash",
+      "questions": {
+        "incident-factors": {
+          "type": "noul",
+          "instructions": "Does this describe an unresolved service incident?"
+        },
+        "factor:customer_impact": {
+          "type": "noul",
+          "instructions": "Does this explicitly say customers cannot use the service?"
+        },
+        "factor:scope": {
+          "type": "score",
+          "instructions": "How broad is the reported service impact?",
+          "criteria": [
+            "No impact",
+            "Some customers",
+            "All customers"
+          ]
+        },
+        "factor:recovered": {
+          "type": "noul",
+          "instructions": "Does this explicitly say the service recovered or a retry succeeded?"
+        }
+      }
+    },
+    "counts": {
+      "state_tokens": 14,
+      "question_tokens": 412,
+      "input_tokens": 426,
+      "exact": true
+    },
+    "response": {
+      "model": "clef-flash",
+      "answers": {
+        "incident-factors": {
+          "type": "noul",
+          "noul": 0.9386
+        },
+        "factor:customer_impact": {
+          "type": "noul",
+          "noul": 0.9096
+        },
+        "factor:scope": {
+          "type": "score",
+          "score": 1.9667,
+          "confidence": 0.9766,
+          "legend": {
+            "0": "No impact",
+            "1": "Some customers",
+            "2": "All customers"
+          },
+          "probabilities": {
+            "0": 0.01,
+            "1": 0.0134,
+            "2": 0.9766
+          }
+        },
+        "factor:recovered": {
+          "type": "noul",
+          "noul": 0.0119
+        }
+      },
+      "usage": {
+        "input_tokens": 426,
+        "output_tokens": 0
+      }
+    },
+    "external_selection": {
+      "score": 1.25
+    }
+  }
+]

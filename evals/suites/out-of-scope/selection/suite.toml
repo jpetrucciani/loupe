@@ -1,0 +1,25 @@
+schema_version = 1
+id = "out-of-scope/selection/seed"
+revision = "selection-v1"
+preset = "selection-query"
+task = "retrieval"
+splits = "splits.json"
+metrics = ["accuracy", "f1", "coverage", "latency-p50-ms", "latency-p95-ms", "units-per-second"]
+
+[cases]
+path = "cases.jsonl"
+revision = "fictional-selection-v1"
+blake3 = "4b260fab003eaf08c7029eaae0aff538cbc7416fc2389d2ef0f9b4ac049e1b98"
+
+[split]
+seed = 42
+calibrate_percent = 50
+
+[provenance]
+source = "Handwritten fictional selection examples; human verification pending"
+license = "MIT"
+
+[selection]
+mode = "find"
+take = 1
+max_rounds = 64

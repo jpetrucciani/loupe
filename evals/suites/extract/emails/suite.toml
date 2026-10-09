@@ -1,0 +1,27 @@
+schema_version = 1
+id = "extract/emails/seed"
+revision = "selection-v1"
+preset = "selection-query"
+task = "retrieval"
+splits = "splits.json"
+metrics = ["accuracy", "f1", "coverage", "latency-p50-ms", "latency-p95-ms", "units-per-second"]
+
+[cases]
+path = "cases.jsonl"
+revision = "fictional-selection-v1"
+blake3 = "ba051a57fd456ca2fc714e501fbfb861604e23c615f069c61d427521a61aa3ac"
+
+[split]
+seed = 42
+calibrate_percent = 50
+
+[provenance]
+source = "Handwritten fictional selection examples; human verification pending"
+license = "MIT"
+
+[selection]
+mode = "extract"
+take = 1
+max_rounds = 64
+
+[selection.normalize]

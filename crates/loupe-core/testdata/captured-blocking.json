@@ -1,0 +1,3732 @@
+{
+  "schema_version": 1,
+  "captured_at_utc": "2026-10-06T09:32:28.327705+00:00",
+  "binary_sha256": "16478b08a85a72ee783205ff5b00446904f5d104132999db69d847f7a1479a68",
+  "endpoint": "http://127.0.0.1:8015/v1/systemone",
+  "captures": [
+    {
+      "name": "blocking-hybrid",
+      "command": [
+        "/path/to/loupe/target/debug/loupe",
+        "--config",
+        "/tmp/loupe-blocking-probe-ofybrw5_/config.toml",
+        "--profile",
+        "server",
+        "join",
+        "-",
+        "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+        "--on",
+        "name,location",
+        "--blocking",
+        "hybrid",
+        "--dry-run"
+      ],
+      "input": "{\"id\": \"l-1\", \"name\": \"ACME, Dental Clinic.\", \"location\": \"Portland, Maine\"}\n{\"id\": \"l-2\", \"name\": \"Unlisted Workshop\", \"location\": \"Berlin Germany\"}\n{\"id\": \"l-3\", \"name\": \"Blue Sky Clinic\", \"location\": \"LONDON\"}\n",
+      "right_input": "{\"id\": \"r-1\", \"name\": \"Acme Dental Clinic\", \"location\": \"Portland Maine\"}\n{\"id\": \"r-2\", \"name\": \"Acme Hardware\", \"location\": \"Portland Oregon\"}\n{\"id\": \"r-3\", \"name\": \"Blue Sky Clinic\", \"location\": \"London\"}\n",
+      "exit": 0,
+      "stdout": "{\"index\":1,\"left\":{\"unit\":{\"id\":\"l-1\",\"name\":\"ACME, Dental Clinic.\",\"location\":\"Portland, Maine\"},\"location\":{\"source\":null,\"byte_start\":0,\"byte_end\":77,\"line_start\":1,\"line_end\":1}},\"fields\":[\"name\",\"location\"],\"blocking_mode\":\"hybrid\",\"eligible_records\":3,\"candidates\":[{\"blocking\":{\"right_index\":1,\"exact_fields\":2,\"intersection\":5,\"union\":5,\"token_jaccard\":1.0,\"matching_lsh_bands\":8},\"right\":{\"index\":1,\"unit\":{\"id\":\"r-1\",\"name\":\"Acme Dental Clinic\",\"location\":\"Portland Maine\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":0,\"byte_end\":74,\"line_start\":1,\"line_end\":1}}},{\"blocking\":{\"right_index\":2,\"exact_fields\":0,\"intersection\":2,\"union\":7,\"token_jaccard\":0.2857142857142857,\"matching_lsh_bands\":0},\"right\":{\"index\":2,\"unit\":{\"id\":\"r-2\",\"name\":\"Acme Hardware\",\"location\":\"Portland Oregon\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":74,\"byte_end\":144,\"line_start\":2,\"line_end\":2}}},{\"blocking\":{\"right_index\":3,\"exact_fields\":0,\"intersection\":1,\"union\":8,\"token_jaccard\":0.125,\"matching_lsh_bands\":0},\"right\":{\"index\":3,\"unit\":{\"id\":\"r-3\",\"name\":\"Blue Sky Clinic\",\"location\":\"London\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":144,\"byte_end\":207,\"line_start\":3,\"line_end\":3}}}],\"right_index\":{\"records\":3,\"raw_bytes\":207,\"distinct_tokens\":10,\"token_postings\":13,\"distinct_bands\":24,\"band_postings\":24,\"scratch_slots\":3}}\n{\"index\":2,\"left\":{\"unit\":{\"id\":\"l-2\",\"name\":\"Unlisted Workshop\",\"location\":\"Berlin Germany\"},\"location\":{\"source\":null,\"byte_start\":77,\"byte_end\":150,\"line_start\":2,\"line_end\":2}},\"fields\":[\"name\",\"location\"],\"blocking_mode\":\"hybrid\",\"eligible_records\":0,\"candidates\":[],\"right_index\":{\"records\":3,\"raw_bytes\":207,\"distinct_tokens\":10,\"token_postings\":13,\"distinct_bands\":24,\"band_postings\":24,\"scratch_slots\":3}}\n{\"index\":3,\"left\":{\"unit\":{\"id\":\"l-3\",\"name\":\"Blue Sky Clinic\",\"location\":\"LONDON\"},\"location\":{\"source\":null,\"byte_start\":150,\"byte_end\":213,\"line_start\":3,\"line_end\":3}},\"fields\":[\"name\",\"location\"],\"blocking_mode\":\"hybrid\",\"eligible_records\":2,\"candidates\":[{\"blocking\":{\"right_index\":3,\"exact_fields\":2,\"intersection\":4,\"union\":4,\"token_jaccard\":1.0,\"matching_lsh_bands\":8},\"right\":{\"index\":3,\"unit\":{\"id\":\"r-3\",\"name\":\"Blue Sky Clinic\",\"location\":\"London\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":144,\"byte_end\":207,\"line_start\":3,\"line_end\":3}}},{\"blocking\":{\"right_index\":1,\"exact_fields\":0,\"intersection\":1,\"union\":8,\"token_jaccard\":0.125,\"matching_lsh_bands\":0},\"right\":{\"index\":1,\"unit\":{\"id\":\"r-1\",\"name\":\"Acme Dental Clinic\",\"location\":\"Portland Maine\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":0,\"byte_end\":74,\"line_start\":1,\"line_end\":1}}}],\"right_index\":{\"records\":3,\"raw_bytes\":207,\"distinct_tokens\":10,\"token_postings\":13,\"distinct_bands\":24,\"band_postings\":24,\"scratch_slots\":3}}\n",
+      "stderr": "loupe: right records=3 token_postings=13 band_postings=24 blocking=Hybrid max_candidates=20\n",
+      "records": [
+        {
+          "index": 1,
+          "left": {
+            "unit": {
+              "id": "l-1",
+              "name": "ACME, Dental Clinic.",
+              "location": "Portland, Maine"
+            },
+            "location": {
+              "source": null,
+              "byte_start": 0,
+              "byte_end": 77,
+              "line_start": 1,
+              "line_end": 1
+            }
+          },
+          "fields": [
+            "name",
+            "location"
+          ],
+          "blocking_mode": "hybrid",
+          "eligible_records": 3,
+          "candidates": [
+            {
+              "blocking": {
+                "right_index": 1,
+                "exact_fields": 2,
+                "intersection": 5,
+                "union": 5,
+                "token_jaccard": 1.0,
+                "matching_lsh_bands": 8
+              },
+              "right": {
+                "index": 1,
+                "unit": {
+                  "id": "r-1",
+                  "name": "Acme Dental Clinic",
+                  "location": "Portland Maine"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 0,
+                  "byte_end": 74,
+                  "line_start": 1,
+                  "line_end": 1
+                }
+              }
+            },
+            {
+              "blocking": {
+                "right_index": 2,
+                "exact_fields": 0,
+                "intersection": 2,
+                "union": 7,
+                "token_jaccard": 0.2857142857142857,
+                "matching_lsh_bands": 0
+              },
+              "right": {
+                "index": 2,
+                "unit": {
+                  "id": "r-2",
+                  "name": "Acme Hardware",
+                  "location": "Portland Oregon"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 74,
+                  "byte_end": 144,
+                  "line_start": 2,
+                  "line_end": 2
+                }
+              }
+            },
+            {
+              "blocking": {
+                "right_index": 3,
+                "exact_fields": 0,
+                "intersection": 1,
+                "union": 8,
+                "token_jaccard": 0.125,
+                "matching_lsh_bands": 0
+              },
+              "right": {
+                "index": 3,
+                "unit": {
+                  "id": "r-3",
+                  "name": "Blue Sky Clinic",
+                  "location": "London"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 144,
+                  "byte_end": 207,
+                  "line_start": 3,
+                  "line_end": 3
+                }
+              }
+            }
+          ],
+          "right_index": {
+            "records": 3,
+            "raw_bytes": 207,
+            "distinct_tokens": 10,
+            "token_postings": 13,
+            "distinct_bands": 24,
+            "band_postings": 24,
+            "scratch_slots": 3
+          }
+        },
+        {
+          "index": 2,
+          "left": {
+            "unit": {
+              "id": "l-2",
+              "name": "Unlisted Workshop",
+              "location": "Berlin Germany"
+            },
+            "location": {
+              "source": null,
+              "byte_start": 77,
+              "byte_end": 150,
+              "line_start": 2,
+              "line_end": 2
+            }
+          },
+          "fields": [
+            "name",
+            "location"
+          ],
+          "blocking_mode": "hybrid",
+          "eligible_records": 0,
+          "candidates": [],
+          "right_index": {
+            "records": 3,
+            "raw_bytes": 207,
+            "distinct_tokens": 10,
+            "token_postings": 13,
+            "distinct_bands": 24,
+            "band_postings": 24,
+            "scratch_slots": 3
+          }
+        },
+        {
+          "index": 3,
+          "left": {
+            "unit": {
+              "id": "l-3",
+              "name": "Blue Sky Clinic",
+              "location": "LONDON"
+            },
+            "location": {
+              "source": null,
+              "byte_start": 150,
+              "byte_end": 213,
+              "line_start": 3,
+              "line_end": 3
+            }
+          },
+          "fields": [
+            "name",
+            "location"
+          ],
+          "blocking_mode": "hybrid",
+          "eligible_records": 2,
+          "candidates": [
+            {
+              "blocking": {
+                "right_index": 3,
+                "exact_fields": 2,
+                "intersection": 4,
+                "union": 4,
+                "token_jaccard": 1.0,
+                "matching_lsh_bands": 8
+              },
+              "right": {
+                "index": 3,
+                "unit": {
+                  "id": "r-3",
+                  "name": "Blue Sky Clinic",
+                  "location": "London"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 144,
+                  "byte_end": 207,
+                  "line_start": 3,
+                  "line_end": 3
+                }
+              }
+            },
+            {
+              "blocking": {
+                "right_index": 1,
+                "exact_fields": 0,
+                "intersection": 1,
+                "union": 8,
+                "token_jaccard": 0.125,
+                "matching_lsh_bands": 0
+              },
+              "right": {
+                "index": 1,
+                "unit": {
+                  "id": "r-1",
+                  "name": "Acme Dental Clinic",
+                  "location": "Portland Maine"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 0,
+                  "byte_end": 74,
+                  "line_start": 1,
+                  "line_end": 1
+                }
+              }
+            }
+          ],
+          "right_index": {
+            "records": 3,
+            "raw_bytes": 207,
+            "distinct_tokens": 10,
+            "token_postings": 13,
+            "distinct_bands": 24,
+            "band_postings": 24,
+            "scratch_slots": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "blocking-tokens",
+      "command": [
+        "/path/to/loupe/target/debug/loupe",
+        "--config",
+        "/tmp/loupe-blocking-probe-ofybrw5_/config.toml",
+        "--profile",
+        "server",
+        "join",
+        "-",
+        "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+        "--on",
+        "name,location",
+        "--blocking",
+        "tokens",
+        "--dry-run"
+      ],
+      "input": "{\"id\": \"l-1\", \"name\": \"ACME, Dental Clinic.\", \"location\": \"Portland, Maine\"}\n{\"id\": \"l-2\", \"name\": \"Unlisted Workshop\", \"location\": \"Berlin Germany\"}\n{\"id\": \"l-3\", \"name\": \"Blue Sky Clinic\", \"location\": \"LONDON\"}\n",
+      "right_input": "{\"id\": \"r-1\", \"name\": \"Acme Dental Clinic\", \"location\": \"Portland Maine\"}\n{\"id\": \"r-2\", \"name\": \"Acme Hardware\", \"location\": \"Portland Oregon\"}\n{\"id\": \"r-3\", \"name\": \"Blue Sky Clinic\", \"location\": \"London\"}\n",
+      "exit": 0,
+      "stdout": "{\"index\":1,\"left\":{\"unit\":{\"id\":\"l-1\",\"name\":\"ACME, Dental Clinic.\",\"location\":\"Portland, Maine\"},\"location\":{\"source\":null,\"byte_start\":0,\"byte_end\":77,\"line_start\":1,\"line_end\":1}},\"fields\":[\"name\",\"location\"],\"blocking_mode\":\"tokens\",\"eligible_records\":3,\"candidates\":[{\"blocking\":{\"right_index\":1,\"exact_fields\":2,\"intersection\":5,\"union\":5,\"token_jaccard\":1.0,\"matching_lsh_bands\":8},\"right\":{\"index\":1,\"unit\":{\"id\":\"r-1\",\"name\":\"Acme Dental Clinic\",\"location\":\"Portland Maine\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":0,\"byte_end\":74,\"line_start\":1,\"line_end\":1}}},{\"blocking\":{\"right_index\":2,\"exact_fields\":0,\"intersection\":2,\"union\":7,\"token_jaccard\":0.2857142857142857,\"matching_lsh_bands\":0},\"right\":{\"index\":2,\"unit\":{\"id\":\"r-2\",\"name\":\"Acme Hardware\",\"location\":\"Portland Oregon\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":74,\"byte_end\":144,\"line_start\":2,\"line_end\":2}}},{\"blocking\":{\"right_index\":3,\"exact_fields\":0,\"intersection\":1,\"union\":8,\"token_jaccard\":0.125,\"matching_lsh_bands\":0},\"right\":{\"index\":3,\"unit\":{\"id\":\"r-3\",\"name\":\"Blue Sky Clinic\",\"location\":\"London\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":144,\"byte_end\":207,\"line_start\":3,\"line_end\":3}}}],\"right_index\":{\"records\":3,\"raw_bytes\":207,\"distinct_tokens\":10,\"token_postings\":13,\"distinct_bands\":24,\"band_postings\":24,\"scratch_slots\":3}}\n{\"index\":2,\"left\":{\"unit\":{\"id\":\"l-2\",\"name\":\"Unlisted Workshop\",\"location\":\"Berlin Germany\"},\"location\":{\"source\":null,\"byte_start\":77,\"byte_end\":150,\"line_start\":2,\"line_end\":2}},\"fields\":[\"name\",\"location\"],\"blocking_mode\":\"tokens\",\"eligible_records\":0,\"candidates\":[],\"right_index\":{\"records\":3,\"raw_bytes\":207,\"distinct_tokens\":10,\"token_postings\":13,\"distinct_bands\":24,\"band_postings\":24,\"scratch_slots\":3}}\n{\"index\":3,\"left\":{\"unit\":{\"id\":\"l-3\",\"name\":\"Blue Sky Clinic\",\"location\":\"LONDON\"},\"location\":{\"source\":null,\"byte_start\":150,\"byte_end\":213,\"line_start\":3,\"line_end\":3}},\"fields\":[\"name\",\"location\"],\"blocking_mode\":\"tokens\",\"eligible_records\":2,\"candidates\":[{\"blocking\":{\"right_index\":3,\"exact_fields\":2,\"intersection\":4,\"union\":4,\"token_jaccard\":1.0,\"matching_lsh_bands\":8},\"right\":{\"index\":3,\"unit\":{\"id\":\"r-3\",\"name\":\"Blue Sky Clinic\",\"location\":\"London\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":144,\"byte_end\":207,\"line_start\":3,\"line_end\":3}}},{\"blocking\":{\"right_index\":1,\"exact_fields\":0,\"intersection\":1,\"union\":8,\"token_jaccard\":0.125,\"matching_lsh_bands\":0},\"right\":{\"index\":1,\"unit\":{\"id\":\"r-1\",\"name\":\"Acme Dental Clinic\",\"location\":\"Portland Maine\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":0,\"byte_end\":74,\"line_start\":1,\"line_end\":1}}}],\"right_index\":{\"records\":3,\"raw_bytes\":207,\"distinct_tokens\":10,\"token_postings\":13,\"distinct_bands\":24,\"band_postings\":24,\"scratch_slots\":3}}\n",
+      "stderr": "loupe: right records=3 token_postings=13 band_postings=24 blocking=Tokens max_candidates=20\n",
+      "records": [
+        {
+          "index": 1,
+          "left": {
+            "unit": {
+              "id": "l-1",
+              "name": "ACME, Dental Clinic.",
+              "location": "Portland, Maine"
+            },
+            "location": {
+              "source": null,
+              "byte_start": 0,
+              "byte_end": 77,
+              "line_start": 1,
+              "line_end": 1
+            }
+          },
+          "fields": [
+            "name",
+            "location"
+          ],
+          "blocking_mode": "tokens",
+          "eligible_records": 3,
+          "candidates": [
+            {
+              "blocking": {
+                "right_index": 1,
+                "exact_fields": 2,
+                "intersection": 5,
+                "union": 5,
+                "token_jaccard": 1.0,
+                "matching_lsh_bands": 8
+              },
+              "right": {
+                "index": 1,
+                "unit": {
+                  "id": "r-1",
+                  "name": "Acme Dental Clinic",
+                  "location": "Portland Maine"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 0,
+                  "byte_end": 74,
+                  "line_start": 1,
+                  "line_end": 1
+                }
+              }
+            },
+            {
+              "blocking": {
+                "right_index": 2,
+                "exact_fields": 0,
+                "intersection": 2,
+                "union": 7,
+                "token_jaccard": 0.2857142857142857,
+                "matching_lsh_bands": 0
+              },
+              "right": {
+                "index": 2,
+                "unit": {
+                  "id": "r-2",
+                  "name": "Acme Hardware",
+                  "location": "Portland Oregon"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 74,
+                  "byte_end": 144,
+                  "line_start": 2,
+                  "line_end": 2
+                }
+              }
+            },
+            {
+              "blocking": {
+                "right_index": 3,
+                "exact_fields": 0,
+                "intersection": 1,
+                "union": 8,
+                "token_jaccard": 0.125,
+                "matching_lsh_bands": 0
+              },
+              "right": {
+                "index": 3,
+                "unit": {
+                  "id": "r-3",
+                  "name": "Blue Sky Clinic",
+                  "location": "London"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 144,
+                  "byte_end": 207,
+                  "line_start": 3,
+                  "line_end": 3
+                }
+              }
+            }
+          ],
+          "right_index": {
+            "records": 3,
+            "raw_bytes": 207,
+            "distinct_tokens": 10,
+            "token_postings": 13,
+            "distinct_bands": 24,
+            "band_postings": 24,
+            "scratch_slots": 3
+          }
+        },
+        {
+          "index": 2,
+          "left": {
+            "unit": {
+              "id": "l-2",
+              "name": "Unlisted Workshop",
+              "location": "Berlin Germany"
+            },
+            "location": {
+              "source": null,
+              "byte_start": 77,
+              "byte_end": 150,
+              "line_start": 2,
+              "line_end": 2
+            }
+          },
+          "fields": [
+            "name",
+            "location"
+          ],
+          "blocking_mode": "tokens",
+          "eligible_records": 0,
+          "candidates": [],
+          "right_index": {
+            "records": 3,
+            "raw_bytes": 207,
+            "distinct_tokens": 10,
+            "token_postings": 13,
+            "distinct_bands": 24,
+            "band_postings": 24,
+            "scratch_slots": 3
+          }
+        },
+        {
+          "index": 3,
+          "left": {
+            "unit": {
+              "id": "l-3",
+              "name": "Blue Sky Clinic",
+              "location": "LONDON"
+            },
+            "location": {
+              "source": null,
+              "byte_start": 150,
+              "byte_end": 213,
+              "line_start": 3,
+              "line_end": 3
+            }
+          },
+          "fields": [
+            "name",
+            "location"
+          ],
+          "blocking_mode": "tokens",
+          "eligible_records": 2,
+          "candidates": [
+            {
+              "blocking": {
+                "right_index": 3,
+                "exact_fields": 2,
+                "intersection": 4,
+                "union": 4,
+                "token_jaccard": 1.0,
+                "matching_lsh_bands": 8
+              },
+              "right": {
+                "index": 3,
+                "unit": {
+                  "id": "r-3",
+                  "name": "Blue Sky Clinic",
+                  "location": "London"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 144,
+                  "byte_end": 207,
+                  "line_start": 3,
+                  "line_end": 3
+                }
+              }
+            },
+            {
+              "blocking": {
+                "right_index": 1,
+                "exact_fields": 0,
+                "intersection": 1,
+                "union": 8,
+                "token_jaccard": 0.125,
+                "matching_lsh_bands": 0
+              },
+              "right": {
+                "index": 1,
+                "unit": {
+                  "id": "r-1",
+                  "name": "Acme Dental Clinic",
+                  "location": "Portland Maine"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 0,
+                  "byte_end": 74,
+                  "line_start": 1,
+                  "line_end": 1
+                }
+              }
+            }
+          ],
+          "right_index": {
+            "records": 3,
+            "raw_bytes": 207,
+            "distinct_tokens": 10,
+            "token_postings": 13,
+            "distinct_bands": 24,
+            "band_postings": 24,
+            "scratch_slots": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "blocking-lsh",
+      "command": [
+        "/path/to/loupe/target/debug/loupe",
+        "--config",
+        "/tmp/loupe-blocking-probe-ofybrw5_/config.toml",
+        "--profile",
+        "server",
+        "join",
+        "-",
+        "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+        "--on",
+        "name,location",
+        "--blocking",
+        "lsh",
+        "--dry-run"
+      ],
+      "input": "{\"id\": \"l-1\", \"name\": \"ACME, Dental Clinic.\", \"location\": \"Portland, Maine\"}\n{\"id\": \"l-2\", \"name\": \"Unlisted Workshop\", \"location\": \"Berlin Germany\"}\n{\"id\": \"l-3\", \"name\": \"Blue Sky Clinic\", \"location\": \"LONDON\"}\n",
+      "right_input": "{\"id\": \"r-1\", \"name\": \"Acme Dental Clinic\", \"location\": \"Portland Maine\"}\n{\"id\": \"r-2\", \"name\": \"Acme Hardware\", \"location\": \"Portland Oregon\"}\n{\"id\": \"r-3\", \"name\": \"Blue Sky Clinic\", \"location\": \"London\"}\n",
+      "exit": 0,
+      "stdout": "{\"index\":1,\"left\":{\"unit\":{\"id\":\"l-1\",\"name\":\"ACME, Dental Clinic.\",\"location\":\"Portland, Maine\"},\"location\":{\"source\":null,\"byte_start\":0,\"byte_end\":77,\"line_start\":1,\"line_end\":1}},\"fields\":[\"name\",\"location\"],\"blocking_mode\":\"lsh\",\"eligible_records\":1,\"candidates\":[{\"blocking\":{\"right_index\":1,\"exact_fields\":2,\"intersection\":5,\"union\":5,\"token_jaccard\":1.0,\"matching_lsh_bands\":8},\"right\":{\"index\":1,\"unit\":{\"id\":\"r-1\",\"name\":\"Acme Dental Clinic\",\"location\":\"Portland Maine\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":0,\"byte_end\":74,\"line_start\":1,\"line_end\":1}}}],\"right_index\":{\"records\":3,\"raw_bytes\":207,\"distinct_tokens\":10,\"token_postings\":13,\"distinct_bands\":24,\"band_postings\":24,\"scratch_slots\":3}}\n{\"index\":2,\"left\":{\"unit\":{\"id\":\"l-2\",\"name\":\"Unlisted Workshop\",\"location\":\"Berlin Germany\"},\"location\":{\"source\":null,\"byte_start\":77,\"byte_end\":150,\"line_start\":2,\"line_end\":2}},\"fields\":[\"name\",\"location\"],\"blocking_mode\":\"lsh\",\"eligible_records\":0,\"candidates\":[],\"right_index\":{\"records\":3,\"raw_bytes\":207,\"distinct_tokens\":10,\"token_postings\":13,\"distinct_bands\":24,\"band_postings\":24,\"scratch_slots\":3}}\n{\"index\":3,\"left\":{\"unit\":{\"id\":\"l-3\",\"name\":\"Blue Sky Clinic\",\"location\":\"LONDON\"},\"location\":{\"source\":null,\"byte_start\":150,\"byte_end\":213,\"line_start\":3,\"line_end\":3}},\"fields\":[\"name\",\"location\"],\"blocking_mode\":\"lsh\",\"eligible_records\":1,\"candidates\":[{\"blocking\":{\"right_index\":3,\"exact_fields\":2,\"intersection\":4,\"union\":4,\"token_jaccard\":1.0,\"matching_lsh_bands\":8},\"right\":{\"index\":3,\"unit\":{\"id\":\"r-3\",\"name\":\"Blue Sky Clinic\",\"location\":\"London\"},\"location\":{\"source\":\"/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl\",\"byte_start\":144,\"byte_end\":207,\"line_start\":3,\"line_end\":3}}}],\"right_index\":{\"records\":3,\"raw_bytes\":207,\"distinct_tokens\":10,\"token_postings\":13,\"distinct_bands\":24,\"band_postings\":24,\"scratch_slots\":3}}\n",
+      "stderr": "loupe: right records=3 token_postings=13 band_postings=24 blocking=Lsh max_candidates=20\n",
+      "records": [
+        {
+          "index": 1,
+          "left": {
+            "unit": {
+              "id": "l-1",
+              "name": "ACME, Dental Clinic.",
+              "location": "Portland, Maine"
+            },
+            "location": {
+              "source": null,
+              "byte_start": 0,
+              "byte_end": 77,
+              "line_start": 1,
+              "line_end": 1
+            }
+          },
+          "fields": [
+            "name",
+            "location"
+          ],
+          "blocking_mode": "lsh",
+          "eligible_records": 1,
+          "candidates": [
+            {
+              "blocking": {
+                "right_index": 1,
+                "exact_fields": 2,
+                "intersection": 5,
+                "union": 5,
+                "token_jaccard": 1.0,
+                "matching_lsh_bands": 8
+              },
+              "right": {
+                "index": 1,
+                "unit": {
+                  "id": "r-1",
+                  "name": "Acme Dental Clinic",
+                  "location": "Portland Maine"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 0,
+                  "byte_end": 74,
+                  "line_start": 1,
+                  "line_end": 1
+                }
+              }
+            }
+          ],
+          "right_index": {
+            "records": 3,
+            "raw_bytes": 207,
+            "distinct_tokens": 10,
+            "token_postings": 13,
+            "distinct_bands": 24,
+            "band_postings": 24,
+            "scratch_slots": 3
+          }
+        },
+        {
+          "index": 2,
+          "left": {
+            "unit": {
+              "id": "l-2",
+              "name": "Unlisted Workshop",
+              "location": "Berlin Germany"
+            },
+            "location": {
+              "source": null,
+              "byte_start": 77,
+              "byte_end": 150,
+              "line_start": 2,
+              "line_end": 2
+            }
+          },
+          "fields": [
+            "name",
+            "location"
+          ],
+          "blocking_mode": "lsh",
+          "eligible_records": 0,
+          "candidates": [],
+          "right_index": {
+            "records": 3,
+            "raw_bytes": 207,
+            "distinct_tokens": 10,
+            "token_postings": 13,
+            "distinct_bands": 24,
+            "band_postings": 24,
+            "scratch_slots": 3
+          }
+        },
+        {
+          "index": 3,
+          "left": {
+            "unit": {
+              "id": "l-3",
+              "name": "Blue Sky Clinic",
+              "location": "LONDON"
+            },
+            "location": {
+              "source": null,
+              "byte_start": 150,
+              "byte_end": 213,
+              "line_start": 3,
+              "line_end": 3
+            }
+          },
+          "fields": [
+            "name",
+            "location"
+          ],
+          "blocking_mode": "lsh",
+          "eligible_records": 1,
+          "candidates": [
+            {
+              "blocking": {
+                "right_index": 3,
+                "exact_fields": 2,
+                "intersection": 4,
+                "union": 4,
+                "token_jaccard": 1.0,
+                "matching_lsh_bands": 8
+              },
+              "right": {
+                "index": 3,
+                "unit": {
+                  "id": "r-3",
+                  "name": "Blue Sky Clinic",
+                  "location": "London"
+                },
+                "location": {
+                  "source": "/tmp/loupe-blocking-probe-ofybrw5_/right.jsonl",
+                  "byte_start": 144,
+                  "byte_end": 207,
+                  "line_start": 3,
+                  "line_end": 3
+                }
+              }
+            }
+          ],
+          "right_index": {
+            "records": 3,
+            "raw_bytes": 207,
+            "distinct_tokens": 10,
+            "token_postings": 13,
+            "distinct_bands": 24,
+            "band_postings": 24,
+            "scratch_slots": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "pair-l-1-r-1",
+      "command": [
+        "/path/to/loupe/target/debug/loupe",
+        "--config",
+        "/tmp/loupe-blocking-probe-ofybrw5_/config.toml",
+        "--profile",
+        "server",
+        "ask",
+        "-f",
+        "/tmp/loupe-blocking-probe-ofybrw5_/pair.json",
+        "--strict",
+        "--no-cache",
+        "--summary",
+        "--deadline",
+        "60s",
+        "--failed",
+        "/tmp/loupe-blocking-probe-ofybrw5_/pair-l-1-r-1.jsonl"
+      ],
+      "blocking": {
+        "right_index": 1,
+        "exact_fields": 2,
+        "intersection": 5,
+        "union": 5,
+        "token_jaccard": 1.0,
+        "matching_lsh_bands": 8
+      },
+      "input": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+      "exit": 0,
+      "stdout": "{\"model\":\"clef-flash\",\"answers\":{\"same_entity\":{\"type\":\"noul\",\"noul\":0.8832},\"similarity\":{\"type\":\"score\",\"score\":1.8396,\"confidence\":0.8724,\"legend\":{\"0\":\"Different business or different location\",\"1\":\"Ambiguous possible match\",\"2\":\"Clear match with equivalent business name and location\"},\"probabilities\":{\"0\":0.0328,\"1\":0.0949,\"2\":0.8724}},\"name_agrees\":{\"type\":\"noul\",\"noul\":0.9329},\"location_agrees\":{\"type\":\"noul\",\"noul\":0.9553}},\"usage\":{\"input_tokens\":513,\"output_tokens\":0}}\n",
+      "stderr": "loupe: units=1 attempts=1 http_attempts=1 input_counted=513 input_reported=513 unknown_attempts=0 uncertain=0 cache_hits=0 gpu_passes=unavailable logical_records=1 succeeded_records=1 failed_records=0 cancelled_records=0 output_reported=0 input_reserved=0 cache_hit_rate=0.000000 latency_samples=1 p50_ms=263.192575 p95_ms=263.192575 latency_bounds=upper latency_kind=uncached_submitted_logical cost_usd_estimate=unavailable cost_unknown_output=false unknown_input_counted=0 mode=classify errors=0\n",
+      "summary": {
+        "units": "1",
+        "attempts": "1",
+        "http_attempts": "1",
+        "input_counted": "513",
+        "input_reported": "513",
+        "unknown_attempts": "0",
+        "uncertain": "0",
+        "cache_hits": "0",
+        "gpu_passes": "unavailable",
+        "logical_records": "1",
+        "succeeded_records": "1",
+        "failed_records": "0",
+        "cancelled_records": "0",
+        "output_reported": "0",
+        "input_reserved": "0",
+        "cache_hit_rate": "0.000000",
+        "latency_samples": "1",
+        "p50_ms": "263.192575",
+        "p95_ms": "263.192575",
+        "latency_bounds": "upper",
+        "latency_kind": "uncached_submitted_logical",
+        "cost_usd_estimate": "unavailable",
+        "cost_unknown_output": "false",
+        "unknown_input_counted": "0",
+        "mode": "classify",
+        "errors": "0"
+      },
+      "journal": [
+        {
+          "version": 1,
+          "sequence": 1,
+          "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+          "record": {
+            "record": "begin",
+            "identity": {
+              "version": 1,
+              "command": "Ask",
+              "reverse": false,
+              "strict": true,
+              "cwd": "/tmp/loupe-blocking-probe-ofybrw5_",
+              "document": {
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "questions": [
+                [
+                  "same_entity",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  }
+                ],
+                [
+                  "similarity",
+                  {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  }
+                ],
+                [
+                  "name_agrees",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  }
+                ],
+                [
+                  "location_agrees",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                ]
+              ],
+              "files": [],
+              "reader": {
+                "format": "whole",
+                "keep_blank": false,
+                "records": null,
+                "field": null,
+                "select": [],
+                "with_context": 0
+              },
+              "policy": {
+                "threshold": 0.5,
+                "margin": 0.0,
+                "min_confidence": 0.0,
+                "min_gap": 0.0,
+                "uncertain": "Drop",
+                "capture": null
+              },
+              "endpoint": "http://127.0.0.1:8015/v1/systemone",
+              "model": "clef-flash",
+              "model_identity": null,
+              "encoder": "clef-v1@17f0b0ad64efb65d273590632833508766b2aae6;tokenizer=17f0b0ad64efb65d273590632833508766b2aae6;blake3=16066ad27076349236a282e9351f8bab5aa9b33803f12f7ab9dca401909d7273",
+              "pack": "Unit",
+              "limits": {
+                "max_length": 16384,
+                "max_state_tokens": 16384,
+                "max_questions": 128,
+                "max_options": 512,
+                "max_total_options": 2048,
+                "max_batch": 4
+              },
+              "output": "Plain",
+              "split": null,
+              "truncate": null,
+              "focus": null,
+              "route": null,
+              "errors": {
+                "keep_going": false,
+                "action": "Drop"
+              }
+            }
+          },
+          "checksum": "3c07cfb9855a2f2931f98cac3069c67eb5c3daca3f505c1b84e657243d76585a"
+        },
+        {
+          "version": 1,
+          "sequence": 2,
+          "previous": "3c07cfb9855a2f2931f98cac3069c67eb5c3daca3f505c1b84e657243d76585a",
+          "record": {
+            "record": "admit",
+            "unit": {
+              "index": 1,
+              "text": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+              "raw": [
+                76,
+                69,
+                70,
+                84,
+                32,
+                114,
+                101,
+                99,
+                111,
+                114,
+                100,
+                58,
+                10,
+                123,
+                34,
+                105,
+                100,
+                34,
+                58,
+                32,
+                34,
+                108,
+                45,
+                49,
+                34,
+                44,
+                32,
+                34,
+                108,
+                111,
+                99,
+                97,
+                116,
+                105,
+                111,
+                110,
+                34,
+                58,
+                32,
+                34,
+                80,
+                111,
+                114,
+                116,
+                108,
+                97,
+                110,
+                100,
+                44,
+                32,
+                77,
+                97,
+                105,
+                110,
+                101,
+                34,
+                44,
+                32,
+                34,
+                110,
+                97,
+                109,
+                101,
+                34,
+                58,
+                32,
+                34,
+                65,
+                67,
+                77,
+                69,
+                44,
+                32,
+                68,
+                101,
+                110,
+                116,
+                97,
+                108,
+                32,
+                67,
+                108,
+                105,
+                110,
+                105,
+                99,
+                46,
+                34,
+                125,
+                10,
+                82,
+                73,
+                71,
+                72,
+                84,
+                32,
+                114,
+                101,
+                99,
+                111,
+                114,
+                100,
+                58,
+                10,
+                123,
+                34,
+                105,
+                100,
+                34,
+                58,
+                32,
+                34,
+                114,
+                45,
+                49,
+                34,
+                44,
+                32,
+                34,
+                108,
+                111,
+                99,
+                97,
+                116,
+                105,
+                111,
+                110,
+                34,
+                58,
+                32,
+                34,
+                80,
+                111,
+                114,
+                116,
+                108,
+                97,
+                110,
+                100,
+                32,
+                77,
+                97,
+                105,
+                110,
+                101,
+                34,
+                44,
+                32,
+                34,
+                110,
+                97,
+                109,
+                101,
+                34,
+                58,
+                32,
+                34,
+                65,
+                99,
+                109,
+                101,
+                32,
+                68,
+                101,
+                110,
+                116,
+                97,
+                108,
+                32,
+                67,
+                108,
+                105,
+                110,
+                105,
+                99,
+                34,
+                125
+              ],
+              "subject": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+              "state": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+              "header": null,
+              "location": {
+                "source": null,
+                "byte_start": 0,
+                "byte_end": 177,
+                "line_start": 1,
+                "line_end": 4
+              }
+            }
+          },
+          "checksum": "c2ee37ccdc7bdb4e24935b54752bfd9e496fb2396ff4913eeacccdb6cd2672ac"
+        },
+        {
+          "version": 1,
+          "sequence": 3,
+          "previous": "c2ee37ccdc7bdb4e24935b54752bfd9e496fb2396ff4913eeacccdb6cd2672ac",
+          "record": {
+            "record": "input_end",
+            "fingerprint": {
+              "sources": [
+                {
+                  "source": "-",
+                  "consumed_units": 1,
+                  "blake3": "1ad88d2be7ed886614a1784d322b08fca7d19e9c78c0d6ecab8a46b12c208571"
+                }
+              ]
+            }
+          },
+          "checksum": "d425cdcb4a413aefbbc615282ea4eb5cfb7ba3176ab9c11fb80952bbeab4bc06"
+        },
+        {
+          "version": 1,
+          "sequence": 4,
+          "previous": "d425cdcb4a413aefbbc615282ea4eb5cfb7ba3176ab9c11fb80952bbeab4bc06",
+          "record": {
+            "record": "plan",
+            "indices": [
+              1
+            ],
+            "provenance": {
+              "request": {
+                "state": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+                "model": "clef-flash",
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "question_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "counts": {
+                "state_tokens": 60,
+                "question_tokens": 453,
+                "input_tokens": 513,
+                "exact": true
+              },
+              "provenance": {
+                "operation": "unit"
+              }
+            }
+          },
+          "checksum": "cf92068f9bbd2d5f939d7c914b5a633d3137f4b2cdd53295500411f495301259"
+        },
+        {
+          "version": 1,
+          "sequence": 5,
+          "previous": "cf92068f9bbd2d5f939d7c914b5a633d3137f4b2cdd53295500411f495301259",
+          "record": {
+            "record": "ready",
+            "index": 1,
+            "completed": {
+              "request": {
+                "state": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+                "model": "clef-flash",
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "question_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "answer_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "counts": {
+                "state_tokens": 60,
+                "question_tokens": 453,
+                "input_tokens": 513,
+                "exact": true
+              },
+              "evaluation": {
+                "response": {
+                  "model": "clef-flash",
+                  "answers": {
+                    "same_entity": {
+                      "type": "noul",
+                      "noul": 0.8832
+                    },
+                    "similarity": {
+                      "type": "score",
+                      "score": 1.8396,
+                      "confidence": 0.8724,
+                      "legend": {
+                        "0": "Different business or different location",
+                        "1": "Ambiguous possible match",
+                        "2": "Clear match with equivalent business name and location"
+                      },
+                      "probabilities": {
+                        "0": 0.0328,
+                        "1": 0.0949,
+                        "2": 0.8724
+                      }
+                    },
+                    "name_agrees": {
+                      "type": "noul",
+                      "noul": 0.9329
+                    },
+                    "location_agrees": {
+                      "type": "noul",
+                      "noul": 0.9553
+                    }
+                  },
+                  "usage": {
+                    "input_tokens": 513,
+                    "output_tokens": 0
+                  }
+                },
+                "warning": null,
+                "cached": false
+              },
+              "answer_id": "same_entity",
+              "packed_indices": null,
+              "split_plan": null,
+              "view": null,
+              "focus_plan": null
+            }
+          },
+          "checksum": "37e5674475101cec854ce443f3a856a67f36da29d70a5b5a38af613ea31bcff3"
+        },
+        {
+          "version": 1,
+          "sequence": 6,
+          "previous": "37e5674475101cec854ce443f3a856a67f36da29d70a5b5a38af613ea31bcff3",
+          "record": {
+            "record": "handled",
+            "index": 1,
+            "disposition": "emitted"
+          },
+          "checksum": "bd84a8fd13ec4e130db504ab8ad2499c6b0e59e67623cdb6d65b245f7547fca1"
+        },
+        {
+          "version": 1,
+          "sequence": 7,
+          "previous": "bd84a8fd13ec4e130db504ab8ad2499c6b0e59e67623cdb6d65b245f7547fca1",
+          "record": {
+            "record": "finish",
+            "emitted": 1,
+            "exit_code": 0
+          },
+          "checksum": "6203d782c867ca505e18666135c8d50ccb38f04ea81382159cae712c8dcf2819"
+        }
+      ],
+      "response": {
+        "model": "clef-flash",
+        "answers": {
+          "same_entity": {
+            "type": "noul",
+            "noul": 0.8832
+          },
+          "similarity": {
+            "type": "score",
+            "score": 1.8396,
+            "confidence": 0.8724,
+            "legend": {
+              "0": "Different business or different location",
+              "1": "Ambiguous possible match",
+              "2": "Clear match with equivalent business name and location"
+            },
+            "probabilities": {
+              "0": 0.0328,
+              "1": 0.0949,
+              "2": 0.8724
+            }
+          },
+          "name_agrees": {
+            "type": "noul",
+            "noul": 0.9329
+          },
+          "location_agrees": {
+            "type": "noul",
+            "noul": 0.9553
+          }
+        },
+        "usage": {
+          "input_tokens": 513,
+          "output_tokens": 0
+        }
+      }
+    },
+    {
+      "name": "pair-l-1-r-2",
+      "command": [
+        "/path/to/loupe/target/debug/loupe",
+        "--config",
+        "/tmp/loupe-blocking-probe-ofybrw5_/config.toml",
+        "--profile",
+        "server",
+        "ask",
+        "-f",
+        "/tmp/loupe-blocking-probe-ofybrw5_/pair.json",
+        "--strict",
+        "--no-cache",
+        "--summary",
+        "--deadline",
+        "60s",
+        "--failed",
+        "/tmp/loupe-blocking-probe-ofybrw5_/pair-l-1-r-2.jsonl"
+      ],
+      "blocking": {
+        "right_index": 2,
+        "exact_fields": 0,
+        "intersection": 2,
+        "union": 7,
+        "token_jaccard": 0.2857142857142857,
+        "matching_lsh_bands": 0
+      },
+      "input": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-2\", \"location\": \"Portland Oregon\", \"name\": \"Acme Hardware\"}",
+      "exit": 0,
+      "stdout": "{\"model\":\"clef-flash\",\"answers\":{\"same_entity\":{\"type\":\"noul\",\"noul\":0.0216},\"similarity\":{\"type\":\"score\",\"score\":0.1421,\"confidence\":0.8996,\"legend\":{\"0\":\"Different business or different location\",\"1\":\"Ambiguous possible match\",\"2\":\"Clear match with equivalent business name and location\"},\"probabilities\":{\"0\":0.8996,\"1\":0.0586,\"2\":0.0417}},\"name_agrees\":{\"type\":\"noul\",\"noul\":0.5319},\"location_agrees\":{\"type\":\"noul\",\"noul\":0.0304}},\"usage\":{\"input_tokens\":512,\"output_tokens\":0}}\n",
+      "stderr": "loupe: units=1 attempts=1 http_attempts=1 input_counted=512 input_reported=512 unknown_attempts=0 uncertain=0 cache_hits=0 gpu_passes=unavailable logical_records=1 succeeded_records=1 failed_records=0 cancelled_records=0 output_reported=0 input_reserved=0 cache_hit_rate=0.000000 latency_samples=1 p50_ms=174.063615 p95_ms=174.063615 latency_bounds=upper latency_kind=uncached_submitted_logical cost_usd_estimate=unavailable cost_unknown_output=false unknown_input_counted=0 mode=classify errors=0\n",
+      "summary": {
+        "units": "1",
+        "attempts": "1",
+        "http_attempts": "1",
+        "input_counted": "512",
+        "input_reported": "512",
+        "unknown_attempts": "0",
+        "uncertain": "0",
+        "cache_hits": "0",
+        "gpu_passes": "unavailable",
+        "logical_records": "1",
+        "succeeded_records": "1",
+        "failed_records": "0",
+        "cancelled_records": "0",
+        "output_reported": "0",
+        "input_reserved": "0",
+        "cache_hit_rate": "0.000000",
+        "latency_samples": "1",
+        "p50_ms": "174.063615",
+        "p95_ms": "174.063615",
+        "latency_bounds": "upper",
+        "latency_kind": "uncached_submitted_logical",
+        "cost_usd_estimate": "unavailable",
+        "cost_unknown_output": "false",
+        "unknown_input_counted": "0",
+        "mode": "classify",
+        "errors": "0"
+      },
+      "journal": [
+        {
+          "version": 1,
+          "sequence": 1,
+          "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+          "record": {
+            "record": "begin",
+            "identity": {
+              "version": 1,
+              "command": "Ask",
+              "reverse": false,
+              "strict": true,
+              "cwd": "/tmp/loupe-blocking-probe-ofybrw5_",
+              "document": {
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "questions": [
+                [
+                  "same_entity",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  }
+                ],
+                [
+                  "similarity",
+                  {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  }
+                ],
+                [
+                  "name_agrees",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  }
+                ],
+                [
+                  "location_agrees",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                ]
+              ],
+              "files": [],
+              "reader": {
+                "format": "whole",
+                "keep_blank": false,
+                "records": null,
+                "field": null,
+                "select": [],
+                "with_context": 0
+              },
+              "policy": {
+                "threshold": 0.5,
+                "margin": 0.0,
+                "min_confidence": 0.0,
+                "min_gap": 0.0,
+                "uncertain": "Drop",
+                "capture": null
+              },
+              "endpoint": "http://127.0.0.1:8015/v1/systemone",
+              "model": "clef-flash",
+              "model_identity": null,
+              "encoder": "clef-v1@17f0b0ad64efb65d273590632833508766b2aae6;tokenizer=17f0b0ad64efb65d273590632833508766b2aae6;blake3=16066ad27076349236a282e9351f8bab5aa9b33803f12f7ab9dca401909d7273",
+              "pack": "Unit",
+              "limits": {
+                "max_length": 16384,
+                "max_state_tokens": 16384,
+                "max_questions": 128,
+                "max_options": 512,
+                "max_total_options": 2048,
+                "max_batch": 4
+              },
+              "output": "Plain",
+              "split": null,
+              "truncate": null,
+              "focus": null,
+              "route": null,
+              "errors": {
+                "keep_going": false,
+                "action": "Drop"
+              }
+            }
+          },
+          "checksum": "3c07cfb9855a2f2931f98cac3069c67eb5c3daca3f505c1b84e657243d76585a"
+        },
+        {
+          "version": 1,
+          "sequence": 2,
+          "previous": "3c07cfb9855a2f2931f98cac3069c67eb5c3daca3f505c1b84e657243d76585a",
+          "record": {
+            "record": "admit",
+            "unit": {
+              "index": 1,
+              "text": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-2\", \"location\": \"Portland Oregon\", \"name\": \"Acme Hardware\"}",
+              "raw": [
+                76,
+                69,
+                70,
+                84,
+                32,
+                114,
+                101,
+                99,
+                111,
+                114,
+                100,
+                58,
+                10,
+                123,
+                34,
+                105,
+                100,
+                34,
+                58,
+                32,
+                34,
+                108,
+                45,
+                49,
+                34,
+                44,
+                32,
+                34,
+                108,
+                111,
+                99,
+                97,
+                116,
+                105,
+                111,
+                110,
+                34,
+                58,
+                32,
+                34,
+                80,
+                111,
+                114,
+                116,
+                108,
+                97,
+                110,
+                100,
+                44,
+                32,
+                77,
+                97,
+                105,
+                110,
+                101,
+                34,
+                44,
+                32,
+                34,
+                110,
+                97,
+                109,
+                101,
+                34,
+                58,
+                32,
+                34,
+                65,
+                67,
+                77,
+                69,
+                44,
+                32,
+                68,
+                101,
+                110,
+                116,
+                97,
+                108,
+                32,
+                67,
+                108,
+                105,
+                110,
+                105,
+                99,
+                46,
+                34,
+                125,
+                10,
+                82,
+                73,
+                71,
+                72,
+                84,
+                32,
+                114,
+                101,
+                99,
+                111,
+                114,
+                100,
+                58,
+                10,
+                123,
+                34,
+                105,
+                100,
+                34,
+                58,
+                32,
+                34,
+                114,
+                45,
+                50,
+                34,
+                44,
+                32,
+                34,
+                108,
+                111,
+                99,
+                97,
+                116,
+                105,
+                111,
+                110,
+                34,
+                58,
+                32,
+                34,
+                80,
+                111,
+                114,
+                116,
+                108,
+                97,
+                110,
+                100,
+                32,
+                79,
+                114,
+                101,
+                103,
+                111,
+                110,
+                34,
+                44,
+                32,
+                34,
+                110,
+                97,
+                109,
+                101,
+                34,
+                58,
+                32,
+                34,
+                65,
+                99,
+                109,
+                101,
+                32,
+                72,
+                97,
+                114,
+                100,
+                119,
+                97,
+                114,
+                101,
+                34,
+                125
+              ],
+              "subject": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-2\", \"location\": \"Portland Oregon\", \"name\": \"Acme Hardware\"}",
+              "state": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-2\", \"location\": \"Portland Oregon\", \"name\": \"Acme Hardware\"}",
+              "header": null,
+              "location": {
+                "source": null,
+                "byte_start": 0,
+                "byte_end": 173,
+                "line_start": 1,
+                "line_end": 4
+              }
+            }
+          },
+          "checksum": "4ca923b21945096fa34aa8ae0cb44197e12940a6d6c49cd7e75433ca457f2f15"
+        },
+        {
+          "version": 1,
+          "sequence": 3,
+          "previous": "4ca923b21945096fa34aa8ae0cb44197e12940a6d6c49cd7e75433ca457f2f15",
+          "record": {
+            "record": "input_end",
+            "fingerprint": {
+              "sources": [
+                {
+                  "source": "-",
+                  "consumed_units": 1,
+                  "blake3": "50650d683de303424d89c115ffadcaf394332685ccdd66d300434968dc97155f"
+                }
+              ]
+            }
+          },
+          "checksum": "07de7995fd69e71c68c4790ae0fed5edd8da2e8441df671f741037543620248f"
+        },
+        {
+          "version": 1,
+          "sequence": 4,
+          "previous": "07de7995fd69e71c68c4790ae0fed5edd8da2e8441df671f741037543620248f",
+          "record": {
+            "record": "plan",
+            "indices": [
+              1
+            ],
+            "provenance": {
+              "request": {
+                "state": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-2\", \"location\": \"Portland Oregon\", \"name\": \"Acme Hardware\"}",
+                "model": "clef-flash",
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "question_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "counts": {
+                "state_tokens": 59,
+                "question_tokens": 453,
+                "input_tokens": 512,
+                "exact": true
+              },
+              "provenance": {
+                "operation": "unit"
+              }
+            }
+          },
+          "checksum": "15f85967f877ae38a05c5c7a356a2ec5e0888d6dfa0af910d06b4667add6c0e4"
+        },
+        {
+          "version": 1,
+          "sequence": 5,
+          "previous": "15f85967f877ae38a05c5c7a356a2ec5e0888d6dfa0af910d06b4667add6c0e4",
+          "record": {
+            "record": "ready",
+            "index": 1,
+            "completed": {
+              "request": {
+                "state": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-2\", \"location\": \"Portland Oregon\", \"name\": \"Acme Hardware\"}",
+                "model": "clef-flash",
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "question_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "answer_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "counts": {
+                "state_tokens": 59,
+                "question_tokens": 453,
+                "input_tokens": 512,
+                "exact": true
+              },
+              "evaluation": {
+                "response": {
+                  "model": "clef-flash",
+                  "answers": {
+                    "same_entity": {
+                      "type": "noul",
+                      "noul": 0.0216
+                    },
+                    "similarity": {
+                      "type": "score",
+                      "score": 0.1421,
+                      "confidence": 0.8996,
+                      "legend": {
+                        "0": "Different business or different location",
+                        "1": "Ambiguous possible match",
+                        "2": "Clear match with equivalent business name and location"
+                      },
+                      "probabilities": {
+                        "0": 0.8996,
+                        "1": 0.0586,
+                        "2": 0.0417
+                      }
+                    },
+                    "name_agrees": {
+                      "type": "noul",
+                      "noul": 0.5319
+                    },
+                    "location_agrees": {
+                      "type": "noul",
+                      "noul": 0.0304
+                    }
+                  },
+                  "usage": {
+                    "input_tokens": 512,
+                    "output_tokens": 0
+                  }
+                },
+                "warning": null,
+                "cached": false
+              },
+              "answer_id": "same_entity",
+              "packed_indices": null,
+              "split_plan": null,
+              "view": null,
+              "focus_plan": null
+            }
+          },
+          "checksum": "15ec1efc4c9af14e48fde06e7d1690fb1980884aea1acdad49036a71f8a531c4"
+        },
+        {
+          "version": 1,
+          "sequence": 6,
+          "previous": "15ec1efc4c9af14e48fde06e7d1690fb1980884aea1acdad49036a71f8a531c4",
+          "record": {
+            "record": "handled",
+            "index": 1,
+            "disposition": "emitted"
+          },
+          "checksum": "3402d5adbbbfb25736a29fcf4d44e32aa9da4d3db7aa7d4c98f060687bdf1e2a"
+        },
+        {
+          "version": 1,
+          "sequence": 7,
+          "previous": "3402d5adbbbfb25736a29fcf4d44e32aa9da4d3db7aa7d4c98f060687bdf1e2a",
+          "record": {
+            "record": "finish",
+            "emitted": 1,
+            "exit_code": 0
+          },
+          "checksum": "e52eec1c4805d4b20dafc657b3b38907263a12c4cd2415ffef21840f7938c563"
+        }
+      ],
+      "response": {
+        "model": "clef-flash",
+        "answers": {
+          "same_entity": {
+            "type": "noul",
+            "noul": 0.0216
+          },
+          "similarity": {
+            "type": "score",
+            "score": 0.1421,
+            "confidence": 0.8996,
+            "legend": {
+              "0": "Different business or different location",
+              "1": "Ambiguous possible match",
+              "2": "Clear match with equivalent business name and location"
+            },
+            "probabilities": {
+              "0": 0.8996,
+              "1": 0.0586,
+              "2": 0.0417
+            }
+          },
+          "name_agrees": {
+            "type": "noul",
+            "noul": 0.5319
+          },
+          "location_agrees": {
+            "type": "noul",
+            "noul": 0.0304
+          }
+        },
+        "usage": {
+          "input_tokens": 512,
+          "output_tokens": 0
+        }
+      }
+    },
+    {
+      "name": "pair-l-1-r-3",
+      "command": [
+        "/path/to/loupe/target/debug/loupe",
+        "--config",
+        "/tmp/loupe-blocking-probe-ofybrw5_/config.toml",
+        "--profile",
+        "server",
+        "ask",
+        "-f",
+        "/tmp/loupe-blocking-probe-ofybrw5_/pair.json",
+        "--strict",
+        "--no-cache",
+        "--summary",
+        "--deadline",
+        "60s",
+        "--failed",
+        "/tmp/loupe-blocking-probe-ofybrw5_/pair-l-1-r-3.jsonl"
+      ],
+      "blocking": {
+        "right_index": 3,
+        "exact_fields": 0,
+        "intersection": 1,
+        "union": 8,
+        "token_jaccard": 0.125,
+        "matching_lsh_bands": 0
+      },
+      "input": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+      "exit": 0,
+      "stdout": "{\"model\":\"clef-flash\",\"answers\":{\"same_entity\":{\"type\":\"noul\",\"noul\":0.0117},\"similarity\":{\"type\":\"score\",\"score\":0.0603,\"confidence\":0.952,\"legend\":{\"0\":\"Different business or different location\",\"1\":\"Ambiguous possible match\",\"2\":\"Clear match with equivalent business name and location\"},\"probabilities\":{\"0\":0.952,\"1\":0.0358,\"2\":0.0123}},\"name_agrees\":{\"type\":\"noul\",\"noul\":0.0191},\"location_agrees\":{\"type\":\"noul\",\"noul\":0.0142}},\"usage\":{\"input_tokens\":511,\"output_tokens\":0}}\n",
+      "stderr": "loupe: units=1 attempts=1 http_attempts=1 input_counted=511 input_reported=511 unknown_attempts=0 uncertain=0 cache_hits=0 gpu_passes=unavailable logical_records=1 succeeded_records=1 failed_records=0 cancelled_records=0 output_reported=0 input_reserved=0 cache_hit_rate=0.000000 latency_samples=1 p50_ms=173.015039 p95_ms=173.015039 latency_bounds=upper latency_kind=uncached_submitted_logical cost_usd_estimate=unavailable cost_unknown_output=false unknown_input_counted=0 mode=classify errors=0\n",
+      "summary": {
+        "units": "1",
+        "attempts": "1",
+        "http_attempts": "1",
+        "input_counted": "511",
+        "input_reported": "511",
+        "unknown_attempts": "0",
+        "uncertain": "0",
+        "cache_hits": "0",
+        "gpu_passes": "unavailable",
+        "logical_records": "1",
+        "succeeded_records": "1",
+        "failed_records": "0",
+        "cancelled_records": "0",
+        "output_reported": "0",
+        "input_reserved": "0",
+        "cache_hit_rate": "0.000000",
+        "latency_samples": "1",
+        "p50_ms": "173.015039",
+        "p95_ms": "173.015039",
+        "latency_bounds": "upper",
+        "latency_kind": "uncached_submitted_logical",
+        "cost_usd_estimate": "unavailable",
+        "cost_unknown_output": "false",
+        "unknown_input_counted": "0",
+        "mode": "classify",
+        "errors": "0"
+      },
+      "journal": [
+        {
+          "version": 1,
+          "sequence": 1,
+          "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+          "record": {
+            "record": "begin",
+            "identity": {
+              "version": 1,
+              "command": "Ask",
+              "reverse": false,
+              "strict": true,
+              "cwd": "/tmp/loupe-blocking-probe-ofybrw5_",
+              "document": {
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "questions": [
+                [
+                  "same_entity",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  }
+                ],
+                [
+                  "similarity",
+                  {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  }
+                ],
+                [
+                  "name_agrees",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  }
+                ],
+                [
+                  "location_agrees",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                ]
+              ],
+              "files": [],
+              "reader": {
+                "format": "whole",
+                "keep_blank": false,
+                "records": null,
+                "field": null,
+                "select": [],
+                "with_context": 0
+              },
+              "policy": {
+                "threshold": 0.5,
+                "margin": 0.0,
+                "min_confidence": 0.0,
+                "min_gap": 0.0,
+                "uncertain": "Drop",
+                "capture": null
+              },
+              "endpoint": "http://127.0.0.1:8015/v1/systemone",
+              "model": "clef-flash",
+              "model_identity": null,
+              "encoder": "clef-v1@17f0b0ad64efb65d273590632833508766b2aae6;tokenizer=17f0b0ad64efb65d273590632833508766b2aae6;blake3=16066ad27076349236a282e9351f8bab5aa9b33803f12f7ab9dca401909d7273",
+              "pack": "Unit",
+              "limits": {
+                "max_length": 16384,
+                "max_state_tokens": 16384,
+                "max_questions": 128,
+                "max_options": 512,
+                "max_total_options": 2048,
+                "max_batch": 4
+              },
+              "output": "Plain",
+              "split": null,
+              "truncate": null,
+              "focus": null,
+              "route": null,
+              "errors": {
+                "keep_going": false,
+                "action": "Drop"
+              }
+            }
+          },
+          "checksum": "3c07cfb9855a2f2931f98cac3069c67eb5c3daca3f505c1b84e657243d76585a"
+        },
+        {
+          "version": 1,
+          "sequence": 2,
+          "previous": "3c07cfb9855a2f2931f98cac3069c67eb5c3daca3f505c1b84e657243d76585a",
+          "record": {
+            "record": "admit",
+            "unit": {
+              "index": 1,
+              "text": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+              "raw": [
+                76,
+                69,
+                70,
+                84,
+                32,
+                114,
+                101,
+                99,
+                111,
+                114,
+                100,
+                58,
+                10,
+                123,
+                34,
+                105,
+                100,
+                34,
+                58,
+                32,
+                34,
+                108,
+                45,
+                49,
+                34,
+                44,
+                32,
+                34,
+                108,
+                111,
+                99,
+                97,
+                116,
+                105,
+                111,
+                110,
+                34,
+                58,
+                32,
+                34,
+                80,
+                111,
+                114,
+                116,
+                108,
+                97,
+                110,
+                100,
+                44,
+                32,
+                77,
+                97,
+                105,
+                110,
+                101,
+                34,
+                44,
+                32,
+                34,
+                110,
+                97,
+                109,
+                101,
+                34,
+                58,
+                32,
+                34,
+                65,
+                67,
+                77,
+                69,
+                44,
+                32,
+                68,
+                101,
+                110,
+                116,
+                97,
+                108,
+                32,
+                67,
+                108,
+                105,
+                110,
+                105,
+                99,
+                46,
+                34,
+                125,
+                10,
+                82,
+                73,
+                71,
+                72,
+                84,
+                32,
+                114,
+                101,
+                99,
+                111,
+                114,
+                100,
+                58,
+                10,
+                123,
+                34,
+                105,
+                100,
+                34,
+                58,
+                32,
+                34,
+                114,
+                45,
+                51,
+                34,
+                44,
+                32,
+                34,
+                108,
+                111,
+                99,
+                97,
+                116,
+                105,
+                111,
+                110,
+                34,
+                58,
+                32,
+                34,
+                76,
+                111,
+                110,
+                100,
+                111,
+                110,
+                34,
+                44,
+                32,
+                34,
+                110,
+                97,
+                109,
+                101,
+                34,
+                58,
+                32,
+                34,
+                66,
+                108,
+                117,
+                101,
+                32,
+                83,
+                107,
+                121,
+                32,
+                67,
+                108,
+                105,
+                110,
+                105,
+                99,
+                34,
+                125
+              ],
+              "subject": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+              "state": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+              "header": null,
+              "location": {
+                "source": null,
+                "byte_start": 0,
+                "byte_end": 166,
+                "line_start": 1,
+                "line_end": 4
+              }
+            }
+          },
+          "checksum": "a40d2677ff91baee8b5033c0efde9d3736fd0428aa82a55cffc58e3a24d5f10d"
+        },
+        {
+          "version": 1,
+          "sequence": 3,
+          "previous": "a40d2677ff91baee8b5033c0efde9d3736fd0428aa82a55cffc58e3a24d5f10d",
+          "record": {
+            "record": "input_end",
+            "fingerprint": {
+              "sources": [
+                {
+                  "source": "-",
+                  "consumed_units": 1,
+                  "blake3": "bef778a8a990acaef388d5c7d6a5c14f1c787f12941f22a3e2224c0c14d61e93"
+                }
+              ]
+            }
+          },
+          "checksum": "b52905aa5619eead5d4885049e7c493a4bb4d1df50a53dc3ba0da95076441cc0"
+        },
+        {
+          "version": 1,
+          "sequence": 4,
+          "previous": "b52905aa5619eead5d4885049e7c493a4bb4d1df50a53dc3ba0da95076441cc0",
+          "record": {
+            "record": "plan",
+            "indices": [
+              1
+            ],
+            "provenance": {
+              "request": {
+                "state": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+                "model": "clef-flash",
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "question_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "counts": {
+                "state_tokens": 58,
+                "question_tokens": 453,
+                "input_tokens": 511,
+                "exact": true
+              },
+              "provenance": {
+                "operation": "unit"
+              }
+            }
+          },
+          "checksum": "7201e19e8606a8409953d029bd760f1b25b159e80264c96bb18e522952627863"
+        },
+        {
+          "version": 1,
+          "sequence": 5,
+          "previous": "7201e19e8606a8409953d029bd760f1b25b159e80264c96bb18e522952627863",
+          "record": {
+            "record": "ready",
+            "index": 1,
+            "completed": {
+              "request": {
+                "state": "LEFT record:\n{\"id\": \"l-1\", \"location\": \"Portland, Maine\", \"name\": \"ACME, Dental Clinic.\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+                "model": "clef-flash",
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "question_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "answer_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "counts": {
+                "state_tokens": 58,
+                "question_tokens": 453,
+                "input_tokens": 511,
+                "exact": true
+              },
+              "evaluation": {
+                "response": {
+                  "model": "clef-flash",
+                  "answers": {
+                    "same_entity": {
+                      "type": "noul",
+                      "noul": 0.0117
+                    },
+                    "similarity": {
+                      "type": "score",
+                      "score": 0.0603,
+                      "confidence": 0.952,
+                      "legend": {
+                        "0": "Different business or different location",
+                        "1": "Ambiguous possible match",
+                        "2": "Clear match with equivalent business name and location"
+                      },
+                      "probabilities": {
+                        "0": 0.952,
+                        "1": 0.0358,
+                        "2": 0.0123
+                      }
+                    },
+                    "name_agrees": {
+                      "type": "noul",
+                      "noul": 0.0191
+                    },
+                    "location_agrees": {
+                      "type": "noul",
+                      "noul": 0.0142
+                    }
+                  },
+                  "usage": {
+                    "input_tokens": 511,
+                    "output_tokens": 0
+                  }
+                },
+                "warning": null,
+                "cached": false
+              },
+              "answer_id": "same_entity",
+              "packed_indices": null,
+              "split_plan": null,
+              "view": null,
+              "focus_plan": null
+            }
+          },
+          "checksum": "3455d0463f785f05fa074ddcd3578caf1711d3640d3a2f4de4b70fc9fb1202bd"
+        },
+        {
+          "version": 1,
+          "sequence": 6,
+          "previous": "3455d0463f785f05fa074ddcd3578caf1711d3640d3a2f4de4b70fc9fb1202bd",
+          "record": {
+            "record": "handled",
+            "index": 1,
+            "disposition": "emitted"
+          },
+          "checksum": "fbef39481d964dd08c518d7d3243ced156eaff1d1284b7eb0860fb9c5aa759d6"
+        },
+        {
+          "version": 1,
+          "sequence": 7,
+          "previous": "fbef39481d964dd08c518d7d3243ced156eaff1d1284b7eb0860fb9c5aa759d6",
+          "record": {
+            "record": "finish",
+            "emitted": 1,
+            "exit_code": 0
+          },
+          "checksum": "4bc3fdf7b70b39363f42ea5d031a1dc8b3146ccfc608eb2d9e0a3922e75a9d61"
+        }
+      ],
+      "response": {
+        "model": "clef-flash",
+        "answers": {
+          "same_entity": {
+            "type": "noul",
+            "noul": 0.0117
+          },
+          "similarity": {
+            "type": "score",
+            "score": 0.0603,
+            "confidence": 0.952,
+            "legend": {
+              "0": "Different business or different location",
+              "1": "Ambiguous possible match",
+              "2": "Clear match with equivalent business name and location"
+            },
+            "probabilities": {
+              "0": 0.952,
+              "1": 0.0358,
+              "2": 0.0123
+            }
+          },
+          "name_agrees": {
+            "type": "noul",
+            "noul": 0.0191
+          },
+          "location_agrees": {
+            "type": "noul",
+            "noul": 0.0142
+          }
+        },
+        "usage": {
+          "input_tokens": 511,
+          "output_tokens": 0
+        }
+      }
+    },
+    {
+      "name": "pair-l-3-r-3",
+      "command": [
+        "/path/to/loupe/target/debug/loupe",
+        "--config",
+        "/tmp/loupe-blocking-probe-ofybrw5_/config.toml",
+        "--profile",
+        "server",
+        "ask",
+        "-f",
+        "/tmp/loupe-blocking-probe-ofybrw5_/pair.json",
+        "--strict",
+        "--no-cache",
+        "--summary",
+        "--deadline",
+        "60s",
+        "--failed",
+        "/tmp/loupe-blocking-probe-ofybrw5_/pair-l-3-r-3.jsonl"
+      ],
+      "blocking": {
+        "right_index": 3,
+        "exact_fields": 2,
+        "intersection": 4,
+        "union": 4,
+        "token_jaccard": 1.0,
+        "matching_lsh_bands": 8
+      },
+      "input": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+      "exit": 0,
+      "stdout": "{\"model\":\"clef-flash\",\"answers\":{\"same_entity\":{\"type\":\"noul\",\"noul\":0.7827},\"similarity\":{\"type\":\"score\",\"score\":1.7209,\"confidence\":0.7777,\"legend\":{\"0\":\"Different business or different location\",\"1\":\"Ambiguous possible match\",\"2\":\"Clear match with equivalent business name and location\"},\"probabilities\":{\"0\":0.0568,\"1\":0.1656,\"2\":0.7777}},\"name_agrees\":{\"type\":\"noul\",\"noul\":0.9587},\"location_agrees\":{\"type\":\"noul\",\"noul\":0.8366}},\"usage\":{\"input_tokens\":507,\"output_tokens\":0}}\n",
+      "stderr": "loupe: units=1 attempts=1 http_attempts=1 input_counted=507 input_reported=507 unknown_attempts=0 uncertain=0 cache_hits=0 gpu_passes=unavailable logical_records=1 succeeded_records=1 failed_records=0 cancelled_records=0 output_reported=0 input_reserved=0 cache_hit_rate=0.000000 latency_samples=1 p50_ms=173.015039 p95_ms=173.015039 latency_bounds=upper latency_kind=uncached_submitted_logical cost_usd_estimate=unavailable cost_unknown_output=false unknown_input_counted=0 mode=classify errors=0\n",
+      "summary": {
+        "units": "1",
+        "attempts": "1",
+        "http_attempts": "1",
+        "input_counted": "507",
+        "input_reported": "507",
+        "unknown_attempts": "0",
+        "uncertain": "0",
+        "cache_hits": "0",
+        "gpu_passes": "unavailable",
+        "logical_records": "1",
+        "succeeded_records": "1",
+        "failed_records": "0",
+        "cancelled_records": "0",
+        "output_reported": "0",
+        "input_reserved": "0",
+        "cache_hit_rate": "0.000000",
+        "latency_samples": "1",
+        "p50_ms": "173.015039",
+        "p95_ms": "173.015039",
+        "latency_bounds": "upper",
+        "latency_kind": "uncached_submitted_logical",
+        "cost_usd_estimate": "unavailable",
+        "cost_unknown_output": "false",
+        "unknown_input_counted": "0",
+        "mode": "classify",
+        "errors": "0"
+      },
+      "journal": [
+        {
+          "version": 1,
+          "sequence": 1,
+          "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+          "record": {
+            "record": "begin",
+            "identity": {
+              "version": 1,
+              "command": "Ask",
+              "reverse": false,
+              "strict": true,
+              "cwd": "/tmp/loupe-blocking-probe-ofybrw5_",
+              "document": {
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "questions": [
+                [
+                  "same_entity",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  }
+                ],
+                [
+                  "similarity",
+                  {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  }
+                ],
+                [
+                  "name_agrees",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  }
+                ],
+                [
+                  "location_agrees",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                ]
+              ],
+              "files": [],
+              "reader": {
+                "format": "whole",
+                "keep_blank": false,
+                "records": null,
+                "field": null,
+                "select": [],
+                "with_context": 0
+              },
+              "policy": {
+                "threshold": 0.5,
+                "margin": 0.0,
+                "min_confidence": 0.0,
+                "min_gap": 0.0,
+                "uncertain": "Drop",
+                "capture": null
+              },
+              "endpoint": "http://127.0.0.1:8015/v1/systemone",
+              "model": "clef-flash",
+              "model_identity": null,
+              "encoder": "clef-v1@17f0b0ad64efb65d273590632833508766b2aae6;tokenizer=17f0b0ad64efb65d273590632833508766b2aae6;blake3=16066ad27076349236a282e9351f8bab5aa9b33803f12f7ab9dca401909d7273",
+              "pack": "Unit",
+              "limits": {
+                "max_length": 16384,
+                "max_state_tokens": 16384,
+                "max_questions": 128,
+                "max_options": 512,
+                "max_total_options": 2048,
+                "max_batch": 4
+              },
+              "output": "Plain",
+              "split": null,
+              "truncate": null,
+              "focus": null,
+              "route": null,
+              "errors": {
+                "keep_going": false,
+                "action": "Drop"
+              }
+            }
+          },
+          "checksum": "3c07cfb9855a2f2931f98cac3069c67eb5c3daca3f505c1b84e657243d76585a"
+        },
+        {
+          "version": 1,
+          "sequence": 2,
+          "previous": "3c07cfb9855a2f2931f98cac3069c67eb5c3daca3f505c1b84e657243d76585a",
+          "record": {
+            "record": "admit",
+            "unit": {
+              "index": 1,
+              "text": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+              "raw": [
+                76,
+                69,
+                70,
+                84,
+                32,
+                114,
+                101,
+                99,
+                111,
+                114,
+                100,
+                58,
+                10,
+                123,
+                34,
+                105,
+                100,
+                34,
+                58,
+                32,
+                34,
+                108,
+                45,
+                51,
+                34,
+                44,
+                32,
+                34,
+                108,
+                111,
+                99,
+                97,
+                116,
+                105,
+                111,
+                110,
+                34,
+                58,
+                32,
+                34,
+                76,
+                79,
+                78,
+                68,
+                79,
+                78,
+                34,
+                44,
+                32,
+                34,
+                110,
+                97,
+                109,
+                101,
+                34,
+                58,
+                32,
+                34,
+                66,
+                108,
+                117,
+                101,
+                32,
+                83,
+                107,
+                121,
+                32,
+                67,
+                108,
+                105,
+                110,
+                105,
+                99,
+                34,
+                125,
+                10,
+                82,
+                73,
+                71,
+                72,
+                84,
+                32,
+                114,
+                101,
+                99,
+                111,
+                114,
+                100,
+                58,
+                10,
+                123,
+                34,
+                105,
+                100,
+                34,
+                58,
+                32,
+                34,
+                114,
+                45,
+                51,
+                34,
+                44,
+                32,
+                34,
+                108,
+                111,
+                99,
+                97,
+                116,
+                105,
+                111,
+                110,
+                34,
+                58,
+                32,
+                34,
+                76,
+                111,
+                110,
+                100,
+                111,
+                110,
+                34,
+                44,
+                32,
+                34,
+                110,
+                97,
+                109,
+                101,
+                34,
+                58,
+                32,
+                34,
+                66,
+                108,
+                117,
+                101,
+                32,
+                83,
+                107,
+                121,
+                32,
+                67,
+                108,
+                105,
+                110,
+                105,
+                99,
+                34,
+                125
+              ],
+              "subject": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+              "state": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+              "header": null,
+              "location": {
+                "source": null,
+                "byte_start": 0,
+                "byte_end": 152,
+                "line_start": 1,
+                "line_end": 4
+              }
+            }
+          },
+          "checksum": "ed5f3efc9f9f55fb1566cb81222c1d0add8e680be701397cd54d17d3f005650c"
+        },
+        {
+          "version": 1,
+          "sequence": 3,
+          "previous": "ed5f3efc9f9f55fb1566cb81222c1d0add8e680be701397cd54d17d3f005650c",
+          "record": {
+            "record": "input_end",
+            "fingerprint": {
+              "sources": [
+                {
+                  "source": "-",
+                  "consumed_units": 1,
+                  "blake3": "131436616d18089408df5995a4a01af80d896899d9767cdc227d15c41b07738c"
+                }
+              ]
+            }
+          },
+          "checksum": "63561f22c32bbee0e9dd23ab20cb9e862c9ce2b6857174c54d401b13dfbb645d"
+        },
+        {
+          "version": 1,
+          "sequence": 4,
+          "previous": "63561f22c32bbee0e9dd23ab20cb9e862c9ce2b6857174c54d401b13dfbb645d",
+          "record": {
+            "record": "plan",
+            "indices": [
+              1
+            ],
+            "provenance": {
+              "request": {
+                "state": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+                "model": "clef-flash",
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "question_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "counts": {
+                "state_tokens": 54,
+                "question_tokens": 453,
+                "input_tokens": 507,
+                "exact": true
+              },
+              "provenance": {
+                "operation": "unit"
+              }
+            }
+          },
+          "checksum": "bcc33ea6d76ed38518f64844f5689029474bcd2e2abe55ae1c68273b3cb01511"
+        },
+        {
+          "version": 1,
+          "sequence": 5,
+          "previous": "bcc33ea6d76ed38518f64844f5689029474bcd2e2abe55ae1c68273b3cb01511",
+          "record": {
+            "record": "ready",
+            "index": 1,
+            "completed": {
+              "request": {
+                "state": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-3\", \"location\": \"London\", \"name\": \"Blue Sky Clinic\"}",
+                "model": "clef-flash",
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "question_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "answer_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "counts": {
+                "state_tokens": 54,
+                "question_tokens": 453,
+                "input_tokens": 507,
+                "exact": true
+              },
+              "evaluation": {
+                "response": {
+                  "model": "clef-flash",
+                  "answers": {
+                    "same_entity": {
+                      "type": "noul",
+                      "noul": 0.7827
+                    },
+                    "similarity": {
+                      "type": "score",
+                      "score": 1.7209,
+                      "confidence": 0.7777,
+                      "legend": {
+                        "0": "Different business or different location",
+                        "1": "Ambiguous possible match",
+                        "2": "Clear match with equivalent business name and location"
+                      },
+                      "probabilities": {
+                        "0": 0.0568,
+                        "1": 0.1656,
+                        "2": 0.7777
+                      }
+                    },
+                    "name_agrees": {
+                      "type": "noul",
+                      "noul": 0.9587
+                    },
+                    "location_agrees": {
+                      "type": "noul",
+                      "noul": 0.8366
+                    }
+                  },
+                  "usage": {
+                    "input_tokens": 507,
+                    "output_tokens": 0
+                  }
+                },
+                "warning": null,
+                "cached": false
+              },
+              "answer_id": "same_entity",
+              "packed_indices": null,
+              "split_plan": null,
+              "view": null,
+              "focus_plan": null
+            }
+          },
+          "checksum": "6b85ef0d41b7c1ac16482a8ef95b6a6749b8b348ea85817db9d3966c7ab52e12"
+        },
+        {
+          "version": 1,
+          "sequence": 6,
+          "previous": "6b85ef0d41b7c1ac16482a8ef95b6a6749b8b348ea85817db9d3966c7ab52e12",
+          "record": {
+            "record": "handled",
+            "index": 1,
+            "disposition": "emitted"
+          },
+          "checksum": "81c507f0a4fae7ad1edd9d99bce5bb65cf1c5cdd4cd6c666f4101ee5df3410e6"
+        },
+        {
+          "version": 1,
+          "sequence": 7,
+          "previous": "81c507f0a4fae7ad1edd9d99bce5bb65cf1c5cdd4cd6c666f4101ee5df3410e6",
+          "record": {
+            "record": "finish",
+            "emitted": 1,
+            "exit_code": 0
+          },
+          "checksum": "486ad7fafb5f85044f15b0d139c738df16d1c9d63e891f1443d6747755224d47"
+        }
+      ],
+      "response": {
+        "model": "clef-flash",
+        "answers": {
+          "same_entity": {
+            "type": "noul",
+            "noul": 0.7827
+          },
+          "similarity": {
+            "type": "score",
+            "score": 1.7209,
+            "confidence": 0.7777,
+            "legend": {
+              "0": "Different business or different location",
+              "1": "Ambiguous possible match",
+              "2": "Clear match with equivalent business name and location"
+            },
+            "probabilities": {
+              "0": 0.0568,
+              "1": 0.1656,
+              "2": 0.7777
+            }
+          },
+          "name_agrees": {
+            "type": "noul",
+            "noul": 0.9587
+          },
+          "location_agrees": {
+            "type": "noul",
+            "noul": 0.8366
+          }
+        },
+        "usage": {
+          "input_tokens": 507,
+          "output_tokens": 0
+        }
+      }
+    },
+    {
+      "name": "pair-l-3-r-1",
+      "command": [
+        "/path/to/loupe/target/debug/loupe",
+        "--config",
+        "/tmp/loupe-blocking-probe-ofybrw5_/config.toml",
+        "--profile",
+        "server",
+        "ask",
+        "-f",
+        "/tmp/loupe-blocking-probe-ofybrw5_/pair.json",
+        "--strict",
+        "--no-cache",
+        "--summary",
+        "--deadline",
+        "60s",
+        "--failed",
+        "/tmp/loupe-blocking-probe-ofybrw5_/pair-l-3-r-1.jsonl"
+      ],
+      "blocking": {
+        "right_index": 1,
+        "exact_fields": 0,
+        "intersection": 1,
+        "union": 8,
+        "token_jaccard": 0.125,
+        "matching_lsh_bands": 0
+      },
+      "input": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+      "exit": 0,
+      "stdout": "{\"model\":\"clef-flash\",\"answers\":{\"same_entity\":{\"type\":\"noul\",\"noul\":0.0108},\"similarity\":{\"type\":\"score\",\"score\":0.0528,\"confidence\":0.9599,\"legend\":{\"0\":\"Different business or different location\",\"1\":\"Ambiguous possible match\",\"2\":\"Clear match with equivalent business name and location\"},\"probabilities\":{\"0\":0.9599,\"1\":0.0274,\"2\":0.0127}},\"name_agrees\":{\"type\":\"noul\",\"noul\":0.0206},\"location_agrees\":{\"type\":\"noul\",\"noul\":0.0143}},\"usage\":{\"input_tokens\":509,\"output_tokens\":0}}\n",
+      "stderr": "loupe: units=1 attempts=1 http_attempts=1 input_counted=509 input_reported=509 unknown_attempts=0 uncertain=0 cache_hits=0 gpu_passes=unavailable logical_records=1 succeeded_records=1 failed_records=0 cancelled_records=0 output_reported=0 input_reserved=0 cache_hit_rate=0.000000 latency_samples=1 p50_ms=171.966463 p95_ms=171.966463 latency_bounds=upper latency_kind=uncached_submitted_logical cost_usd_estimate=unavailable cost_unknown_output=false unknown_input_counted=0 mode=classify errors=0\n",
+      "summary": {
+        "units": "1",
+        "attempts": "1",
+        "http_attempts": "1",
+        "input_counted": "509",
+        "input_reported": "509",
+        "unknown_attempts": "0",
+        "uncertain": "0",
+        "cache_hits": "0",
+        "gpu_passes": "unavailable",
+        "logical_records": "1",
+        "succeeded_records": "1",
+        "failed_records": "0",
+        "cancelled_records": "0",
+        "output_reported": "0",
+        "input_reserved": "0",
+        "cache_hit_rate": "0.000000",
+        "latency_samples": "1",
+        "p50_ms": "171.966463",
+        "p95_ms": "171.966463",
+        "latency_bounds": "upper",
+        "latency_kind": "uncached_submitted_logical",
+        "cost_usd_estimate": "unavailable",
+        "cost_unknown_output": "false",
+        "unknown_input_counted": "0",
+        "mode": "classify",
+        "errors": "0"
+      },
+      "journal": [
+        {
+          "version": 1,
+          "sequence": 1,
+          "previous": "0000000000000000000000000000000000000000000000000000000000000000",
+          "record": {
+            "record": "begin",
+            "identity": {
+              "version": 1,
+              "command": "Ask",
+              "reverse": false,
+              "strict": true,
+              "cwd": "/tmp/loupe-blocking-probe-ofybrw5_",
+              "document": {
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "questions": [
+                [
+                  "same_entity",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  }
+                ],
+                [
+                  "similarity",
+                  {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  }
+                ],
+                [
+                  "name_agrees",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  }
+                ],
+                [
+                  "location_agrees",
+                  {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                ]
+              ],
+              "files": [],
+              "reader": {
+                "format": "whole",
+                "keep_blank": false,
+                "records": null,
+                "field": null,
+                "select": [],
+                "with_context": 0
+              },
+              "policy": {
+                "threshold": 0.5,
+                "margin": 0.0,
+                "min_confidence": 0.0,
+                "min_gap": 0.0,
+                "uncertain": "Drop",
+                "capture": null
+              },
+              "endpoint": "http://127.0.0.1:8015/v1/systemone",
+              "model": "clef-flash",
+              "model_identity": null,
+              "encoder": "clef-v1@17f0b0ad64efb65d273590632833508766b2aae6;tokenizer=17f0b0ad64efb65d273590632833508766b2aae6;blake3=16066ad27076349236a282e9351f8bab5aa9b33803f12f7ab9dca401909d7273",
+              "pack": "Unit",
+              "limits": {
+                "max_length": 16384,
+                "max_state_tokens": 16384,
+                "max_questions": 128,
+                "max_options": 512,
+                "max_total_options": 2048,
+                "max_batch": 4
+              },
+              "output": "Plain",
+              "split": null,
+              "truncate": null,
+              "focus": null,
+              "route": null,
+              "errors": {
+                "keep_going": false,
+                "action": "Drop"
+              }
+            }
+          },
+          "checksum": "3c07cfb9855a2f2931f98cac3069c67eb5c3daca3f505c1b84e657243d76585a"
+        },
+        {
+          "version": 1,
+          "sequence": 2,
+          "previous": "3c07cfb9855a2f2931f98cac3069c67eb5c3daca3f505c1b84e657243d76585a",
+          "record": {
+            "record": "admit",
+            "unit": {
+              "index": 1,
+              "text": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+              "raw": [
+                76,
+                69,
+                70,
+                84,
+                32,
+                114,
+                101,
+                99,
+                111,
+                114,
+                100,
+                58,
+                10,
+                123,
+                34,
+                105,
+                100,
+                34,
+                58,
+                32,
+                34,
+                108,
+                45,
+                51,
+                34,
+                44,
+                32,
+                34,
+                108,
+                111,
+                99,
+                97,
+                116,
+                105,
+                111,
+                110,
+                34,
+                58,
+                32,
+                34,
+                76,
+                79,
+                78,
+                68,
+                79,
+                78,
+                34,
+                44,
+                32,
+                34,
+                110,
+                97,
+                109,
+                101,
+                34,
+                58,
+                32,
+                34,
+                66,
+                108,
+                117,
+                101,
+                32,
+                83,
+                107,
+                121,
+                32,
+                67,
+                108,
+                105,
+                110,
+                105,
+                99,
+                34,
+                125,
+                10,
+                82,
+                73,
+                71,
+                72,
+                84,
+                32,
+                114,
+                101,
+                99,
+                111,
+                114,
+                100,
+                58,
+                10,
+                123,
+                34,
+                105,
+                100,
+                34,
+                58,
+                32,
+                34,
+                114,
+                45,
+                49,
+                34,
+                44,
+                32,
+                34,
+                108,
+                111,
+                99,
+                97,
+                116,
+                105,
+                111,
+                110,
+                34,
+                58,
+                32,
+                34,
+                80,
+                111,
+                114,
+                116,
+                108,
+                97,
+                110,
+                100,
+                32,
+                77,
+                97,
+                105,
+                110,
+                101,
+                34,
+                44,
+                32,
+                34,
+                110,
+                97,
+                109,
+                101,
+                34,
+                58,
+                32,
+                34,
+                65,
+                99,
+                109,
+                101,
+                32,
+                68,
+                101,
+                110,
+                116,
+                97,
+                108,
+                32,
+                67,
+                108,
+                105,
+                110,
+                105,
+                99,
+                34,
+                125
+              ],
+              "subject": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+              "state": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+              "header": null,
+              "location": {
+                "source": null,
+                "byte_start": 0,
+                "byte_end": 163,
+                "line_start": 1,
+                "line_end": 4
+              }
+            }
+          },
+          "checksum": "249dd0704ac392fa8324edaac6ec9e5f3da45e4f4856d0445ade823122177728"
+        },
+        {
+          "version": 1,
+          "sequence": 3,
+          "previous": "249dd0704ac392fa8324edaac6ec9e5f3da45e4f4856d0445ade823122177728",
+          "record": {
+            "record": "input_end",
+            "fingerprint": {
+              "sources": [
+                {
+                  "source": "-",
+                  "consumed_units": 1,
+                  "blake3": "2d0a25d0a8bd6235fe37128f33b5255fc8244144e52185cd5fe0b39625b7559e"
+                }
+              ]
+            }
+          },
+          "checksum": "a4f11d9944e67d09fcede0138b5e2d53530cb32ae2f6ddcbb454aacaa40c7019"
+        },
+        {
+          "version": 1,
+          "sequence": 4,
+          "previous": "a4f11d9944e67d09fcede0138b5e2d53530cb32ae2f6ddcbb454aacaa40c7019",
+          "record": {
+            "record": "plan",
+            "indices": [
+              1
+            ],
+            "provenance": {
+              "request": {
+                "state": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+                "model": "clef-flash",
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "question_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "counts": {
+                "state_tokens": 56,
+                "question_tokens": 453,
+                "input_tokens": 509,
+                "exact": true
+              },
+              "provenance": {
+                "operation": "unit"
+              }
+            }
+          },
+          "checksum": "17e9ecc8ea162bd00a53b1c435a1b3d6e45a1852512c4257ce13ce4a26bccefa"
+        },
+        {
+          "version": 1,
+          "sequence": 5,
+          "previous": "17e9ecc8ea162bd00a53b1c435a1b3d6e45a1852512c4257ce13ce4a26bccefa",
+          "record": {
+            "record": "ready",
+            "index": 1,
+            "completed": {
+              "request": {
+                "state": "LEFT record:\n{\"id\": \"l-3\", \"location\": \"LONDON\", \"name\": \"Blue Sky Clinic\"}\nRIGHT record:\n{\"id\": \"r-1\", \"location\": \"Portland Maine\", \"name\": \"Acme Dental Clinic\"}",
+                "model": "clef-flash",
+                "questions": {
+                  "same_entity": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+                  },
+                  "similarity": {
+                    "type": "score",
+                    "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+                    "criteria": [
+                      "Different business or different location",
+                      "Ambiguous possible match",
+                      "Clear match with equivalent business name and location"
+                    ]
+                  },
+                  "name_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+                  },
+                  "location_agrees": {
+                    "type": "noul",
+                    "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+                  }
+                }
+              },
+              "question_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "answer_order": [
+                "same_entity",
+                "similarity",
+                "name_agrees",
+                "location_agrees"
+              ],
+              "counts": {
+                "state_tokens": 56,
+                "question_tokens": 453,
+                "input_tokens": 509,
+                "exact": true
+              },
+              "evaluation": {
+                "response": {
+                  "model": "clef-flash",
+                  "answers": {
+                    "same_entity": {
+                      "type": "noul",
+                      "noul": 0.0108
+                    },
+                    "similarity": {
+                      "type": "score",
+                      "score": 0.0528,
+                      "confidence": 0.9599,
+                      "legend": {
+                        "0": "Different business or different location",
+                        "1": "Ambiguous possible match",
+                        "2": "Clear match with equivalent business name and location"
+                      },
+                      "probabilities": {
+                        "0": 0.9599,
+                        "1": 0.0274,
+                        "2": 0.0127
+                      }
+                    },
+                    "name_agrees": {
+                      "type": "noul",
+                      "noul": 0.0206
+                    },
+                    "location_agrees": {
+                      "type": "noul",
+                      "noul": 0.0143
+                    }
+                  },
+                  "usage": {
+                    "input_tokens": 509,
+                    "output_tokens": 0
+                  }
+                },
+                "warning": null,
+                "cached": false
+              },
+              "answer_id": "same_entity",
+              "packed_indices": null,
+              "split_plan": null,
+              "view": null,
+              "focus_plan": null
+            }
+          },
+          "checksum": "2f87db395e02f55bc9617a1927700f52f52835fa7907c43399926ecedc1da2ad"
+        },
+        {
+          "version": 1,
+          "sequence": 6,
+          "previous": "2f87db395e02f55bc9617a1927700f52f52835fa7907c43399926ecedc1da2ad",
+          "record": {
+            "record": "handled",
+            "index": 1,
+            "disposition": "emitted"
+          },
+          "checksum": "618ccc6b065e114922f1f6a17acd0504d6eb5ac741d50f69da6fc3222d9cfdf5"
+        },
+        {
+          "version": 1,
+          "sequence": 7,
+          "previous": "618ccc6b065e114922f1f6a17acd0504d6eb5ac741d50f69da6fc3222d9cfdf5",
+          "record": {
+            "record": "finish",
+            "emitted": 1,
+            "exit_code": 0
+          },
+          "checksum": "e475265801d12aa47d3869dac2c39bad6ba56eeedff519a41eab6d36feb3bc7b"
+        }
+      ],
+      "response": {
+        "model": "clef-flash",
+        "answers": {
+          "same_entity": {
+            "type": "noul",
+            "noul": 0.0108
+          },
+          "similarity": {
+            "type": "score",
+            "score": 0.0528,
+            "confidence": 0.9599,
+            "legend": {
+              "0": "Different business or different location",
+              "1": "Ambiguous possible match",
+              "2": "Clear match with equivalent business name and location"
+            },
+            "probabilities": {
+              "0": 0.9599,
+              "1": 0.0274,
+              "2": 0.0127
+            }
+          },
+          "name_agrees": {
+            "type": "noul",
+            "noul": 0.0206
+          },
+          "location_agrees": {
+            "type": "noul",
+            "noul": 0.0143
+          }
+        },
+        "usage": {
+          "input_tokens": 509,
+          "output_tokens": 0
+        }
+      }
+    }
+  ],
+  "complete": true,
+  "proof_boundary": "Actual local candidate blocking and built-CLI server ask requests over retained synthetic pairs. Full raw requests/responses/journals and exact per-attempt accounting are retained. Join inference/cardinality execution is still separate work; these functional probes do not establish held-out blocking recall or pair quality. No fresh full identity/cache, native packaging or activation claim.",
+  "question_source": {
+    "questions": {
+      "same_entity": {
+        "type": "noul",
+        "instructions": "Do the LEFT and RIGHT records identify the same real-world business at the same location? Shared words alone are insufficient."
+      },
+      "similarity": {
+        "type": "score",
+        "instructions": "How strong is the evidence that LEFT and RIGHT identify the same business at the same location?",
+        "criteria": [
+          "Different business or different location",
+          "Ambiguous possible match",
+          "Clear match with equivalent business name and location"
+        ]
+      },
+      "name_agrees": {
+        "type": "noul",
+        "instructions": "Do the LEFT and RIGHT business names describe the same business, allowing case and punctuation differences?"
+      },
+      "location_agrees": {
+        "type": "noul",
+        "instructions": "Do the LEFT and RIGHT locations describe the same city and state or country?"
+      }
+    }
+  },
+  "totals": {
+    "attempts": 5,
+    "http_attempts": 5,
+    "input_counted": 2552,
+    "input_reported": 2552,
+    "unknown_input_counted": 0,
+    "cache_hits": 0
+  }
+}

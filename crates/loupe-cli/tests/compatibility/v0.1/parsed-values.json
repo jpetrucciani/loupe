@@ -1,0 +1,3641 @@
+[
+  {
+    "name": "mcp",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe mcp",
+        "values": {
+          "deadline": [
+            "30s"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "review",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe review",
+        "values": {
+          "file": [
+            "queue.jsonl"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "is",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe is",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "keep",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "drop",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe drop",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "tag",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe tag",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "criteria": [
+            "a,b"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "route",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe route",
+        "values": {
+          "preset": [
+            "severity"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "out": [
+            "out"
+          ],
+          "route_truncate": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "rate",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe rate",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "criteria": [
+            "low,high"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "sort",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe sort",
+        "values": {
+          "preset": [
+            "sentiment"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "reverse": [
+            "true"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "count",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe count",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "true"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "ask",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe ask",
+        "values": {
+          "question_file": [
+            "schema.json"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "featurize",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe featurize",
+        "values": {
+          "preset": [
+            "features"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "output_format": [
+            "parquet"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "explain",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe explain",
+        "values": {
+          "preset": [
+            "factors"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "join",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe join",
+        "values": {
+          "ensemble": [
+            "false"
+          ],
+          "left": [
+            "-"
+          ],
+          "right": [
+            "right.jsonl"
+          ],
+          "on": [
+            "name"
+          ],
+          "max_candidates": [
+            "20"
+          ],
+          "blocking": [
+            "hybrid"
+          ],
+          "input_format": [
+            "jsonl"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "cardinality": [
+            "1:1"
+          ],
+          "unmatched": [
+            "both"
+          ],
+          "json": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "dedupe",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe dedupe",
+        "values": {
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "keep": [
+            "longest"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "on",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe on",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "when": [
+            "yes",
+            "no"
+          ],
+          "exec": [
+            "true"
+          ],
+          "append": [
+            "no.log"
+          ],
+          "exec_timeout": [
+            "30s"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ],
+    "actions": [
+      {
+        "when": "yes",
+        "target": {
+          "kind": "exec",
+          "value": "true"
+        }
+      },
+      {
+        "when": "no",
+        "target": {
+          "kind": "append",
+          "value": "no.log"
+        }
+      }
+    ]
+  },
+  {
+    "name": "hook-install",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe hook",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe hook install",
+        "values": {
+          "hooks": [
+            "pre-commit",
+            "commit-msg"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "hook-run",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe hook",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe hook run",
+        "values": {
+          "kind": [
+            "commit-msg"
+          ],
+          "message": [
+            "message.txt"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "eval",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe eval",
+        "values": {
+          "ensemble": [
+            "false"
+          ],
+          "suite": [
+            "real-failure"
+          ],
+          "suites_dir": [
+            "evals/suites"
+          ],
+          "init_splits": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "allow_unverified": [
+            "false"
+          ],
+          "warmup": [
+            "1"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split_text": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "calibrate",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe calibrate",
+        "values": {
+          "ensemble": [
+            "false"
+          ],
+          "suite": [
+            "real-failure"
+          ],
+          "suites_dir": [
+            "evals/suites"
+          ],
+          "init_splits": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "allow_unverified": [
+            "false"
+          ],
+          "warmup": [
+            "1"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split_text": [
+            "false"
+          ],
+          "target": [
+            "precision=0.9"
+          ],
+          "min_support": [
+            "1"
+          ],
+          "write": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "find",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe find",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "take": [
+            "1"
+          ],
+          "max_rounds": [
+            "64"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "pick",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe pick",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "take": [
+            "3"
+          ],
+          "max_rounds": [
+            "64"
+          ],
+          "independent": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "extract",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe extract",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "take": [
+            "1"
+          ],
+          "max_rounds": [
+            "64"
+          ],
+          "candidates": [
+            "money"
+          ],
+          "normalize": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "tokens",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe tokens",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "doctor",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe doctor",
+        "values": {
+          "prefetch": [
+            "false"
+          ],
+          "json": [
+            "true"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "models",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe models",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "presets-list",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets list",
+        "values": {
+          "json": [
+            "true"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "presets-show",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets show",
+        "values": {
+          "name": [
+            "real-failure"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "presets-new",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets new",
+        "values": {
+          "name": [
+            "example"
+          ],
+          "type": [
+            "choice"
+          ],
+          "project": [
+            "true"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "presets-edit",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets edit",
+        "values": {
+          "name": [
+            "example"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "presets-trust",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets trust",
+        "values": {
+          "file": [
+            "rubric.toml"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "presets-lint",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe presets lint",
+        "values": {
+          "live": [
+            "false"
+          ],
+          "json": [
+            "true"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "cache-stats",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe cache",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe cache stats",
+        "values": {
+          "json": [
+            "true"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "cache-prune",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe cache",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe cache prune",
+        "values": {
+          "older_than": [
+            "10d"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "cache-clear",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe cache",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe cache clear",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "completions",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe completions",
+        "values": {
+          "shell": [
+            "zsh"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "man",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe man",
+        "values": {
+          "command": [
+            "presets",
+            "trust"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "global-after-command",
+    "quiet": false,
+    "verbosity": 2,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "url": [
+            "http://127.0.0.1:8015"
+          ],
+          "concurrency": [
+            "4"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "2"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "url": [
+            "http://127.0.0.1:8015"
+          ],
+          "concurrency": [
+            "4"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "2"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "global-before-command",
+    "quiet": true,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "profile": [
+            "server"
+          ],
+          "quiet": [
+            "true"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "profile": [
+            "server"
+          ],
+          "quiet": [
+            "true"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "review-bare",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "review": [
+            "interactive"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "review-defer",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "review": [
+            "defer"
+          ],
+          "review_queue": [
+            "q.jsonl"
+          ],
+          "audit_rate": [
+            "2%"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "input-null",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "input_format": [
+            "null"
+          ],
+          "output_format": [
+            "json"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "input-tsv",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "input_format": [
+            "tsv"
+          ],
+          "output_format": [
+            "tsv"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "stdin-after-question-file",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe ask",
+        "values": {
+          "operands": [
+            "-"
+          ],
+          "question_file": [
+            "q.json"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "explicit-splitting",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "true"
+          ],
+          "combine": [
+            "noisy-or"
+          ],
+          "max_chunks": [
+            "64"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "packing-window",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "pack": [
+            "window:8"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "packing-numeric-accepted",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "pack": [
+            "8"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "independent-default-rounds",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe pick",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "take": [
+            "1"
+          ],
+          "max_rounds": [
+            "64"
+          ],
+          "independent": [
+            "true"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "normalize-date",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe extract",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "take": [
+            "1"
+          ],
+          "max_rounds": [
+            "64"
+          ],
+          "candidates": [
+            "date"
+          ],
+          "normalize": [
+            "true"
+          ],
+          "now": [
+            "2026-10-06T00:00:00Z"
+          ],
+          "tz": [
+            "UTC"
+          ],
+          "date_order": [
+            "dmy"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "normalize-money",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe extract",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "take": [
+            "1"
+          ],
+          "max_rounds": [
+            "64"
+          ],
+          "candidates": [
+            "money"
+          ],
+          "normalize": [
+            "true"
+          ],
+          "currency": [
+            "USD"
+          ],
+          "decimal_separator": [
+            "dot"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "fallback-one-external-winner",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe pick",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "on_uncertain": [
+            "fallback"
+          ],
+          "fallback": [
+            "cat"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "take": [
+            "3"
+          ],
+          "max_rounds": [
+            "64"
+          ],
+          "independent": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "keep-failed-units",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "operands": [
+            "question"
+          ],
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "true"
+          ],
+          "on_error": [
+            "keep"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "ensemble",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe keep",
+        "values": {
+          "preset": [
+            "example"
+          ],
+          "ensemble": [
+            "true"
+          ],
+          "min_agreement": [
+            "0.75"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "join-cardinality",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe join",
+        "values": {
+          "ensemble": [
+            "false"
+          ],
+          "left": [
+            "-"
+          ],
+          "right": [
+            "r.jsonl"
+          ],
+          "on": [
+            "name"
+          ],
+          "max_candidates": [
+            "20"
+          ],
+          "blocking": [
+            "hybrid"
+          ],
+          "input_format": [
+            "jsonl"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "cardinality": [
+            "n:m"
+          ],
+          "json": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "streaming-time-window",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe dedupe",
+        "values": {
+          "ensemble": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "keep_blank": [
+            "false"
+          ],
+          "why": [
+            "false"
+          ],
+          "files_mode": [
+            "false"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "summary": [
+            "false"
+          ],
+          "keep_going": [
+            "false"
+          ],
+          "keep": [
+            "first"
+          ],
+          "window_time": [
+            "10m"
+          ],
+          "index_capacity": [
+            "128"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "eval-view-grid",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe eval",
+        "values": {
+          "ensemble": [
+            "false"
+          ],
+          "suite": [
+            "example"
+          ],
+          "suites_dir": [
+            "evals/suites"
+          ],
+          "partition": [
+            "calibrate"
+          ],
+          "init_splits": [
+            "false"
+          ],
+          "sweep_pack": [
+            "unit",
+            "window:4"
+          ],
+          "json": [
+            "false"
+          ],
+          "allow_unverified": [
+            "false"
+          ],
+          "warmup": [
+            "1"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split_text": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "calibration-percentage",
+    "quiet": false,
+    "verbosity": 0,
+    "levels": [
+      {
+        "path": "loupe",
+        "values": {
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      },
+      {
+        "path": "loupe calibrate",
+        "values": {
+          "ensemble": [
+            "false"
+          ],
+          "suite": [
+            "example"
+          ],
+          "suites_dir": [
+            "evals/suites"
+          ],
+          "init_splits": [
+            "false"
+          ],
+          "json": [
+            "false"
+          ],
+          "allow_unverified": [
+            "false"
+          ],
+          "warmup": [
+            "1"
+          ],
+          "dry_run": [
+            "false"
+          ],
+          "no_cache": [
+            "false"
+          ],
+          "refresh": [
+            "false"
+          ],
+          "strict": [
+            "false"
+          ],
+          "split_text": [
+            "false"
+          ],
+          "max_uncertain": [
+            "20%"
+          ],
+          "min_support": [
+            "1"
+          ],
+          "write": [
+            "false"
+          ],
+          "quiet": [
+            "false"
+          ],
+          "verbose": [
+            "0"
+          ]
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,77 @@
+{
+  "source": {
+    "path": "crates/loupe-core/testdata/captured-response.json",
+    "blake3": "dfe5c1e0fadd5e2acd7997a8d0037424974a5afb487d6035b172f0b3d366b630",
+    "observed_at": "2026-10-05T13:03:11.360417+00:00",
+    "endpoint": "http://127.0.0.1:8015/v1/systemone",
+    "note": "Genuine joint request and response; endpoint metadata has been redacted. Counts recomputed by the native offline encoder; no response values invented."
+  },
+  "request": {
+    "model": "clef-flash",
+    "state": "Checkout is down. Customers cannot place orders.",
+    "questions": {
+      "outage": {
+        "type": "noul",
+        "instructions": "Is the checkout service experiencing an outage?"
+      },
+      "severity": {
+        "type": "choice",
+        "criteria": {
+          "page": "Service unavailable; act now",
+          "noise": "Expected informational event"
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "criteria": [
+          "Can wait",
+          "Needs attention soon",
+          "Act immediately"
+        ]
+      }
+    }
+  },
+  "response": {
+    "model": "clef-flash",
+    "answers": {
+      "outage": {
+        "type": "noul",
+        "noul": 0.9654
+      },
+      "severity": {
+        "type": "choice",
+        "choice": "page",
+        "confidence": 0.988,
+        "probabilities": {
+          "page": 0.988,
+          "noise": 0.012
+        }
+      },
+      "urgency": {
+        "type": "score",
+        "score": 1.8972,
+        "confidence": 0.9226,
+        "legend": {
+          "0": "Can wait",
+          "1": "Needs attention soon",
+          "2": "Act immediately"
+        },
+        "probabilities": {
+          "0": 0.0254,
+          "1": 0.052,
+          "2": 0.9226
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 298,
+      "output_tokens": 0
+    }
+  },
+  "counts": {
+    "state_tokens": 9,
+    "question_tokens": 289,
+    "input_tokens": 298,
+    "exact": true
+  }
+}

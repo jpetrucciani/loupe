@@ -1,0 +1,9 @@
+[
+  {"name":"is-yes","arguments":["is","$QUERY","--threshold","0","--margin","0","--strict","--no-cache"],"exit":0},
+  {"name":"is-no","arguments":["is","$QUERY","--threshold","1","--margin","0","--strict","--no-cache"],"exit":1},
+  {"name":"is-uncertain","arguments":["is","$QUERY","--margin","1","--strict","--no-cache"],"exit":2},
+  {"name":"explicit-uncertainty-failure","arguments":["keep","$QUERY","--margin","1","--on-uncertain","fail","--strict","--no-cache"],"exit":3},
+  {"name":"uncertain-not-emitted","arguments":["keep","$QUERY","--margin","1","--strict","--no-cache"],"exit":1},
+  {"name":"unit-json","arguments":["keep","$QUERY","--threshold","0","--margin","0","--json","--strict","--no-cache"],"exit":0,"fields":["index","unit","answer","model","cached"]},
+  {"name":"count-json","arguments":["count","$QUERY","--json","--strict","--no-cache"],"exit":0,"fields":["counts"]}
+]

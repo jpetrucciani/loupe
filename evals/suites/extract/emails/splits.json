@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "suite_id": "extract/emails/seed",
+  "suite_revision": "selection-v1",
+  "dataset_revision": "fictional-selection-v1",
+  "cases_blake3": "ba051a57fd456ca2fc714e501fbfb861604e23c615f069c61d427521a61aa3ac",
+  "config": {
+    "seed": 42,
+    "calibrate_percent": 50
+  },
+  "calibrate": [
+    "emails-absent-b",
+    "emails-positive-b"
+  ],
+  "test": [
+    "emails-absent-a",
+    "emails-positive-a"
+  ],
+  "captured": []
+}

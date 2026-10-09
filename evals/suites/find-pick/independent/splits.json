@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "suite_id": "find-pick/independent/seed",
+  "suite_revision": "selection-v1",
+  "dataset_revision": "fictional-selection-v1",
+  "cases_blake3": "b2ee8f2307a0c638a6c715a9225c21adabd916dbba9fdb3081d79102a07a42cc",
+  "config": {
+    "seed": 42,
+    "calibrate_percent": 50
+  },
+  "calibrate": [
+    "independent-absent-a",
+    "independent-positive-b"
+  ],
+  "test": [
+    "independent-absent-b",
+    "independent-positive-a"
+  ],
+  "captured": []
+}

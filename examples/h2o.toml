@@ -1,0 +1,16 @@
+[profile.server-h2o]
+backend = "jev"
+base_url = "http://127.0.0.1:8015"
+path = "/v1/systemone"
+model = "h2oai/h2o-lightning-4b"
+encoder = "estimate"
+concurrency = 2
+# Conservative estimated ceiling; the shim reports a 40960-token model limit.
+max_length = 32000
+max_state_tokens = 32000
+max_options = 255
+max_batch = 1
+
+[mcp]
+presets = ["real-failure", "severity"]
+allow_paths = []

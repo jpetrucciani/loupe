@@ -1,0 +1,11 @@
+{
+  "revision": "17f0b0ad64efb65d273590632833508766b2aae6",
+  "reference_sha256": "0e304cf7c6500e8bb59bef7e2afd2c6373f82596dfb3b57d1aa93c175e2dc3a3",
+  "tokenizer_sha256": "06b9509352d2af50381ab2247e083b80d32d5c0aba91c272ca9ff729b6a0e523",
+  "tokenizers": "0.23.2",
+  "license": "Apache-2.0",
+  "source": "https://huggingface.co/Cloudflare/clef-flash/blob/17f0b0ad64efb65d273590632833508766b2aae6/joint_schema_model.py",
+  "records": 100,
+  "numeric_cases": 1000,
+  "model_weights_loaded": false
+}

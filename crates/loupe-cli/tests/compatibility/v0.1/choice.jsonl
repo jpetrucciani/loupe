@@ -1,0 +1,1 @@
+{"index":1,"unit":"Checkout is down. Customers cannot place orders.","answer":{"type":"choice","choice":"page","confidence":0.988,"probabilities":{"page":0.988,"noise":0.012}},"model":"clef-flash","cached":false}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "suite_id": "out-of-scope/selection/seed",
+  "suite_revision": "selection-v1",
+  "dataset_revision": "fictional-selection-v1",
+  "cases_blake3": "4b260fab003eaf08c7029eaae0aff538cbc7416fc2389d2ef0f9b4ac049e1b98",
+  "config": {
+    "seed": 42,
+    "calibrate_percent": 50
+  },
+  "calibrate": [
+    "in-scope-0",
+    "oos-3",
+    "oos-4",
+    "oos-5"
+  ],
+  "test": [
+    "in-scope-1",
+    "oos-0",
+    "oos-1",
+    "oos-2"
+  ],
+  "captured": []
+}

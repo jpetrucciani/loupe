@@ -1,0 +1,25 @@
+schema_version = 1
+id = "find-pick/pick/seed"
+revision = "selection-v1"
+preset = "selection-query"
+task = "retrieval"
+splits = "splits.json"
+metrics = ["accuracy", "f1", "coverage", "latency-p50-ms", "latency-p95-ms", "units-per-second"]
+
+[cases]
+path = "cases.jsonl"
+revision = "fictional-selection-v1"
+blake3 = "e7af2b760d1a53821295594b5e6f2a92942ed02011b1c82de820ae3d053c7e90"
+
+[split]
+seed = 42
+calibrate_percent = 50
+
+[provenance]
+source = "Handwritten fictional selection examples; human verification pending"
+license = "MIT"
+
+[selection]
+mode = "pick"
+take = 2
+max_rounds = 64

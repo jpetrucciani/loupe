@@ -1,0 +1,126 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      prerelease: ${{ steps.tag.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+      - name: Verify release tag
+        id: tag
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python3 - <<'PY'
+          import os, tomllib
+          from pathlib import Path
+          version = tomllib.loads(Path('Cargo.toml').read_text())['workspace']['package']['version']
+          if os.environ['RELEASE_TAG'] != 'v' + version:
+              raise SystemExit('Release tag must match Cargo.toml version')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'prerelease={str("-" in version.split("+", 1)[0]).lower()}\n')
+          PY
+      - name: Run offline checks
+        run: nix shell -f default.nix scripts.loupe-check --command loupe-check -- --workspace --all-features -- --test-threads=1
+      - name: Prepare draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          PRERELEASE: ${{ steps.tag.outputs.prerelease }}
+        run: |
+          if gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > release-state; then
+            if [[ "$(cat release-state)" != true ]]; then
+              echo "Refusing to replace assets of a published release" >&2
+              exit 1
+            fi
+          else
+            args=(--verify-tag --draft --title "Loupe $RELEASE_TAG" --generate-notes --notes-file docs/release-notes.md)
+            if [[ "$PRERELEASE" == true ]]; then
+              args+=(--prerelease)
+            fi
+            gh release create "$RELEASE_TAG" "${args[@]}"
+          fi
+
+  build:
+    needs: prepare
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-musl
+          - os: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-musl
+          - os: macos-15
+            target: aarch64-apple-darwin
+    env:
+      RELEASE_TARGET: ${{ matrix.target }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+      - name: Build and package native binary
+        run: nix shell -f default.nix scripts.loupe-dist --command loupe-dist
+      - name: Smoke-test packaged binary
+        run: |
+          cd dist
+          if [[ "$RELEASE_TARGET" == *-apple-darwin ]]; then
+            shasum -a 256 -c ./*.sha256
+          else
+            sha256sum -c ./*.sha256
+          fi
+          mkdir unpacked
+          tar -xzf "loupe-"*"-$RELEASE_TARGET.tar.gz" -C unpacked
+          binaries=(unpacked/loupe-*/bin/loupe)
+          test "${#binaries[@]}" -eq 1
+          "${binaries[0]}" --version
+          "${binaries[0]}" --help
+          "${binaries[0]}" ask --help
+      - name: Attach archives to draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: gh release upload "$RELEASE_TAG" dist/*.tar.gz dist/*.sha256 --clobber
+
+  release:
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Publish completed release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          PRERELEASE: ${{ needs.prepare.outputs.prerelease }}
+        run: |
+          args=(--verify-tag --draft=false --prerelease="$PRERELEASE")
+          if [[ "$PRERELEASE" == true ]]; then
+            args+=(--latest=false)
+          else
+            args+=(--latest)
+          fi
+          gh release edit "$RELEASE_TAG" "${args[@]}"

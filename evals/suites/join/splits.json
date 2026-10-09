@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "suite_id": "join/seed",
+  "suite_revision": "catalog-v1",
+  "dataset_revision": "fictional-catalogs-v1",
+  "cases_blake3": "3cc120ac10a1163d26edd71de5c5a3af1c3a24ba6a743a71e0e20eac7eee8189",
+  "config": {
+    "seed": 42,
+    "calibrate_percent": 50
+  },
+  "calibrate": [
+    "abbreviation-b",
+    "cap-b",
+    "duplicate-a",
+    "negative-a"
+  ],
+  "test": [
+    "abbreviation-a",
+    "cap-a",
+    "duplicate-b",
+    "negative-b"
+  ],
+  "captured": []
+}

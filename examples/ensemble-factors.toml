@@ -1,0 +1,36 @@
+name = "ensemble-factors"
+version = 1
+type = "noul"
+instructions = "Does this describe an unresolved service incident?"
+
+[[factors]]
+id = "customer_impact"
+weight = 3
+instructions = "Does this explicitly say customers cannot use the service?"
+
+[[factors]]
+id = "scope"
+type = "score"
+weight = 2
+instructions = "How broad is the reported service impact?"
+criteria = ["No impact", "Some customers", "All customers"]
+
+[[factors]]
+id = "recovered"
+weight = 1
+invert = true
+instructions = "Does this explicitly say the service recovered or a retry succeeded?"
+
+[[variants]]
+id = "direct"
+instructions = "Is the reported incident still unresolved?"
+
+[[variants]]
+id = "direct"
+field = "factor:customer_impact"
+instructions = "Are customers currently unable to use the service?"
+
+[[variants]]
+id = "direct"
+field = "factor:scope"
+instructions = "Rate the reported breadth of customer impact."

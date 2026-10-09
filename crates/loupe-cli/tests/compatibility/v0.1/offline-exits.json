@@ -1,0 +1,15 @@
+[
+  {"name":"help-before-invalid-config","arguments":["--config","malformed.toml","--help"],"input":"","exit":0,"stdout_empty":false},
+  {"name":"version-before-invalid-config","arguments":["--config","malformed.toml","--version"],"input":"","exit":0,"stdout_empty":false},
+  {"name":"invalid-argument-before-config","arguments":["--config","malformed.toml","keep","question","--jsonl"],"input":"","exit":64,"stdout_empty":true},
+  {"name":"invalid-config","arguments":["--config","malformed.toml","keep","question","--dry-run"],"input":"","exit":78,"stdout_empty":true},
+  {"name":"missing-input-file","arguments":["keep","question","--dry-run","missing-input.txt"],"input":"","exit":74,"stdout_empty":true},
+  {"name":"invalid-input-before-inference","arguments":["keep","question","--dry-run"],"input":"invalid-utf8","exit":65,"stdout_empty":true},
+  {"name":"inapplicable-policy-before-inference","arguments":["keep","question","--min-gap","0.1","--dry-run"],"input":"unit","exit":64,"stdout_empty":true},
+  {"name":"inapplicable-format-before-inference","arguments":["keep","question","-O","csv","--dry-run"],"input":"unit","exit":64,"stdout_empty":true},
+  {"name":"empty-filter","arguments":["keep","question"],"input":"","exit":1,"stdout_empty":true},
+  {"name":"budget-before-inference","arguments":["keep","question","--budget","0","--no-cache"],"input":"unit","exit":4,"stdout_empty":true},
+  {"name":"refused-endpoint-deadline","arguments":["keep","question","--deadline","100ms","--no-cache"],"input":"unit","exit":69,"stdout_empty":true},
+  {"name":"man-before-config","arguments":["--config","malformed.toml","man","pick"],"input":"","exit":0,"stdout_empty":false},
+  {"name":"bad-man-path","arguments":["man","pick","missing"],"input":"","exit":64,"stdout_empty":true}
+]

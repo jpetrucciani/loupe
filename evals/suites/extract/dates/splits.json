@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "suite_id": "extract/dates/seed",
+  "suite_revision": "selection-v1",
+  "dataset_revision": "fictional-selection-v1",
+  "cases_blake3": "40bae37040955c12ea02b3800d0e9e3820634564ddf5f75e9117089679b957ff",
+  "config": {
+    "seed": 42,
+    "calibrate_percent": 50
+  },
+  "calibrate": [
+    "dates-absent-b",
+    "dates-positive-b"
+  ],
+  "test": [
+    "dates-absent-a",
+    "dates-positive-a"
+  ],
+  "captured": []
+}

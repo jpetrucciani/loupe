@@ -1,0 +1,22 @@
+name: Offline checks
+permissions:
+  contents: read
+on:
+  push:
+  pull_request:
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+      - name: Format, full-feature Clippy and non-inference contracts
+        run: nix shell -f default.nix --command loupe-check -- --workspace --all-features -- --test-threads=1
+      - name: Regenerate pinned encoder fixtures
+        run: |
+          nix shell -f default.nix --command loupe-golden -- --out /tmp/loupe-golden
+          diff -r evals/golden/clef-v1 /tmp/loupe-golden
+      - name: Native package and installed grammar artifacts
+        run: nix-build default.nix -A package --no-out-link

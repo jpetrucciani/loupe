@@ -1,0 +1,6 @@
+type = "noul"
+instructions = "Do left.record and right.record describe the same event or entity? Shared words alone are insufficient."
+
+[[variants]]
+id = "direct"
+instructions = "Would retaining both records duplicate one event or entity, given their details?"

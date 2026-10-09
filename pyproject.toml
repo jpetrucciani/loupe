@@ -1,0 +1,8 @@
+[project]
+name = "loupe-reference-tools"
+version = "0.0.1"
+requires-python = ">=3.12"
+dependencies = ["tokenizers==0.23.2"]
+
+[tool.uv]
+package = false

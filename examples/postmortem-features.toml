@@ -1,0 +1,16 @@
+[questions.config_change]
+type = "noul"
+instructions = "Does this incident explicitly involve a configuration change?"
+
+[questions.customer_impact]
+type = "noul"
+instructions = "Did customers lose the ability to check out or pay?"
+
+[questions.urgency]
+type = "score"
+instructions = "How urgent is the current incident?"
+criteria = ["Routine or recovered", "Degraded service", "An unresolved customer-facing outage"]
+
+[[signals]]
+id = "recovered"
+instructions = "Does the incident explicitly say service has recovered?"

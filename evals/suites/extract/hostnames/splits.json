@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "suite_id": "extract/hostnames/seed",
+  "suite_revision": "selection-v1",
+  "dataset_revision": "fictional-selection-v1",
+  "cases_blake3": "4d6f76d14a8337608b0210a786dfe30bc45fbc7c713cd67b9648f421415a8fa6",
+  "config": {
+    "seed": 42,
+    "calibrate_percent": 50
+  },
+  "calibrate": [
+    "hostnames-absent-b",
+    "hostnames-positive-a"
+  ],
+  "test": [
+    "hostnames-absent-a",
+    "hostnames-positive-b"
+  ],
+  "captured": []
+}

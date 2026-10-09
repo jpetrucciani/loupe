@@ -1,0 +1,25 @@
+{
+  "state": "Checkout is down. Customers cannot place orders.",
+  "model": "clef-flash",
+  "questions": {
+    "outage": {
+      "type": "noul",
+      "instructions": "Is the checkout service experiencing an outage?"
+    },
+    "severity": {
+      "type": "choice",
+      "criteria": {
+        "page": "Service unavailable; act now",
+        "noise": "Expected informational event"
+      }
+    },
+    "urgency": {
+      "type": "score",
+      "criteria": [
+        "Can wait",
+        "Needs attention soon",
+        "Act immediately"
+      ]
+    }
+  }
+}
