@@ -81,7 +81,7 @@ jobs:
           persist-credentials: false
       - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
       - name: Build and package native binary
-        run: nix shell -f default.nix scripts.loupe-dist --command loupe-dist
+        run: nix-shell default.nix -A distShell --run loupe-dist
       - name: Smoke-test packaged binary
         run: |
           cd dist

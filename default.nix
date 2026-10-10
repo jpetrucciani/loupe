@@ -179,6 +179,10 @@ let
       '';
     };
   };
+  distShell = pkgs.mkShell {
+    name = "loupe-dist-shell";
+    packages = [ scripts.loupe-dist ];
+  };
   paths = pkgs.lib.flatten [ (builtins.attrValues tools) ];
   env = pkgs.buildEnv {
     inherit name paths; buildInputs = paths;
@@ -187,4 +191,4 @@ in
 (env.overrideAttrs (old: {
   inherit name;
   env = (old.env or { }) // envVars;
-})) // { inherit scripts package cargoArtifacts tokenizer referenceSource pythonEnv; }
+})) // { inherit scripts package cargoArtifacts tokenizer referenceSource pythonEnv distShell; }
