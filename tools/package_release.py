@@ -6,10 +6,13 @@ import argparse
 import gzip
 import hashlib
 import io
+import posixpath
+import re
 import subprocess
 import tarfile
 import tomllib
 from pathlib import Path
+from urllib.parse import urlsplit, urlunsplit
 
 PUBLIC_DOCS = (
     "baselines.md",
@@ -80,6 +83,45 @@ TARGETS = (
 )
 
 
+def archive_markdown(
+    content: bytes,
+    source: str,
+    destination: str,
+    packaged: set[str],
+    root: Path,
+    repository: str,
+    revision: str,
+) -> bytes:
+    def rewrite(match: re.Match[str]) -> str:
+        url = urlsplit(match[1])
+        if url.scheme or url.netloc or not url.path:
+            return match[0]
+        path = posixpath.normpath(posixpath.join(posixpath.dirname(source), url.path))
+        if path in packaged:
+            target = posixpath.relpath(path, posixpath.dirname(destination) or ".")
+        else:
+            kind = "tree" if (root / path).is_dir() else "blob"
+            target = f"{repository}/{kind}/{revision}/{path}"
+        return "](" + urlunsplit(("", "", target, url.query, url.fragment)) + ")"
+
+    lines: list[str] = []
+    fence: str | None = None
+    for line in content.decode().splitlines(keepends=True):
+        stripped = line.lstrip()
+        if stripped.startswith(("```", "~~~")):
+            marker = stripped[:3]
+            if fence is None:
+                fence = marker
+            elif fence == marker:
+                fence = None
+            lines.append(line)
+        else:
+            lines.append(
+                re.sub(r"\]\(([^\s)]+)\)", rewrite, line) if fence is None else line
+            )
+    return "".join(lines).encode()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--binary", required=True, type=Path)
@@ -118,9 +160,8 @@ def main() -> None:
             if not dependency.startswith(("/usr/lib/", "/System/Library/")):
                 raise SystemExit(f"Non-system macOS library dependency: {dependency}")
     root = Path(__file__).resolve().parents[1]
-    version = tomllib.loads((root / "Cargo.toml").read_text())["workspace"]["package"][
-        "version"
-    ]
+    metadata = tomllib.loads((root / "Cargo.toml").read_text())["workspace"]["package"]
+    version = metadata["version"]
     observed = subprocess.run(
         [str(binary), "--version"],
         capture_output=True,
@@ -146,6 +187,9 @@ def main() -> None:
         files[f"examples/{name}"] = (root / "examples" / name).read_bytes()
     for name in PUBLIC_DOCS:
         files[f"docs/{name}"] = (root / "docs" / name).read_bytes()
+    reference = "crates/loupe-cli/tests/compatibility/v0.1"
+    for name in ["flags.md", "grammar.json"]:
+        files[f"{reference}/{name}"] = (root / reference / name).read_bytes()
     for shell in ["bash", "fish", "zsh"]:
         files[f"completions/loupe.{shell}"] = subprocess.run(
             [str(binary), "completions", shell],
@@ -156,6 +200,21 @@ def main() -> None:
     files["man/loupe.1"] = subprocess.run(
         [str(binary), "man"], capture_output=True, check=True, timeout=30
     ).stdout
+    packaged = set(files)
+    for destination, content in files.items():
+        if destination.endswith(".md"):
+            source = {"INSTALL.md": "docs/install.md", "mcp.md": "docs/mcp.md"}.get(
+                destination, destination
+            )
+            files[destination] = archive_markdown(
+                content,
+                source,
+                destination,
+                packaged,
+                root,
+                metadata["repository"],
+                f"v{version}",
+            )
     args.out.mkdir(parents=True, exist_ok=True)
     archive = args.out / f"{prefix}.tar.gz"
     with (

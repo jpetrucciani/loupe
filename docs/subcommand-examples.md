@@ -319,7 +319,7 @@ loupe presets trust billing-defect
 Create/edit writes a project preset; edit launches your editor. Inspect the
 instructions and permissions before trusting it. Editing a trusted preset changes
 its content hash and revokes the grant. Add `--live` to lint after trust to run
-its declared examples against your endpoint. See [preset trust](mcp-access.md).
+its declared examples against your endpoint. See [preset trust](cli-reference.md#preset-trust).
 
 ## `cache`: inspect or remove saved responses
 

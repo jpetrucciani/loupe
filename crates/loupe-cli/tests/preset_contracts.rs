@@ -47,6 +47,50 @@ fn success(output: &Output) {
 }
 
 #[test]
+fn preset_list_aligns_columns_and_displays_readable_origins() {
+    let dir = tempfile::tempdir().unwrap();
+    let root = dir.path();
+    let name = "a-project-preset-longer-than-any-builtin";
+    success(&run(root, &["presets", "new", name, "--project"], b"", &[]));
+    let listed = run(root, &["presets", "list"], b"", &[]);
+    success(&listed);
+    let text = String::from_utf8(listed.stdout).unwrap();
+    let mut lines = text.lines();
+    let header = lines.next().unwrap();
+    assert_eq!(
+        header.split_whitespace().collect::<Vec<_>>(),
+        ["NAME", "TYPE", "VERSION", "TRUST", "ORIGIN"]
+    );
+    let type_column = header.find("TYPE").unwrap();
+    let version_column = header.find("VERSION").unwrap();
+    let trust_column = header.find("TRUST").unwrap();
+    let origin_column = header.find("ORIGIN").unwrap();
+    for line in lines {
+        assert!(line.find("  ").unwrap() + 2 <= type_column);
+        assert!(matches!(
+            line[type_column..version_column].trim(),
+            "noul" | "choice" | "score"
+        ));
+        assert_eq!(line[version_column..trust_column].trim(), "1");
+        if line.starts_with(name) {
+            assert_eq!(line[trust_column..origin_column].trim(), "untrusted");
+            assert_eq!(
+                &line[origin_column..],
+                format!(
+                    "project: {}",
+                    root.join(".loupe/presets")
+                        .join(format!("{name}.toml"))
+                        .display()
+                )
+            );
+        } else {
+            assert_eq!(line[trust_column..origin_column].trim(), "trusted");
+            assert_eq!(&line[origin_column..], "builtin");
+        }
+    }
+}
+
+#[test]
 fn new_show_list_lint_trust_and_edit_preserve_actual_content_grants() {
     let dir = tempfile::tempdir().unwrap();
     let root = dir.path();

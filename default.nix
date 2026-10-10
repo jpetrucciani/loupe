@@ -151,9 +151,10 @@ let
         set -euo pipefail
         export LOUPE_TEST_TOKENIZER=${tokenizer}
         export LOUPE_TOKENIZER=${tokenizer}
-        cargo fmt --check
-        cargo clippy --all --benches --tests --examples --all-features
-        cargo test "$@"
+        cargo fmt --all --check
+        cargo clippy --locked --all --benches --tests --examples --all-features
+        python -m unittest tools.test_package_release
+        cargo test --locked "$@"
       '';
     };
     loupe-golden = pkgs.pog {

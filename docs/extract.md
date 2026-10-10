@@ -25,7 +25,7 @@ Semver removes a leading `v`, preserving prerelease/build metadata. Other kinds 
 
 | Kind | Candidate forms |
 | --- | --- |
-| `dates` | ISO dashed dates; RFC 3339 timestamps; ISO local date/time; slash dates with a four-digit year; English month/day and day/month forms with optional ordinal/day punctuation/year; today/yesterday/tomorrow and adjacent-day phrases; next/last/this weekday; `in N days|weeks|months|years` and `N … ago`. |
+| `dates` | ISO dashed dates; RFC 3339 timestamps; ISO local date/time; slash dates with a four-digit year; English month/day and day/month forms with optional ordinal/day punctuation/year; today/yesterday/tomorrow and adjacent-day phrases; next/last/this weekday; `in N days\|weeks\|months\|years` and `N … ago`. |
 | `money` | Currency symbols `$ € £ ¥ ₹ ₩ ₽ ₿` or uppercase three-letter code-shaped markers before/after an amount; signs, parentheses, decimal/group separators, apostrophe/NBSP grouping, scientific notation, `k` and spelled thousand/million/billion/trillion magnitudes. |
 | `semver` | Three-component SemVer, optional lowercase `v`, prerelease and build metadata. Core numbers and numeric prerelease identifiers reject leading zeros. |
 | `emails` | ASCII dot-atom local parts, quoted local parts and dotted ASCII domains or IP literals. Address detection does not establish deliverability. |

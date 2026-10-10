@@ -26,27 +26,49 @@ pub async fn execute(command: &Presets, store: &Store, profile: &Profile) -> Res
             if *as_json {
                 write_json(&mut output, &presets)?;
             } else {
-                for preset in presets {
-                    writeln!(
-                        output,
-                        "{}\t{}\t{}\t{}\t{}",
+                let mut rows =
+                    vec![["NAME", "TYPE", "VERSION", "TRUST", "ORIGIN"].map(str::to_owned)];
+                rows.extend(presets.into_iter().map(|preset| {
+                    [
                         preset.name,
                         preset
                             .document
                             .get("type")
                             .and_then(Value::as_str)
-                            .unwrap_or("invalid"),
+                            .unwrap_or("invalid")
+                            .to_owned(),
                         preset
                             .document
                             .get("version")
                             .and_then(Value::as_u64)
-                            .unwrap_or(1),
+                            .unwrap_or(1)
+                            .to_string(),
                         if preset.trusted {
                             "trusted"
                         } else {
                             "untrusted"
+                        }
+                        .to_owned(),
+                        match preset.origin {
+                            Origin::Builtin => "builtin".to_owned(),
+                            Origin::Project(path) => format!("project: {}", path.display()),
+                            Origin::Xdg(path) => format!("user: {}", path.display()),
+                            Origin::External(path) => format!("external: {}", path.display()),
+                            Origin::Explicit(path) => format!("file: {}", path.display()),
                         },
-                        serde_json::to_string(&preset.origin).map_err(json_error)?
+                    ]
+                }));
+                let [name_width, type_width, version_width, trust_width]: [usize; 4] =
+                    std::array::from_fn(|column| {
+                        rows.iter()
+                            .map(|row| row[column].chars().count())
+                            .max()
+                            .unwrap_or(0)
+                    });
+                for [name, kind, version, trust, origin] in rows {
+                    writeln!(
+                        output,
+                        "{name:<name_width$}  {kind:<type_width$}  {version:<version_width$}  {trust:<trust_width$}  {origin}"
                     )
                     .map_err(|error| Error::io("writing preset list", error))?;
                 }

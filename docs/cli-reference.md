@@ -5,7 +5,7 @@ shell completion installation.
 
 The binary's grammar is the source of truth for option names, aliases, defaults and allowed enum values. `loupe --help` lists commands; `loupe COMMAND --help` lists their arguments. `loupe man` emits one complete roff manual containing every command and nested command. `loupe man pick` and `loupe man presets trust` emit individual pages. These commands work offline without configuration, credentials or a tokenizer. The CLI and JSON contracts remain versioned development interfaces until the 1.0 freeze.
 
-The [complete flag reference](../crates/loupe-cli/tests/compatibility/v0.1/flags.md) is generated from every declared command, including nested commands. Its [grammar snapshot](../crates/loupe-cli/tests/compatibility/v0.1/grammar.json) records option names, aliases, defaults, value arity, enum values, environment variable names, groups and conflicts. [Compatibility checks](compatibility.md) pin parsed defaults, exit precedence, shared output bytes and the actual MCP tool schemas. Current environment values never enter these generated artifacts.
+The [complete flag reference](../crates/loupe-cli/tests/compatibility/v0.1/flags.md) is generated from every declared command, including nested commands. Its [grammar snapshot](../crates/loupe-cli/tests/compatibility/v0.1/grammar.json) records option names, aliases, defaults, value arity, enum values, environment variable names, groups and conflicts. Both references are included in release archives for offline use. Links to source code and other development artifacts open the matching release tag on GitHub. [Compatibility checks](compatibility.md) pin parsed defaults, exit precedence, shared output bytes and the actual MCP tool schemas. Current environment values never enter these generated artifacts.
 
 ```sh
 target/debug/loupe man > loupe.1
@@ -27,7 +27,26 @@ Shared options appear in multiple command help pages. A syntactically accepted o
 | Rubrics and measurements | `presets`, `cache`, `eval`, `calibrate` | Trusted named rubrics, raw-response cache administration, fixed partitions, reports and identity-pinned calibration writes. |
 | Integrations and documentation | `mcp`, `completions`, `man` | Read-only MCP stdio, shell grammar artifacts and complete manuals. |
 
-Global `--config`, `--profile`, `--url`, `--path`, `-m/--model`, `-j/--concurrency`, `-q/--quiet` and repeatable `-v/--verbose` select trusted runtime settings. `-q` conflicts with verbosity. Question sources are a positional question, `-p/--preset`, or `-f/--question-file`. With a preset/question file, positional operands are input files. Without file operands, commands read stdin; `-` explicitly selects stdin where supported.
+Global `--config`, `--profile`, `--url`, `--path`, `--api-format`, `-m/--model`, `-j/--concurrency`, `-q/--quiet` and repeatable `-v/--verbose` select trusted runtime settings. `-q` conflicts with verbosity. Question sources are a positional question, `-p/--preset`, or `-f/--question-file`. With a preset/question file, positional operands are input files. Without file operands, commands read stdin; `-` explicitly selects stdin where supported.
+
+## Preset trust
+
+Built-in presets and presets in your XDG user directory are trusted. Project
+presets and presets discovered through external search paths require a grant for
+their inspected content. An explicit `-f FILE` outside the project's `.loupe`
+directory is treated as your trusted choice of input.
+`loupe presets trust NAME` grants one resolved preset; `-f FILE` grants an explicit
+TOML/JSON file. Omitting both grants every resolved project preset. Inspect the
+instructions and any template permissions before granting trust. Editing content
+changes its hash and revokes the existing grant.
+
+`presets new NAME` creates a user preset; add `--project` to create it under
+`PROJECT/.loupe/presets`. `presets edit NAME` uses `VISUAL` or `EDITOR`, and copies a
+built-in to the user directory before editing. `presets lint` checks schemas and
+templates locally; `--live` additionally evaluates declared examples against your
+configured API. MCP preset allowlists remain separate from these trust grants.
+
+## Formats and shared flags
 
 Input formats use `-I/--input-format`; output uses `-O/--output-format`. `--json` means `-O json`. Plain filters preserve original delimiters, CSV/TSV headers and unterminated final units. Annotated/numeric commands have their own display rules. TSV escapes backslash, tab, CR and LF. JSON unit output is JSONL. Only `featurize` supports output CSV and optional Parquet. `ask` and `count` produce single objects.
 

@@ -21,17 +21,17 @@ Commands:
   sort         Stable ascending score order, requiring finite input
   count        Histogram of choice labels or yes/no/uncertain decisions
   ask          Evaluate all questions in a TOML/JSON file against one state
-  featurize    Evaluate joint Noul/Score features per row, as CSV or JSONL
+  featurize    Emit joint Boolean/Score features as CSV, JSONL or Parquet
   explain      Decompose a decision into an auditable weighted Noul/Score factor index
   join         Stream semantic matches against a finite indexed right-side table
-  dedupe       Cluster duplicate pairs after finite input, keeping a representative
+  dedupe       Keep representatives of finite duplicate clusters or a bounded stream
   on           Run declared actions on streaming Noul or Choice decisions
   hook         Install or run trusted, budgeted Git pre-commit / commit-msg checks
   eval         Evaluate pinned labeled cases and measure uncached pipeline latency
   calibrate    Fit empirical precision/coverage policy on fixed calibration cases
   find         Locate original lines answering a query, with presence and uncertainty gates
   pick         Rank candidate lines by Choice marginals or separate relevance Scores
-  extract      Select source-backed date, money, version, address, host or ticker spans
+  extract      Select original date, money, version, email, hostname or ticker spans
   tokens       Plan requests and count tokens, with no inference
   doctor       Inspect endpoint health, limits and tokenizer readiness
   models       List models, or report an unsupported endpoint
@@ -42,40 +42,51 @@ Commands:
   help         Print this message or the help of the given subcommand(s)
 
 Options:
-      --config <CONFIG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
 
   -V, --version
           Print version
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -87,45 +98,56 @@ Serve read-only classification and selection tools over MCP stdio
 Usage: loupe mcp [OPTIONS]
 
 Options:
-      --config <CONFIG>
-          
-
       --deadline <DEADLINE>
           Overall deadline per inference tool call
-          
+
           [default: 30s]
 
       --budget <BUDGET>
           Exact input tokens per tool call, charging every retry
 
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -138,43 +160,54 @@ Usage: loupe review [OPTIONS] <FILE>
 
 Arguments:
   <FILE>
-          
+          Deferred JSONL review queue to open offline
 
 Options:
-      --config <CONFIG>
-          
-
       --labels-dir <LABELS_DIR>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
+          Write captured labels under DIR (default: PROJECT/.loupe/labels)
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -190,64 +223,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -256,6 +260,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -265,52 +271,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -319,13 +331,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -334,17 +346,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -361,7 +373,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -375,6 +387,46 @@ Options:
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -390,64 +442,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -456,6 +479,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -465,52 +490,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -519,13 +550,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -534,17 +565,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -561,7 +592,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -575,6 +606,46 @@ Options:
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -590,64 +661,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -656,6 +698,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -665,52 +709,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -719,13 +769,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -734,17 +784,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -761,7 +811,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -775,6 +825,46 @@ Options:
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -790,64 +880,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -856,6 +917,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -865,52 +928,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -919,13 +988,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -934,17 +1003,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -961,7 +1030,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -975,6 +1044,46 @@ Options:
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -990,64 +1099,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -1056,6 +1136,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -1065,52 +1147,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -1119,13 +1207,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -1134,17 +1222,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -1161,7 +1249,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -1185,6 +1273,46 @@ Options:
   -h, --help
           Print help
 
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
+
 ```
 
 ## `loupe rate`
@@ -1199,64 +1327,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -1265,6 +1364,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -1274,52 +1375,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -1328,13 +1435,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -1343,17 +1450,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -1370,7 +1477,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -1384,6 +1491,46 @@ Options:
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -1399,64 +1546,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -1465,6 +1583,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -1474,52 +1594,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -1528,13 +1654,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -1543,17 +1669,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -1570,7 +1696,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -1583,10 +1709,50 @@ Options:
           Retain the head/tail, or remove the middle while retaining both ends
 
   -r, --reverse
-          
+          Sort highest scores first instead of ascending
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -1602,64 +1768,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -1668,6 +1805,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -1677,52 +1816,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -1731,13 +1876,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -1746,17 +1891,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -1773,7 +1918,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -1787,6 +1932,46 @@ Options:
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -1802,64 +1987,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -1868,6 +2024,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -1877,52 +2035,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -1931,13 +2095,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -1946,17 +2110,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -1973,7 +2137,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -1988,12 +2152,52 @@ Options:
   -h, --help
           Print help
 
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
+
 ```
 
 ## `loupe featurize`
 
 ```text
-Evaluate joint Noul/Score features per row, as CSV or JSONL
+Emit joint Boolean/Score features as CSV, JSONL or Parquet
 
 Usage: loupe featurize [OPTIONS] [OPERANDS]...
 
@@ -2002,64 +2206,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -2068,6 +2243,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -2077,52 +2254,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Numeric feature rows (default: csv); json emits JSONL.
+
+          [possible values: csv, json, parquet]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -2131,13 +2314,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -2146,17 +2329,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -2173,7 +2356,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -2187,6 +2370,46 @@ Options:
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -2202,64 +2425,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -2268,6 +2462,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -2277,52 +2473,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -2331,13 +2533,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -2346,17 +2548,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -2373,7 +2575,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -2387,6 +2589,46 @@ Options:
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -2405,149 +2647,176 @@ Arguments:
           Finite right input, fully loaded before the left side is read
 
 Options:
-      --config <CONFIG>
-          
-
       --ensemble
           Jointly evaluate the pair rubric's named variants
 
       --min-agreement <MIN_AGREEMENT>
           Minimum pair-ensemble agreement, default 1.0 or preset policy
 
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
       --on <ON>
           Comma-separated scalar field paths for local candidate blocking
 
-      --url <URL>
-          [env: LOUPE_URL]
-
       --max-candidates <MAX_CANDIDATES>
+          Maximum blocked right-side candidates evaluated per arriving left record
+
           [default: 20]
 
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
       --blocking <BLOCKING>
+          Local candidate strategy: tokens, lsh or hybrid
+
           [default: hybrid]
 
   -I, --input-format <INPUT_FORMAT>
-          [default: jsonl]
-          [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
+          Structured input format for both tables
 
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
+          [default: jsonl]
+          [possible values: jsonl, csv, tsv]
 
       --dry-run
           Emit candidate diagnostics without model inference
 
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
   -p, --preset <PRESET>
-          
-
-  -q, --quiet
-          
+          Trusted pair rubric with same_entity and similarity questions
 
   -f, --question-file <QUESTION_FILE>
-          
-
-  -v, --verbose...
-          
+          Trusted TOML/JSON pair-question file instead of a named preset
 
       --arg <ARG>
-          
+          Literal template binding NAME=VALUE; repeat for several names
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every pair request
 
       --cardinality <CARDINALITY>
+          Greedy assignment mode: 1:1, 1:n or n:m; input order affects assignment
+
           [default: 1:1]
 
       --unmatched [<UNMATCHED>]
           Emit unmatched left/right records; bare --unmatched means both
-          
+
           [possible values: left, right, both]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Matched records (default: json); tsv emits escaped columns.
+
+          [possible values: json, tsv]
 
       --json
-          
+          Emit matched-record JSONL (the default)
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean same_entity threshold in [0,1]; equality is yes
 
       --margin <MARGIN>
-          
+          Boolean same_entity uncertainty distance in [0,1]
 
       --min-confidence <MIN_CONFIDENCE>
-          
+          Minimum winning similarity Score probability in [0,1]
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two similarity Score probability gap in [0,1]
 
       --on-uncertain <ON_UNCERTAIN>
+          Uncertain pair handling; defaults to drop
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
           Resolve uncertain pair gates/scores using a trusted shell command
 
       --fallback-timeout <FALLBACK_TIMEOUT>
-          
+          Maximum duration per fallback command (default: 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --why
-          
+          Print pair scores, gates and declared companion-signal diagnostics
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --keep-going
-          
+          Continue after eligible complete-record failures
 
       --on-error <ON_ERROR>
+          Failed-record handling with --keep-going; defaults to drop
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
-          
+          Persist source admissions, pair plans and progress in a new JSONL journal
 
       --resume <RESUME>
-          
+          Validate original tables and resume a join journal
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
 ## `loupe dedupe`
 
 ```text
-Cluster duplicate pairs after finite input, keeping a representative
+Keep representatives of finite duplicate clusters or a bounded stream
 
 Usage: loupe dedupe [OPTIONS] [OPERANDS]...
 
@@ -2556,64 +2825,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -2622,6 +2862,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -2631,52 +2873,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -2685,13 +2933,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -2700,17 +2948,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -2727,7 +2975,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -2740,6 +2988,8 @@ Options:
           Retain the head/tail, or remove the middle while retaining both ends
 
       --keep <KEEP>
+          Finite representative rule: first, last or longest; streaming requires first
+
           [default: first]
 
       --max-pairs <MAX_PAIRS>
@@ -2763,6 +3013,46 @@ Options:
   -h, --help
           Print help
 
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
+
 ```
 
 ## `loupe on`
@@ -2777,64 +3067,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -2843,6 +3104,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -2852,52 +3115,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -2906,13 +3175,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -2921,17 +3190,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -2948,7 +3217,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -2970,19 +3239,61 @@ Options:
           Append matching original unit bytes to this file
 
       --exec-timeout <EXEC_TIMEOUT>
+          Maximum duration per child action, including its output handling
+
           [default: 30s]
 
       --dedupe-window <DEDUPE_WINDOW>
-          
+          Suppress repeated actions within this duration, such as 10m
 
       --state <STATE>
-          
+          Persist action claims in this database across restarts
 
       --max-fired <MAX_FIRED>
           Maximum live dedupe claims, default 65536
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -2999,37 +3310,48 @@ Commands:
   help     Print this message or the help of the given subcommand(s)
 
 Options:
-      --config <CONFIG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -3043,44 +3365,55 @@ Usage: loupe hook install [OPTIONS] [HOOKS]...
 Arguments:
   [HOOKS]...
           Select hooks; omission installs both
-          
+
           [possible values: pre-commit, commit-msg]
 
 Options:
-      --config <CONFIG>
-          
-
       --directory <DIRECTORY>
           Explicit existing hooks directory; defaults to Git's effective path
 
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -3093,49 +3426,62 @@ Usage: loupe hook run [OPTIONS] <KIND> [MESSAGE]
 
 Arguments:
   <KIND>
+          Git hook to evaluate
+
           [possible values: pre-commit, commit-msg]
 
   [MESSAGE]
-          
+          Commit message file; required for commit-msg
 
 Options:
-      --config <CONFIG>
-          
-
       --diff <DIFF>
           Evaluate an existing patch file instead of the staged Git diff
 
       --dry-run
           Emit the exact joint request/counts without credentials or inference
 
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -3151,63 +3497,36 @@ Arguments:
           Labeled JSONL input; requires --preset and --dataset-revision
 
 Options:
-      --config <CONFIG>
-          
-
       --ensemble
           Evaluate mean decisions from jointly encoded named preset variants
 
       --min-agreement <MIN_AGREEMENT>
           Minimum ensemble vote agreement (default 1.0 or preset policy)
 
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
       --labels <LABELS>
           Explicit labeled JSONL input, equivalent to the positional dataset
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
 
       --suite <SUITE>
           Suite directory/manifest or name under --suites-dir; repeat for several suites
 
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
       --suites-dir <SUITES_DIR>
-          [default: evals/suites]
+          Base directory used to resolve named evaluation suites
 
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
+          [default: evals/suites]
 
   -p, --preset <PRESET>
           Trusted preset; also overrides a suite's preset for rubric comparisons
 
       --dataset-revision <DATASET_REVISION>
-          
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
+          Immutable revision label for an explicit dataset
 
       --split-file <SPLIT_FILE>
-          
+          Fixed split assignments; defaults to DATASET.splits.json
 
       --partition <PARTITION>
           Fixed partition; defaults to test, or calibrate for sweeps
-          
-          [possible values: test, calibrate, captured]
 
-  -v, --verbose...
-          
+          [possible values: test, calibrate, captured]
 
       --init-splits
           Explicitly create missing fixed split files; existing assignments are validated
@@ -3231,78 +3550,118 @@ Options:
           Calibration-only selected-evidence counts; zero requests split/combine without focus
 
       --json
-          
+          Emit the evaluation report as JSON instead of Markdown
 
       --allow-unverified
           Emit provisional diagnostics when fresh full model identity is unavailable
 
       --warmup <WARMUP>
           Uncached passes over every selected packing group before latency measurement
-          
+
           [default: 1]
 
       --dry-run
-          
+          Emit request plans without discovery, credentials or inference
 
       --no-cache
-          
+          Disable response-cache reads and writes during accuracy evaluation
 
       --refresh
-          
+          Bypass accuracy-cache reads while allowing verified response writes
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap across every phase and retry; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall discovery/evaluation deadline, such as 30s or 2m
 
       --pack <PACK>
-          
+          Request packing: unit, whole, auto or window:N
 
       --question-id-source <QUESTION_ID_SOURCE>
           Window question ID family; defaults to records or the calibrated preset's family
 
       --split
-          
+          Explicitly split oversized text using --combine
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
-          
+          Score chunks and re-ask over at most N selected evidence chunks
 
       --truncate <TRUNCATE>
-          
+          Explicit text view: head, tail or middle (retain both ends)
 
       --truncate-field <TRUNCATE_FIELD>
-          
+          Shorten only the named string field in structured input
 
       --arg <ARG>
-          
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes
 
       --margin <MARGIN>
-          
+          Boolean uncertainty distance from the threshold in [0,1]
 
       --min-confidence <MIN_CONFIDENCE>
-          
+          Minimum winning Choice/Score probability in [0,1]
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1]
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -3311,82 +3670,51 @@ Options:
 ```text
 Fit empirical precision/coverage policy on fixed calibration cases
 
-Usage: loupe calibrate [OPTIONS] <--target <TARGET>|--max-uncertain <MAX_UNCERTAIN>> [DATASET]
+Usage: loupe calibrate [OPTIONS] [DATASET]
+       --target SPEC or --max-uncertain RATE
 
 Arguments:
   [DATASET]
           Labeled JSONL input; requires --preset and --dataset-revision
 
 Options:
-      --config <CONFIG>
-          
-
       --ensemble
           Evaluate mean decisions from jointly encoded named preset variants
 
       --min-agreement <MIN_AGREEMENT>
           Minimum ensemble vote agreement (default 1.0 or preset policy)
 
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
       --labels <LABELS>
           Explicit labeled JSONL input, equivalent to the positional dataset
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
 
       --suite <SUITE>
           Suite directory/manifest or name under --suites-dir; repeat for several suites
 
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
       --suites-dir <SUITES_DIR>
-          [default: evals/suites]
+          Base directory used to resolve named evaluation suites
 
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
+          [default: evals/suites]
 
   -p, --preset <PRESET>
           Trusted preset; also overrides a suite's preset for rubric comparisons
 
       --dataset-revision <DATASET_REVISION>
-          
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
+          Immutable revision label for an explicit dataset
 
       --split-file <SPLIT_FILE>
-          
+          Fixed split assignments; defaults to DATASET.splits.json
 
       --partition <PARTITION>
-          Fixed partition; defaults to test, or calibrate for sweeps
-          
-          [possible values: test, calibrate, captured]
+          Fixed calibration partition (default: calibrate); captured uses reviewed development
+          cases.
 
-  -v, --verbose...
-          
+          [possible values: calibrate, captured]
 
       --init-splits
           Explicitly create missing fixed split files; existing assignments are validated
 
       --report <REPORT>
           Write private JSON/Markdown reports and a publication manifest under DIR
-
-      --baseline <BASELINE>
-          Human-ratified baseline file; evaluate held-out absolute/regression gates
-
-      --compare <COMPARE> <COMPARE>
-          Two report/profile/preset targets, or standalone/ensemble, over identical cases
 
       --sweep-pack <SWEEP_PACK>
           Calibration-only packing candidates, separated by commas
@@ -3398,75 +3726,75 @@ Options:
           Calibration-only selected-evidence counts; zero requests split/combine without focus
 
       --json
-          
+          Emit the evaluation report as JSON instead of Markdown
 
       --allow-unverified
           Emit provisional diagnostics when fresh full model identity is unavailable
 
       --warmup <WARMUP>
           Uncached passes over every selected packing group before latency measurement
-          
+
           [default: 1]
 
       --dry-run
-          
+          Emit request plans without discovery, credentials or inference
 
       --no-cache
-          
+          Disable response-cache reads and writes during accuracy evaluation
 
       --refresh
-          
+          Bypass accuracy-cache reads while allowing verified response writes
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap across every phase and retry; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall discovery/evaluation deadline, such as 30s or 2m
 
       --pack <PACK>
-          
+          Request packing: unit, whole, auto or window:N
 
       --question-id-source <QUESTION_ID_SOURCE>
           Window question ID family; defaults to records or the calibrated preset's family
 
       --split
-          
+          Explicitly split oversized text using --combine
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
-          
+          Score chunks and re-ask over at most N selected evidence chunks
 
       --truncate <TRUNCATE>
-          
+          Explicit text view: head, tail or middle (retain both ends)
 
       --truncate-field <TRUNCATE_FIELD>
-          
+          Shorten only the named string field in structured input
 
       --arg <ARG>
-          
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes
 
       --margin <MARGIN>
-          
+          Boolean uncertainty distance from the threshold in [0,1]
 
       --min-confidence <MIN_CONFIDENCE>
-          
+          Minimum winning Choice/Score probability in [0,1]
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1]
 
       --field <FIELD>
           Select one field from a mixed rubric; a single-field preset needs no selector
@@ -3479,7 +3807,7 @@ Options:
 
       --min-support <MIN_SUPPORT>
           Minimum accepted/predicted support for every fitted precision target
-          
+
           [default: 1]
 
       --write
@@ -3487,6 +3815,46 @@ Options:
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -3502,64 +3870,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -3568,6 +3907,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -3577,52 +3918,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
-          [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
+          Read each file as a complete UTF-8 document (default: whole).
+
+          [possible values: whole]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -3631,13 +3978,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -3646,17 +3993,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -3673,7 +4020,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -3684,16 +4031,56 @@ Options:
 
   -n, --take <TAKE>
           Retain up to N candidates, ranked within the final Choice population
-          
+
           [default: 1]
 
       --max-rounds <MAX_ROUNDS>
           Stop before submitting a round beyond this bound
-          
+
           [default: 64]
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -3709,64 +4096,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -3775,6 +4133,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -3784,52 +4144,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
-          [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
+          Read each file as a complete UTF-8 document (default: whole).
+
+          [possible values: whole]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -3838,13 +4204,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -3853,17 +4219,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -3880,7 +4246,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -3891,12 +4257,12 @@ Options:
 
   -n, --take <TAKE>
           Retain up to N candidates, ranked within the final Choice population
-          
+
           [default: 1]
 
       --max-rounds <MAX_ROUNDS>
           Stop before submitting a round beyond this bound
-          
+
           [default: 64]
 
       --independent
@@ -3905,78 +4271,90 @@ Options:
   -h, --help
           Print help
 
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
+
 ```
 
 ## `loupe extract`
 
 ```text
-Select source-backed date, money, version, address, host or ticker spans
+Select original date, money, version, email, hostname or ticker spans
 
-Usage: loupe extract [OPTIONS] --candidates <CANDIDATES> [OPERANDS]...
+Usage: loupe extract [OPTIONS] [OPERANDS]...
+       --candidates KIND
 
 Arguments:
   [OPERANDS]...
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -3985,6 +4363,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -3994,52 +4374,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
-          [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
+          Read each file as a complete UTF-8 document (default: whole).
+
+          [possible values: whole]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -4048,13 +4434,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -4063,17 +4449,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -4090,7 +4476,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -4101,12 +4487,12 @@ Options:
 
   -n, --take <TAKE>
           Retain up to N candidates, ranked within the final Choice population
-          
+
           [default: 1]
 
       --max-rounds <MAX_ROUNDS>
           Stop before submitting a round beyond this bound
-          
+
           [default: 64]
 
       --candidates <CANDIDATES>
@@ -4125,13 +4511,53 @@ Options:
           ISO 4217 code to resolve ambiguous money symbols
 
       --decimal-separator <DECIMAL_SEPARATOR>
-          
+          Resolve ambiguous numeric separators: dot or comma
 
       --date-order <DATE_ORDER>
-          
+          Resolve ambiguous slash-date order: mdy or dmy
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -4147,64 +4573,35 @@ Arguments:
           Positional question followed by files; with -p/-f, all operands are files
 
 Options:
-      --config <CONFIG>
-          
-
   -p, --preset <PRESET>
-          
+          Trusted named question rubric; positional operands then identify inputs
 
   -f, --question-file <QUESTION_FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Trusted TOML/JSON question file; positional operands then identify inputs
 
   -c, --criteria <CRITERIA>
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
+          Comma-separated Choice labels or ordered Score levels for a positional question
 
       --criteria-file <CRITERIA_FILE>
-          
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
+          TOML/JSON criteria map or array instead of inline labels or levels
 
       --context <CONTEXT>
-          
+          UTF-8 context file included in every request
 
       --arg <ARG>
-          
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
+          Literal template binding NAME=VALUE; repeat for several names
 
   -t, --threshold <THRESHOLD>
-          
+          Boolean yes threshold in [0,1]; equality is yes (default: 0.5)
 
       --margin <MARGIN>
-          
-
-  -q, --quiet
-          
+          Boolean uncertainty distance from the threshold in [0,1] (default: 0)
 
       --min-confidence <MIN_CONFIDENCE>
-          
-
-  -v, --verbose...
-          
+          Minimum winning Choice/Score probability in [0,1] (default: 0)
 
       --min-gap <MIN_GAP>
-          
+          Minimum top-two Choice/Score probability gap in [0,1] (default: 0)
 
       --ensemble
           Jointly evaluate named preset variants and average their distributions
@@ -4213,6 +4610,8 @@ Options:
           Minimum vote agreement for ensemble certainty (default 1.0)
 
       --on-uncertain <ON_UNCERTAIN>
+          Handle uncertain answers; default filters emit only their certain bucket
+
           [possible values: keep, drop, fail, stderr, fallback]
 
       --fallback <FALLBACK>
@@ -4222,52 +4621,58 @@ Options:
           Maximum duration per fallback command (default 30s)
 
       --on-fallback-error <ON_FALLBACK_ERROR>
+          Failed fallback handling; defaults to uncertain
+
           [possible values: uncertain, fail]
 
       --uncertain <UNCERTAIN>
-          
+          Append original uncertain input to FILE
 
   -I, --input-format <INPUT_FORMAT>
+          Input unit format; normally lines, but is/ask/explain read whole input
+
           [possible values: lines, whole, null, paragraphs, records, jsonl, csv, tsv]
 
   -O, --output-format <OUTPUT_FORMAT>
-          [possible values: plain, annotate, tsv, json, csv, parquet]
+          Result representation (default: plain); json emits JSONL for unit results
+
+          [possible values: plain, annotate, tsv, json]
 
       --json
-          
+          Shorthand for --output-format json; ask/count emit a single JSON object
 
       --keep-blank
-          
+          Preserve blank input units instead of skipping them
 
       --why
           Show declared companion signal probabilities and their separate policies
 
       --records <RECORDS>
-          
+          Regular expression separating text records; requires --input-format records
 
       --field <FIELD>
-          
+          Record field used as the output subject; other fields remain visible to the model
 
       --select <SELECT>
-          
+          Comma-separated table columns to send to the model
 
       --with-context <WITH_CONTEXT>
-          
+          Include N preceding input lines as context; preserve the original subject
 
       --files
-          
+          Treat each named file as a whole unit and emit its path
 
       --dry-run
-          
+          Emit request plans without credentials or model inference
 
       --strict
-          
+          Require exact Clef counts and matching reported input-token usage
 
       --budget <BUDGET>
-          
+          Exact submitted input-token cap, including retries; Clef only
 
       --deadline <DEADLINE>
-          
+          Overall run deadline, such as 30s or 2m; includes input waits
 
       --pack <PACK>
           Pack independent units, whole input, or joint windows (window:N)
@@ -4276,13 +4681,13 @@ Options:
           Explicitly split oversized text under the selected combine semantics
 
       --combine <COMBINE>
-          
+          Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type
 
       --overlap <OVERLAP>
-          
+          Number of overlap tokens between adjacent text chunks
 
       --max-chunks <MAX_CHUNKS>
-          
+          Maximum number of chunks permitted for one input
 
       --focus <FOCUS>
           Score chunks, then re-ask over at most K selected evidence chunks
@@ -4291,17 +4696,17 @@ Options:
           Shorten only this string field in a JSONL/CSV/TSV record, retaining its head
 
       --no-cache
-          
+          Disable response-cache reads and writes
 
       --refresh
-          
+          Bypass cache reads while allowing verified response writes
 
       --summary
-          
+          Print operational metrics on stderr after the run
 
       --review[=<REVIEW>]
           Review uncertainty plus a uniform audit sample using /dev/tty, or defer
-          
+
           [possible values: interactive, defer]
 
       --review-queue <REVIEW_QUEUE>
@@ -4318,7 +4723,7 @@ Options:
 
       --on-error <ON_ERROR>
           Handle failed units independently of uncertain answers
-          
+
           [possible values: drop, keep, fail]
 
       --failed <FAILED>
@@ -4333,6 +4738,46 @@ Options:
   -h, --help
           Print help
 
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
+
 ```
 
 ## `loupe doctor`
@@ -4343,43 +4788,54 @@ Inspect endpoint health, limits and tokenizer readiness
 Usage: loupe doctor [OPTIONS]
 
 Options:
-      --config <CONFIG>
-          
-
       --prefetch
-          
+          Download and validate the pinned Clef tokenizer when needed
 
       --json
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
+          Emit the diagnostic report as JSON
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -4391,37 +4847,48 @@ List models, or report an unsupported endpoint
 Usage: loupe models [OPTIONS]
 
 Options:
-      --config <CONFIG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -4433,328 +4900,419 @@ Inspect, create, edit, trust and lint reusable rubrics
 Usage: loupe presets [OPTIONS] <COMMAND>
 
 Commands:
-  list   
-  show   
-  new    
-  edit   
-  trust  
-  lint   
+  list   List built-in, user and project rubrics with origin and trust status
+  show   Show a resolved preset's complete definition and trust status
+  new    Create a rubric in the user directory, or in this project with --project
+  edit   Edit with VISUAL/EDITOR; changing content revokes an existing trust grant
+  trust  Trust inspected content; omission of NAME/-f trusts all project presets
+  lint   Validate rubric schemas and templates; --live also evaluates examples
   help   Print this message or the help of the given subcommand(s)
 
 Options:
-      --config <CONFIG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
 ## `loupe presets list`
 
 ```text
+List built-in, user and project rubrics with origin and trust status
+
 Usage: loupe presets list [OPTIONS]
 
 Options:
-      --config <CONFIG>
-          
-
       --json
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
+          Emit the preset catalog as JSON
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
 ## `loupe presets show`
 
 ```text
+Show a resolved preset's complete definition and trust status
+
 Usage: loupe presets show [OPTIONS] <NAME>
 
 Arguments:
   <NAME>
-          
+          Preset name to inspect
 
 Options:
-      --config <CONFIG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
 ## `loupe presets new`
 
 ```text
+Create a rubric in the user directory, or in this project with --project
+
 Usage: loupe presets new [OPTIONS] <NAME>
 
 Arguments:
   <NAME>
-          
+          New preset's simple name
 
 Options:
-      --config <CONFIG>
-          
-
       --type <TYPE>
+          Question type: Boolean (noul), labeled choice or ordered score
+
           [default: noul]
           [possible values: noul, choice, score]
 
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
       --project
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
+          Create under PROJECT/.loupe/presets instead of the user directory
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
 ## `loupe presets edit`
 
 ```text
+Edit with VISUAL/EDITOR; changing content revokes an existing trust grant
+
 Usage: loupe presets edit [OPTIONS] <NAME>
 
 Arguments:
   <NAME>
-          
+          Preset name; editing a built-in first creates a user copy
 
 Options:
-      --config <CONFIG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
 ## `loupe presets trust`
 
 ```text
+Trust inspected content; omission of NAME/-f trusts all project presets
+
 Usage: loupe presets trust [OPTIONS] [NAME]
 
 Arguments:
   [NAME]
-          
+          One preset to trust; omission trusts every resolved project preset
 
 Options:
-      --config <CONFIG>
-          
-
   -f, --file <FILE>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
+          Trust this explicit TOML/JSON file instead of a named preset
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
 ## `loupe presets lint`
 
 ```text
+Validate rubric schemas and templates; --live also evaluates examples
+
 Usage: loupe presets lint [OPTIONS] [NAME]
 
 Arguments:
   [NAME]
-          
+          Preset to check; omission checks all resolved presets
 
 Options:
-      --config <CONFIG>
-          
-
       --live
-          
+          Run declared examples against the configured API after local checks
 
       --arg <ARG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
+          Literal template binding NAME=VALUE; repeat for several names
 
       --json
-          
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
+          Emit validation reports as JSON
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -4766,169 +5324,221 @@ Inspect and manage the local raw-response cache without inference
 Usage: loupe cache [OPTIONS] <COMMAND>
 
 Commands:
-  stats  
-  prune  
-  clear  
+  stats  Report cached response counts and disk usage without inference
+  prune  Delete responses older than the selected age
+  clear  Clear all saved responses; retain the database and downloaded tokenizers
   help   Print this message or the help of the given subcommand(s)
 
 Options:
-      --config <CONFIG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
 ## `loupe cache stats`
 
 ```text
+Report cached response counts and disk usage without inference
+
 Usage: loupe cache stats [OPTIONS]
 
 Options:
-      --config <CONFIG>
-          
-
       --json
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
+          Emit cache statistics as JSON
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
 ## `loupe cache prune`
 
 ```text
+Delete responses older than the selected age
+
 Usage: loupe cache prune [OPTIONS]
 
 Options:
-      --config <CONFIG>
-          
-
       --older <OLDER_THAN>
+          Retention age as integer seconds/minutes/hours/days, such as 7d
+
           [default: 30d]
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
 
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
 ## `loupe cache clear`
 
 ```text
+Clear all saved responses; retain the database and downloaded tokenizers
+
 Usage: loupe cache clear [OPTIONS]
 
 Options:
-      --config <CONFIG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -4941,40 +5551,53 @@ Usage: loupe completions [OPTIONS] <SHELL>
 
 Arguments:
   <SHELL>
+          Shell whose completion script is written to stdout
+
           [possible values: bash, elvish, fish, powershell, zsh]
 
 Options:
-      --config <CONFIG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```
 
@@ -4990,36 +5613,47 @@ Arguments:
           Optional command path, such as "pick" or "presets trust"
 
 Options:
-      --config <CONFIG>
-          
-
-      --profile <PROFILE>
-          [env: LOUPE_PROFILE]
-
-      --url <URL>
-          [env: LOUPE_URL]
-
-      --path <PATH>
-          [env: LOUPE_PATH]
-
-      --api-format <API_FORMAT>
-          Request/response format: systemone (default) or decisions
-          
-          [env: LOUPE_API_FORMAT]
-
-  -m, --model <MODEL>
-          [env: LOUPE_MODEL]
-
-  -j, --concurrency <CONCURRENCY>
-          [env: LOUPE_CONCURRENCY]
-
-  -q, --quiet
-          
-
-  -v, --verbose...
-          
-
   -h, --help
           Print help
+
+Global options:
+      --api-format <API_FORMAT>
+          Request/response format: systemone (default) or decisions
+
+          [env: LOUPE_API_FORMAT]
+
+      --config <CONFIG>
+          Read configuration from FILE instead of the XDG config directory
+
+  -j, --concurrency <CONCURRENCY>
+          Maximum concurrent inference requests; must be positive
+
+          [env: LOUPE_CONCURRENCY]
+
+  -m, --model <MODEL>
+          Override the model name sent to the API
+
+          [env: LOUPE_MODEL]
+
+      --path <PATH>
+          Override the request path, such as /v1/systemone or /v1/decisions
+
+          [env: LOUPE_PATH]
+
+      --profile <PROFILE>
+          Select a named configuration profile
+
+          [env: LOUPE_PROFILE]
+
+  -q, --quiet
+          Suppress progress and diagnostic messages on stderr
+
+      --url <URL>
+          Override the decision API's base URL
+
+          [env: LOUPE_URL]
+
+  -v, --verbose...
+          Increase diagnostics; repeat for more detail
 
 ```

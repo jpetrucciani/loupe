@@ -1,34 +1,105 @@
-use clap::{Args, Parser, Subcommand, ValueEnum};
+use clap::builder::{PossibleValuesParser, TypedValueParser};
+use clap::{Args, CommandFactory, Parser, Subcommand, ValueEnum};
 use std::path::PathBuf;
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Args)]
 #[command(
     name = "loupe",
     version,
     about = "Semantic Unix filters for System One decision models"
 )]
 pub struct Cli {
+    /// Read configuration from FILE instead of the XDG config directory.
     #[arg(long, global = true)]
     pub config: Option<PathBuf>,
+    /// Select a named configuration profile.
     #[arg(long, env = "LOUPE_PROFILE", global = true)]
     pub profile: Option<String>,
+    /// Override the decision API's base URL.
     #[arg(long, env = "LOUPE_URL", global = true)]
     pub url: Option<String>,
+    /// Override the request path, such as /v1/systemone or /v1/decisions.
     #[arg(long, env = "LOUPE_PATH", global = true)]
     pub path: Option<String>,
     /// Request/response format: systemone (default) or decisions.
     #[arg(long, env = "LOUPE_API_FORMAT", global = true)]
     pub api_format: Option<loupe_core::wire::ApiFormat>,
+    /// Override the model name sent to the API.
     #[arg(short = 'm', long, env = "LOUPE_MODEL", global = true)]
     pub model: Option<String>,
+    /// Maximum concurrent inference requests; must be positive.
     #[arg(short = 'j', long, env = "LOUPE_CONCURRENCY", global = true)]
     pub concurrency: Option<usize>,
+    /// Suppress progress and diagnostic messages on stderr.
     #[arg(short = 'q', long, global = true, conflicts_with = "verbose")]
     pub quiet: bool,
+    /// Increase diagnostics; repeat for more detail.
     #[arg(short = 'v', long, global = true, action = clap::ArgAction::Count)]
     pub verbose: u8,
     #[command(subcommand)]
     pub command: Command,
+}
+
+impl Parser for Cli {}
+
+impl CommandFactory for Cli {
+    fn command() -> clap::Command {
+        command_help(Self::augment_args(clap::Command::new("loupe")))
+    }
+
+    fn command_for_update() -> clap::Command {
+        command_help(Self::augment_args_for_update(clap::Command::new("loupe")))
+    }
+}
+
+fn enum_values<T: ValueEnum + Send + Sync + 'static>(
+    values: impl Into<PossibleValuesParser>,
+) -> impl TypedValueParser<Value = T> {
+    PossibleValuesParser::new(values).try_map(|value| T::from_str(&value, false))
+}
+
+fn command_help(command: clap::Command) -> clap::Command {
+    command
+        .mut_args(|arg| {
+            if arg.is_global_set() {
+                arg.help_heading("Global options").display_order(900)
+            } else {
+                arg
+            }
+        })
+        .mut_subcommands(|mut command| {
+            let name = command.get_name().to_owned();
+            command = command.mut_args(|arg| match (name.as_str(), arg.get_id().as_str()) {
+                ("featurize", "output_format") => arg
+                    .value_parser(enum_values::<Output>(["csv", "json", "parquet"]))
+                    .help("Numeric feature rows (default: csv); json emits JSONL."),
+                ("join", "output_format") => arg
+                    .value_parser(enum_values::<Output>(["json", "tsv"]))
+                    .help("Matched records (default: json); tsv emits escaped columns."),
+                (_, "output_format") => arg.value_parser(enum_values::<Output>([
+                    "plain", "annotate", "tsv", "json",
+                ])),
+                ("join", "input_format") => arg
+                    .value_parser(enum_values::<Input>(["jsonl", "csv", "tsv"])),
+                ("find" | "pick" | "extract", "input_format") => arg
+                    .value_parser(enum_values::<Input>(["whole"]))
+                    .help("Read each file as a complete UTF-8 document (default: whole)."),
+                ("calibrate", "partition") => arg
+                    .value_parser(enum_values::<EvalSplit>(["calibrate", "captured"]))
+                    .help("Fixed calibration partition (default: calibrate); captured uses reviewed development cases."),
+                ("calibrate", "baseline" | "compare") => arg.hide(true),
+                _ => arg,
+            });
+            if name == "calibrate" {
+                command = command.override_usage("loupe calibrate [OPTIONS] [DATASET]\n       --target SPEC or --max-uncertain RATE");
+            }
+            if name == "extract" {
+                command = command.override_usage(
+                    "loupe extract [OPTIONS] [OPERANDS]...\n       --candidates KIND",
+                );
+            }
+            command
+        })
 }
 
 impl Cli {
@@ -56,7 +127,9 @@ pub enum Command {
     },
     /// Review a deferred queue offline, capturing labels and emitting corrections.
     Review {
+        /// Deferred JSONL review queue to open offline.
         file: PathBuf,
+        /// Write captured labels under DIR (default: PROJECT/.loupe/labels).
         #[arg(long)]
         labels_dir: Option<PathBuf>,
     },
@@ -76,6 +149,7 @@ pub enum Command {
     Sort {
         #[command(flatten)]
         options: Classify,
+        /// Sort highest scores first instead of ascending.
         #[arg(short = 'r', long)]
         reverse: bool,
     },
@@ -83,13 +157,13 @@ pub enum Command {
     Count(Classify),
     /// Evaluate all questions in a TOML/JSON file against one state.
     Ask(Classify),
-    /// Evaluate joint Noul/Score features per row, as CSV or JSONL.
+    /// Emit joint Boolean/Score features as CSV, JSONL or Parquet.
     Featurize(Classify),
     /// Decompose a decision into an auditable weighted Noul/Score factor index.
     Explain(Classify),
     /// Stream semantic matches against a finite indexed right-side table.
     Join(Join),
-    /// Cluster duplicate pairs after finite input, keeping a representative.
+    /// Keep representatives of finite duplicate clusters or a bounded stream.
     Dedupe(Dedupe),
     /// Run declared actions on streaming Noul or Choice decisions.
     On(On),
@@ -106,14 +180,16 @@ pub enum Command {
     Find(Selection),
     /// Rank candidate lines by Choice marginals or separate relevance Scores.
     Pick(Pick),
-    /// Select source-backed date, money, version, address, host or ticker spans.
+    /// Select original date, money, version, email, hostname or ticker spans.
     Extract(Extract),
     /// Plan requests and count tokens, with no inference.
     Tokens(Classify),
     /// Inspect endpoint health, limits and tokenizer readiness.
     Doctor {
+        /// Download and validate the pinned Clef tokenizer when needed.
         #[arg(long)]
         prefetch: bool,
+        /// Emit the diagnostic report as JSON.
         #[arg(long)]
         json: bool,
     },
@@ -130,7 +206,10 @@ pub enum Command {
         command: Cache,
     },
     /// Generate shell completions from this grammar.
-    Completions { shell: clap_complete::Shell },
+    Completions {
+        /// Shell whose completion script is written to stdout.
+        shell: clap_complete::Shell,
+    },
     /// Generate the complete roff manual, or one command's page.
     Man {
         /// Optional command path, such as "pick" or "presets trust".
@@ -165,8 +244,10 @@ pub enum Hook {
     },
     /// Run a hook check. Git supplies the message file to commit-msg.
     Run {
+        /// Git hook to evaluate.
         #[arg(value_enum)]
         kind: HookKind,
+        /// Commit message file; required for commit-msg.
         message: Option<PathBuf>,
         /// Evaluate an existing patch file instead of the staged Git diff.
         #[arg(long)]
@@ -201,6 +282,7 @@ pub struct Eval {
     /// Suite directory/manifest or name under --suites-dir; repeat for several suites.
     #[arg(long, conflicts_with = "eval_input")]
     pub suite: Vec<String>,
+    /// Base directory used to resolve named evaluation suites.
     #[arg(long, default_value = "evals/suites")]
     pub suites_dir: PathBuf,
     /// Trusted preset; also overrides a suite's preset for rubric comparisons.
@@ -208,8 +290,10 @@ pub struct Eval {
     pub preset: Option<String>,
     #[arg(skip)]
     pub preset_override: Option<String>,
+    /// Immutable revision label for an explicit dataset.
     #[arg(long, requires = "eval_input")]
     pub dataset_revision: Option<String>,
+    /// Fixed split assignments; defaults to DATASET.splits.json.
     #[arg(long, requires = "eval_input")]
     pub split_file: Option<PathBuf>,
     /// Fixed partition; defaults to test, or calibrate for sweeps.
@@ -236,6 +320,7 @@ pub struct Eval {
     /// Calibration-only selected-evidence counts; zero requests split/combine without focus.
     #[arg(long, value_delimiter = ',', conflicts_with_all = ["focus", "split_text", "truncate", "truncate_field"])]
     pub sweep_focus: Vec<usize>,
+    /// Emit the evaluation report as JSON instead of Markdown.
     #[arg(long)]
     pub json: bool,
     /// Emit provisional diagnostics when fresh full model identity is unavailable.
@@ -244,45 +329,64 @@ pub struct Eval {
     /// Uncached passes over every selected packing group before latency measurement.
     #[arg(long, default_value = "1")]
     pub warmup: usize,
+    /// Emit request plans without discovery, credentials or inference.
     #[arg(long)]
     pub dry_run: bool,
+    /// Disable response-cache reads and writes during accuracy evaluation.
     #[arg(long)]
     pub no_cache: bool,
+    /// Bypass accuracy-cache reads while allowing verified response writes.
     #[arg(long, conflicts_with = "no_cache")]
     pub refresh: bool,
+    /// Require exact Clef counts and matching reported input-token usage.
     #[arg(long)]
     pub strict: bool,
+    /// Exact submitted input-token cap across every phase and retry; Clef only.
     #[arg(long)]
     pub budget: Option<u64>,
+    /// Overall discovery/evaluation deadline, such as 30s or 2m.
     #[arg(long)]
     pub deadline: Option<String>,
+    /// Request packing: unit, whole, auto or window:N.
     #[arg(long)]
     pub pack: Option<loupe_core::pack::Mode>,
     /// Window question ID family; defaults to records or the calibrated preset's family.
     #[arg(long)]
     pub question_id_source: Option<loupe_core::pack::SourceKind>,
+    /// Explicitly split oversized text using --combine.
     #[arg(long="split", conflicts_with_all=["focus","truncate","truncate_field"])]
     pub split_text: bool,
+    /// Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type.
     #[arg(long)]
     pub combine: Option<loupe_core::combine::Mode>,
+    /// Number of overlap tokens between adjacent text chunks.
     #[arg(long)]
     pub overlap: Option<usize>,
+    /// Maximum number of chunks permitted for one input.
     #[arg(long)]
     pub max_chunks: Option<std::num::NonZeroUsize>,
+    /// Score chunks and re-ask over at most N selected evidence chunks.
     #[arg(long, conflicts_with_all=["split_text","combine","truncate","truncate_field"])]
     pub focus: Option<std::num::NonZeroUsize>,
+    /// Explicit text view: head, tail or middle (retain both ends).
     #[arg(long, conflicts_with_all=["split_text","focus","truncate_field"])]
     pub truncate: Option<loupe_core::truncate::Mode>,
+    /// Shorten only the named string field in structured input.
     #[arg(long, conflicts_with_all=["split_text","focus","truncate"])]
     pub truncate_field: Option<String>,
+    /// Literal template binding NAME=VALUE; repeat for several names.
     #[arg(long)]
     pub arg: Vec<String>,
+    /// Boolean yes threshold in [0,1]; equality is yes.
     #[arg(short = 't', long, allow_hyphen_values = true)]
     pub threshold: Option<f64>,
+    /// Boolean uncertainty distance from the threshold in [0,1].
     #[arg(long, allow_hyphen_values = true)]
     pub margin: Option<f64>,
+    /// Minimum winning Choice/Score probability in [0,1].
     #[arg(long, allow_hyphen_values = true)]
     pub min_confidence: Option<f64>,
+    /// Minimum top-two Choice/Score probability gap in [0,1].
     #[arg(long, allow_hyphen_values = true)]
     pub min_gap: Option<f64>,
 }
@@ -324,48 +428,71 @@ fn parse_fraction(value: &str) -> Result<f64, String> {
 
 #[derive(Debug, Subcommand)]
 pub enum Cache {
+    /// Report cached response counts and disk usage without inference.
     Stats {
+        /// Emit cache statistics as JSON.
         #[arg(long)]
         json: bool,
     },
+    /// Delete responses older than the selected age.
     Prune {
+        /// Retention age as integer seconds/minutes/hours/days, such as 7d.
         #[arg(long = "older", default_value = "30d")]
         older_than: String,
     },
+    /// Clear all saved responses; retain the database and downloaded tokenizers.
     Clear,
 }
 
 #[derive(Debug, Subcommand)]
 pub enum Presets {
+    /// List built-in, user and project rubrics with origin and trust status.
     List {
+        /// Emit the preset catalog as JSON.
         #[arg(long)]
         json: bool,
     },
+    /// Show a resolved preset's complete definition and trust status.
     Show {
+        /// Preset name to inspect.
         name: String,
     },
+    /// Create a rubric in the user directory, or in this project with --project.
     New {
+        /// New preset's simple name.
         name: String,
+        /// Question type: Boolean (noul), labeled choice or ordered score.
         #[arg(long, value_enum, default_value = "noul")]
         r#type: PresetType,
+        /// Create under PROJECT/.loupe/presets instead of the user directory.
         #[arg(long)]
         project: bool,
     },
+    /// Edit with VISUAL/EDITOR; changing content revokes an existing trust grant.
     Edit {
+        /// Preset name; editing a built-in first creates a user copy.
         name: String,
     },
+    /// Trust inspected content; omission of NAME/-f trusts all project presets.
     Trust {
+        /// One preset to trust; omission trusts every resolved project preset.
         #[arg(conflicts_with = "file")]
         name: Option<String>,
+        /// Trust this explicit TOML/JSON file instead of a named preset.
         #[arg(short = 'f', long)]
         file: Option<PathBuf>,
     },
+    /// Validate rubric schemas and templates; --live also evaluates examples.
     Lint {
+        /// Preset to check; omission checks all resolved presets.
         name: Option<String>,
+        /// Run declared examples against the configured API after local checks.
         #[arg(long)]
         live: bool,
+        /// Literal template binding NAME=VALUE; repeat for several names.
         #[arg(long)]
         arg: Vec<String>,
+        /// Emit validation reports as JSON.
         #[arg(long)]
         json: bool,
     },
@@ -464,8 +591,10 @@ pub struct Extract {
     /// ISO 4217 code to resolve ambiguous money symbols.
     #[arg(long, requires = "normalize")]
     pub currency: Option<String>,
+    /// Resolve ambiguous numeric separators: dot or comma.
     #[arg(long, requires = "normalize")]
     pub decimal_separator: Option<loupe_core::normalize::Separator>,
+    /// Resolve ambiguous slash-date order: mdy or dmy.
     #[arg(long, requires = "normalize")]
     pub date_order: Option<loupe_core::normalize::DateOrder>,
 }
@@ -482,10 +611,13 @@ pub struct On {
     /// Append matching original unit bytes to this file.
     #[arg(long)]
     pub append: Vec<PathBuf>,
+    /// Maximum duration per child action, including its output handling.
     #[arg(long, default_value = "30s")]
     pub exec_timeout: String,
+    /// Suppress repeated actions within this duration, such as 10m.
     #[arg(long)]
     pub dedupe_window: Option<String>,
+    /// Persist action claims in this database across restarts.
     #[arg(long)]
     pub state: Option<PathBuf>,
     /// Maximum live dedupe claims, default 65536.
@@ -498,6 +630,7 @@ pub struct On {
 pub struct Dedupe {
     #[command(flatten)]
     pub options: Classify,
+    /// Finite representative rule: first, last or longest; streaming requires first.
     #[arg(long, default_value = "first")]
     pub keep: loupe_core::dedupe::Keep,
     /// Refuse a finite catalog requiring more than N pair requests.
@@ -535,69 +668,97 @@ pub struct Join {
     /// Comma-separated scalar field paths for local candidate blocking.
     #[arg(long)]
     pub on: String,
+    /// Maximum blocked right-side candidates evaluated per arriving left record.
     #[arg(long, default_value = "20")]
     pub max_candidates: std::num::NonZeroUsize,
+    /// Local candidate strategy: tokens, lsh or hybrid.
     #[arg(long, default_value = "hybrid")]
     pub blocking: loupe_core::blocking::Mode,
+    /// Structured input format for both tables.
     #[arg(short = 'I', long, value_enum, default_value = "jsonl")]
     pub input_format: Input,
     /// Emit candidate diagnostics without model inference.
     #[arg(long)]
     pub dry_run: bool,
+    /// Trusted pair rubric with same_entity and similarity questions.
     #[arg(short = 'p', long, conflicts_with = "question_file")]
     pub preset: Option<String>,
+    /// Trusted TOML/JSON pair-question file instead of a named preset.
     #[arg(short = 'f', long, conflicts_with = "preset")]
     pub question_file: Option<PathBuf>,
+    /// Literal template binding NAME=VALUE; repeat for several names.
     #[arg(long)]
     pub arg: Vec<String>,
+    /// UTF-8 context file included in every pair request.
     #[arg(long)]
     pub context: Option<PathBuf>,
+    /// Greedy assignment mode: 1:1, 1:n or n:m; input order affects assignment.
     #[arg(long, default_value = "1:1")]
     pub cardinality: loupe_core::matching::Cardinality,
     /// Emit unmatched left/right records; bare --unmatched means both.
     #[arg(long,value_enum,num_args=0..=1,default_missing_value="both")]
     pub unmatched: Option<Unmatched>,
+    /// Matched-record output format; defaults to JSONL.
     #[arg(short = 'O', long, value_enum, conflicts_with = "json")]
     pub output_format: Option<Output>,
+    /// Emit matched-record JSONL (the default).
     #[arg(long)]
     pub json: bool,
+    /// Boolean same_entity threshold in [0,1]; equality is yes.
     #[arg(short = 't', long, allow_hyphen_values = true)]
     pub threshold: Option<f64>,
+    /// Boolean same_entity uncertainty distance in [0,1].
     #[arg(long, allow_hyphen_values = true)]
     pub margin: Option<f64>,
+    /// Minimum winning similarity Score probability in [0,1].
     #[arg(long, allow_hyphen_values = true)]
     pub min_confidence: Option<f64>,
+    /// Minimum top-two similarity Score probability gap in [0,1].
     #[arg(long, allow_hyphen_values = true)]
     pub min_gap: Option<f64>,
+    /// Uncertain pair handling; defaults to drop.
     #[arg(long, value_enum)]
     pub on_uncertain: Option<Uncertain>,
     /// Resolve uncertain pair gates/scores using a trusted shell command.
     #[arg(long)]
     pub fallback: Option<String>,
+    /// Maximum duration per fallback command (default: 30s).
     #[arg(long)]
     pub fallback_timeout: Option<String>,
+    /// Failed fallback handling; defaults to uncertain.
     #[arg(long, value_enum)]
     pub on_fallback_error: Option<FallbackError>,
+    /// Print pair scores, gates and declared companion-signal diagnostics.
     #[arg(long)]
     pub why: bool,
+    /// Require exact Clef counts and matching reported input-token usage.
     #[arg(long)]
     pub strict: bool,
+    /// Disable response-cache reads and writes.
     #[arg(long)]
     pub no_cache: bool,
+    /// Bypass cache reads while allowing verified response writes.
     #[arg(long, conflicts_with = "no_cache")]
     pub refresh: bool,
+    /// Print operational metrics on stderr after the run.
     #[arg(long)]
     pub summary: bool,
+    /// Exact submitted input-token cap, including retries; Clef only.
     #[arg(long)]
     pub budget: Option<u64>,
+    /// Overall run deadline, such as 30s or 2m; includes input waits.
     #[arg(long)]
     pub deadline: Option<String>,
+    /// Continue after eligible complete-record failures.
     #[arg(long)]
     pub keep_going: bool,
+    /// Failed-record handling with --keep-going; defaults to drop.
     #[arg(long, value_enum, requires = "keep_going")]
     pub on_error: Option<OnError>,
+    /// Persist source admissions, pair plans and progress in a new JSONL journal.
     #[arg(long, conflicts_with = "resume")]
     pub failed: Option<PathBuf>,
+    /// Validate original tables and resume a join journal.
     #[arg(long)]
     pub resume: Option<PathBuf>,
 }
@@ -634,24 +795,34 @@ pub struct Route {
 pub struct Common {
     /// Positional question followed by files; with -p/-f, all operands are files.
     pub operands: Vec<String>,
+    /// Trusted named question rubric; positional operands then identify inputs.
     #[arg(short = 'p', long, conflicts_with = "question_file")]
     pub preset: Option<String>,
+    /// Trusted TOML/JSON question file; positional operands then identify inputs.
     #[arg(short = 'f', long, conflicts_with = "preset")]
     pub question_file: Option<PathBuf>,
+    /// Comma-separated Choice labels or ordered Score levels for a positional question.
     #[arg(short = 'c', long, conflicts_with = "criteria_file")]
     pub criteria: Option<String>,
+    /// TOML/JSON criteria map or array instead of inline labels or levels.
     #[arg(long, conflicts_with = "criteria")]
     pub criteria_file: Option<PathBuf>,
+    /// UTF-8 context file included in every request.
     #[arg(long)]
     pub context: Option<PathBuf>,
+    /// Literal template binding NAME=VALUE; repeat for several names.
     #[arg(long)]
     pub arg: Vec<String>,
+    /// Boolean yes threshold in [0,1]; equality is yes (default: 0.5).
     #[arg(short = 't', long, allow_hyphen_values = true)]
     pub threshold: Option<f64>,
+    /// Boolean uncertainty distance from the threshold in [0,1] (default: 0).
     #[arg(long, allow_hyphen_values = true)]
     pub margin: Option<f64>,
+    /// Minimum winning Choice/Score probability in [0,1] (default: 0).
     #[arg(long, allow_hyphen_values = true)]
     pub min_confidence: Option<f64>,
+    /// Minimum top-two Choice/Score probability gap in [0,1] (default: 0).
     #[arg(long, allow_hyphen_values = true)]
     pub min_gap: Option<f64>,
     /// Jointly evaluate named preset variants and average their distributions.
@@ -660,6 +831,7 @@ pub struct Common {
     /// Minimum vote agreement for ensemble certainty (default 1.0).
     #[arg(long, requires = "ensemble", allow_hyphen_values = true)]
     pub min_agreement: Option<f64>,
+    /// Handle uncertain answers; default filters emit only their certain bucket.
     #[arg(long, value_enum)]
     pub on_uncertain: Option<Uncertain>,
     /// Resolve uncertain primary decisions with this trusted shell command.
@@ -668,37 +840,52 @@ pub struct Common {
     /// Maximum duration per fallback command (default 30s).
     #[arg(long)]
     pub fallback_timeout: Option<String>,
+    /// Failed fallback handling; defaults to uncertain.
     #[arg(long, value_enum)]
     pub on_fallback_error: Option<FallbackError>,
+    /// Append original uncertain input to FILE.
     #[arg(long)]
     pub uncertain: Option<PathBuf>,
+    /// Input unit format; normally lines, but is/ask/explain read whole input.
     #[arg(short = 'I', long, value_enum)]
     pub input_format: Option<Input>,
+    /// Result representation (default: plain); json emits JSONL for unit results.
     #[arg(short = 'O', long, value_enum, conflicts_with = "json")]
     pub output_format: Option<Output>,
+    /// Shorthand for --output-format json; ask/count emit a single JSON object.
     #[arg(long)]
     pub json: bool,
+    /// Preserve blank input units instead of skipping them.
     #[arg(long)]
     pub keep_blank: bool,
     /// Show declared companion signal probabilities and their separate policies.
     #[arg(long)]
     pub why: bool,
+    /// Regular expression separating text records; requires --input-format records.
     #[arg(long)]
     pub records: Option<String>,
+    /// Record field used as the output subject; other fields remain visible to the model.
     #[arg(long)]
     pub field: Option<String>,
+    /// Comma-separated table columns to send to the model.
     #[arg(long)]
     pub select: Option<String>,
+    /// Include N preceding input lines as context; preserve the original subject.
     #[arg(long)]
     pub with_context: Option<usize>,
+    /// Treat each named file as a whole unit and emit its path.
     #[arg(long = "files")]
     pub files_mode: bool,
+    /// Emit request plans without credentials or model inference.
     #[arg(long)]
     pub dry_run: bool,
+    /// Require exact Clef counts and matching reported input-token usage.
     #[arg(long)]
     pub strict: bool,
+    /// Exact submitted input-token cap, including retries; Clef only.
     #[arg(long)]
     pub budget: Option<u64>,
+    /// Overall run deadline, such as 30s or 2m; includes input waits.
     #[arg(long)]
     pub deadline: Option<String>,
     /// Pack independent units, whole input, or joint windows (window:N).
@@ -707,10 +894,13 @@ pub struct Common {
     /// Explicitly split oversized text under the selected combine semantics.
     #[arg(long)]
     pub split: bool,
+    /// Split-answer rule: any/all/noisy-or/mean, vote or min/max, by question type.
     #[arg(long)]
     pub combine: Option<loupe_core::combine::Mode>,
+    /// Number of overlap tokens between adjacent text chunks.
     #[arg(long)]
     pub overlap: Option<usize>,
+    /// Maximum number of chunks permitted for one input.
     #[arg(long)]
     pub max_chunks: Option<std::num::NonZeroUsize>,
     /// Score chunks, then re-ask over at most K selected evidence chunks.
@@ -719,10 +909,13 @@ pub struct Common {
     /// Shorten only this string field in a JSONL/CSV/TSV record, retaining its head.
     #[arg(long, conflicts_with = "split")]
     pub truncate_field: Option<String>,
+    /// Disable response-cache reads and writes.
     #[arg(long)]
     pub no_cache: bool,
+    /// Bypass cache reads while allowing verified response writes.
     #[arg(long, conflicts_with = "no_cache")]
     pub refresh: bool,
+    /// Print operational metrics on stderr after the run.
     #[arg(long)]
     pub summary: bool,
     /// Review uncertainty plus a uniform audit sample using /dev/tty, or defer.

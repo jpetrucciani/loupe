@@ -164,14 +164,18 @@ dependencies.
 nix shell -f default.nix --command cargo build --features mcp,parquet
 
 # Match CI: format, full-feature Clippy, and offline tests.
-nix shell -f default.nix --command loupe-check -- --workspace --all-features -- --test-threads=1
+nix shell -f default.nix scripts.loupe-check --command loupe-check -- --workspace --all-features -- --test-threads=1
 
 # Build the current platform's archive and checksum in dist/.
 nix shell -f default.nix scripts.loupe-dist --command loupe-dist
 ```
 
 [Offline CI](.github/workflows/check.yml) also regenerates the pinned Clef encoder
-fixtures and builds the native Nix package. Live inference tests are opt-in.
+fixtures and caches the Nix environment and Cargo build artifacts. Native Nix
+package builds are separate from lint/test CI. CI skips debug symbols and
+incremental compiler data to keep compilation and cache transfers smaller, saves
+compiled artifacts even when checks fail, and cancels superseded runs. Live
+inference tests are opt-in.
 [Build notes](docs/rust-builds.md) explain Crane dependency reuse and compilation settings.
 
 The [release workflow](.github/workflows/release.yml) runs on pushed `v*` tags.

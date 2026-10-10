@@ -66,6 +66,31 @@ fn exit(output: &Output, expected: i32) {
 }
 
 #[test]
+fn compatibility_native_command_formats_precede_configuration() {
+    let root = tempfile::tempdir().unwrap();
+    for args in [
+        vec!["keep", "question", "-O", "csv"],
+        vec!["join", "left", "right", "--on", "name", "-I", "lines"],
+        vec!["join", "left", "right", "--on", "name", "-O", "plain"],
+        vec!["find", "question", "-I", "jsonl"],
+        vec![
+            "calibrate",
+            "--target",
+            "precision=0.9",
+            "--partition",
+            "test",
+        ],
+    ] {
+        let mut invalid = vec!["--config", "config-does-not-exist.toml"];
+        invalid.extend(args);
+        let output = run(root.path(), "http://127.0.0.1:1", &invalid, b"");
+        exit(&output, 64);
+        assert!(output.stdout.is_empty());
+        assert!(String::from_utf8_lossy(&output.stderr).contains("invalid value"));
+    }
+}
+
+#[test]
 fn compatibility_native_global_conflicts_precede_configuration_and_actions() {
     let root = tempfile::tempdir().unwrap();
     for args in [

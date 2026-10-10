@@ -64,10 +64,12 @@ fn commands(command: &Command, parent: &str, grammar: &mut Vec<Value>, reference
         .color(clap::ColorChoice::Never);
     // Never snapshot environment values, including credentials or endpoint overrides.
     display = display.mut_args(|arg| arg.hide_env_values(true));
-    reference.push_str(&format!(
-        "\n## `{path}`\n\n```text\n{}\n```\n",
-        display.render_long_help()
-    ));
+    reference.push_str(&format!("\n## `{path}`\n\n```text\n"));
+    for line in display.render_long_help().to_string().lines() {
+        reference.push_str(line.trim_end());
+        reference.push('\n');
+    }
+    reference.push_str("\n```\n");
     let arguments: Vec<_> = command.get_arguments().map(|arg| {
         let range = arg.get_num_args();
         let mut conflicts: Vec<_> = command.get_arg_conflicts_with(arg).iter().map(|arg| arg.get_id().as_str()).collect();
