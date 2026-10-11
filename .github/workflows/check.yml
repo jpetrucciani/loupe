@@ -57,7 +57,7 @@ jobs:
             cargo-check-v2-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('default.nix') }}-${{ hashFiles('Cargo.lock', '**/Cargo.toml') }}-
             cargo-check-v2-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('default.nix') }}-
       - name: Format, full-feature Clippy and non-inference contracts
-        run: nix shell -f default.nix scripts.loupe-check --command loupe-check -- --workspace --all-features -- --test-threads=1 ${{ matrix.test_filters }}
+        run: nix-shell default.nix -A checkShell --run 'loupe-check -- --workspace --all-features -- --test-threads=1 ${{ matrix.test_filters }}'
       - name: Save Cargo dependencies and build artifacts
         if: ${{ !cancelled() && steps.cargo-cache.outputs.cache-hit != 'true' }}
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0

@@ -180,6 +180,10 @@ let
       '';
     };
   };
+  checkShell = pkgs.mkShell {
+    name = "loupe-check-shell";
+    packages = [ scripts.loupe-check ];
+  };
   distShell = pkgs.mkShell {
     name = "loupe-dist-shell";
     packages = [ scripts.loupe-dist ];
@@ -192,4 +196,4 @@ in
 (env.overrideAttrs (old: {
   inherit name;
   env = (old.env or { }) // envVars;
-})) // { inherit scripts package cargoArtifacts tokenizer referenceSource pythonEnv distShell; }
+})) // { inherit scripts package cargoArtifacts tokenizer referenceSource pythonEnv checkShell distShell; }

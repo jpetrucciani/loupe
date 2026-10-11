@@ -167,7 +167,7 @@ and the pinned tokenizer configured through `LOUPE_TEST_TOKENIZER` and
 nix shell -f default.nix --command cargo build --features mcp,parquet
 
 # Match CI: format, full-feature Clippy, and offline tests.
-nix shell -f default.nix scripts.loupe-check --command loupe-check -- --workspace --all-features -- --test-threads=1
+nix-shell default.nix -A checkShell --run 'loupe-check -- --workspace --all-features -- --test-threads=1'
 
 # Build the current platform's archive and checksum in dist/.
 nix shell -f default.nix scripts.loupe-dist --command loupe-dist

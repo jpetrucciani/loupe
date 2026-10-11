@@ -36,7 +36,7 @@ jobs:
               output.write(f'prerelease={str("-" in version.split("+", 1)[0]).lower()}\n')
           PY
       - name: Run offline checks
-        run: nix shell -f default.nix scripts.loupe-check --command loupe-check -- --workspace --all-features -- --test-threads=1
+        run: nix-shell default.nix -A checkShell --run 'loupe-check -- --workspace --all-features -- --test-threads=1'
       - name: Prepare draft release
         env:
           GH_TOKEN: ${{ github.token }}
