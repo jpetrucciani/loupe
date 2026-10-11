@@ -133,12 +133,22 @@ let
     loupe-dist = pkgs.pog {
       name = "loupe-dist";
       description = "Build and package the CLI and MCP server for the current platform";
-      runtimeInputs = [ rust pkgs.cmake pkgs.python3 pkgs.stdenv.cc ]
-        ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.cargo-zigbuild pkgs.zig pkgs.binutils ]
+      runtimeInputs = [ rust pkgs.cmake pkgs.python3 ]
+        ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.stdenv.cc pkgs.cargo-zigbuild pkgs.zig pkgs.binutils ]
         ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ pkgs.darwin.cctools ];
       script = ''
         set -euo pipefail
         export RUSTFLAGS="''${RUSTFLAGS-} --remap-path-prefix=$HOME=/build/user --remap-path-prefix=$PWD=/build/loupe"
+        ${pkgs.lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+          # Nix's SDK replaces system libraries with store paths; portable releases need Apple's SDK.
+          unset DEVELOPER_DIR SDKROOT
+          DEVELOPER_DIR="$(/usr/bin/xcode-select --print-path)"
+          export DEVELOPER_DIR
+          SDKROOT="$(/usr/bin/xcrun --sdk macosx --show-sdk-path)"
+          export SDKROOT
+          export CC=/usr/bin/clang CXX=/usr/bin/clang++
+          export RUSTFLAGS="$RUSTFLAGS -C linker=$CC"
+        ''}
         cargo ${if pkgs.stdenv.hostPlatform.isDarwin then "build" else "zigbuild"} --locked --release --target ${target} --features mcp,parquet
         python tools/package_release.py --target ${target} --binary target/${target}/release/loupe --out dist
       '';
