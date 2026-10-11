@@ -896,15 +896,14 @@ mod tests {
         std::fs::write(root.join("cases.jsonl"), bytes).unwrap();
         let pin = Pin::capture(root, Path::new("cases.jsonl"), "reviewed-v1").unwrap();
         assert_eq!(pin.blake3, blake3::hash(bytes).to_hex().as_str());
-        let held = std::fs::File::open(root).unwrap();
-        rustix::fs::mknodat(
-            &held,
-            "blocked",
-            rustix::fs::FileType::Fifo,
-            rustix::fs::Mode::RUSR | rustix::fs::Mode::WUSR,
-            0,
-        )
-        .unwrap();
+        assert!(
+            std::process::Command::new("mkfifo")
+                .args(["-m", "600"])
+                .arg(root.join("blocked"))
+                .status()
+                .unwrap()
+                .success()
+        );
         std::os::unix::fs::symlink("cases.jsonl", root.join("alias")).unwrap();
         for path in ["blocked", "alias", "../outside", "."] {
             assert_eq!(

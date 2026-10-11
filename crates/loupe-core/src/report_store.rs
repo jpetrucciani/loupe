@@ -357,14 +357,14 @@ mod tests {
         symlink(&outside, bundle.join("report.json")).unwrap();
         assert!(crate::report_store::read(&bundle).is_err());
         std::fs::remove_file(bundle.join("report.json")).unwrap();
-        rustix::fs::mknodat(
-            rustix::fs::CWD,
-            bundle.join("report.json"),
-            rustix::fs::FileType::Fifo,
-            rustix::fs::Mode::RUSR | rustix::fs::Mode::WUSR,
-            0,
-        )
-        .unwrap();
+        assert!(
+            std::process::Command::new("mkfifo")
+                .args(["-m", "600"])
+                .arg(bundle.join("report.json"))
+                .status()
+                .unwrap()
+                .success()
+        );
         assert!(crate::report_store::read(&bundle).is_err());
         std::fs::remove_file(bundle.join("manifest.json")).unwrap();
         assert!(crate::report_store::read(&bundle).is_err());

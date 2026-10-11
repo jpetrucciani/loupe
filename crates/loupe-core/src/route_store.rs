@@ -788,7 +788,7 @@ fn invalid(message: &str) -> Error {
 #[cfg(test)]
 fn boundary(crash_at: Option<&str>, stage: &str) {
     if crash_at == Some(stage) {
-        println!("route boundary {stage}");
+        println!("\nroute boundary {stage}");
         let _ = std::io::stdout().flush();
         loop {
             std::thread::park();

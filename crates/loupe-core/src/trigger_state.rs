@@ -423,7 +423,7 @@ mod tests {
         )
         .unwrap();
         let stop = || {
-            println!("ready");
+            println!("\nready");
             std::io::stdout().flush().unwrap();
             rustix::process::kill_process(rustix::process::getpid(), rustix::process::Signal::STOP)
                 .unwrap();

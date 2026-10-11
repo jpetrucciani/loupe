@@ -439,15 +439,14 @@ mod tests {
         );
         symlink(&path, root.join("alias.toml")).unwrap();
         assert!(load(&root.join("alias.toml")).is_err());
-        let held = std::fs::File::open(root).unwrap();
-        rustix::fs::mknodat(
-            &held,
-            "fifo.toml",
-            rustix::fs::FileType::Fifo,
-            rustix::fs::Mode::RUSR | rustix::fs::Mode::WUSR,
-            0,
-        )
-        .unwrap();
+        assert!(
+            std::process::Command::new("mkfifo")
+                .args(["-m", "600"])
+                .arg(root.join("fifo.toml"))
+                .status()
+                .unwrap()
+                .success()
+        );
         assert!(load(&root.join("fifo.toml")).is_err());
         assert!(load(&root.join("reports")).is_err());
         let mut changed = record.clone();

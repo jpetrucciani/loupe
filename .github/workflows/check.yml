@@ -9,7 +9,27 @@ concurrency:
   cancel-in-progress: true
 jobs:
   rust:
-    runs-on: ubuntu-latest
+    name: Rust (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            test_filters: ''
+          - os: macos-15
+            test_filters: >-
+              stdio::tests::
+              cache::tests::killed_writer_recovers_committed_data_and_discards_uncommitted_transaction
+              route_store::tests::
+              trigger_state::tests::killed_writers_rollback_pending_claims_and_preserve_committed_claims_before_effects
+              recovery::tests::actual_sigkill_rebuilds_index_at_every_result_write_boundary
+              recovery::tests::actual_file_aliases_symlinks_hardlinks_fifo_and_parallel_owner_are_denied
+              baseline::tests::real_file_loader_pins_sealed_bytes_and_refuses_links_changed_content_and_special_files
+              mcp_access::tests::directories_follow_internal_symlinks_and_deny_resolved_escapes_and_siblings
+              report_store::tests::saved_bundles_refuse_unpublished_tampered_and_redirected_content
+              suites::tests::explicit_dataset_pins_reject_fifos_symlinks_and_traversal_without_blocking
+              actual_terminal_review_captures_once_and_restores_on_keys_and_sigterm
     env:
       CARGO_PROFILE_DEV_DEBUG: '0'
       CARGO_PROFILE_TEST_DEBUG: '0'
@@ -37,7 +57,7 @@ jobs:
             cargo-check-v2-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('default.nix') }}-${{ hashFiles('Cargo.lock', '**/Cargo.toml') }}-
             cargo-check-v2-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('default.nix') }}-
       - name: Format, full-feature Clippy and non-inference contracts
-        run: nix shell -f default.nix scripts.loupe-check --command loupe-check -- --workspace --all-features -- --test-threads=1
+        run: nix shell -f default.nix scripts.loupe-check --command loupe-check -- --workspace --all-features -- --test-threads=1 ${{ matrix.test_filters }}
       - name: Save Cargo dependencies and build artifacts
         if: ${{ !cancelled() && steps.cargo-cache.outputs.cache-hit != 'true' }}
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -48,6 +68,7 @@ jobs:
             target/debug
           key: ${{ steps.cargo-cache.outputs.cache-primary-key }}
       - name: Regenerate pinned encoder fixtures
+        if: runner.os == 'Linux'
         run: |
           nix shell -f default.nix scripts.loupe-golden --command loupe-golden -- --out /tmp/loupe-golden
           diff -r evals/golden/clef-v1 /tmp/loupe-golden

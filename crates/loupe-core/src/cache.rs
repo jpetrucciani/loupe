@@ -699,7 +699,7 @@ mod tests {
             transaction.commit().unwrap();
         }
         use std::io::{Read, Write};
-        println!("CACHE_CRASH_READY");
+        println!("\nCACHE_CRASH_READY");
         std::io::stdout().flush().unwrap();
         let mut byte = [0];
         std::io::stdin().read_exact(&mut byte).unwrap();

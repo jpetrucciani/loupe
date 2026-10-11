@@ -711,12 +711,16 @@ impl Store {
     #[cfg(not(test))]
     fn checkpoint(&self, _stage: &str) {}
     #[cfg(test)]
+    #[allow(clippy::unwrap_used)]
     fn checkpoint(&self, stage: &str) {
         if self.crash_at == Some(stage) {
-            let _ = rustix::process::kill_process(
-                rustix::process::getpid(),
-                rustix::process::Signal::KILL,
-            );
+            rustix::process::kill_process(rustix::process::getpid(), rustix::process::Signal::KILL)
+                .unwrap();
+            // Darwin may return from kill before the signal is delivered.
+            // Do not cross another write boundary while termination is pending.
+            loop {
+                std::thread::park();
+            }
         }
     }
 
@@ -1267,14 +1271,14 @@ mod tests {
         assert!(Store::resume(&hardlink, &identity(), &[]).is_err());
         std::fs::remove_file(&hardlink).unwrap();
         let fifo = root.path().join("fifo");
-        rustix::fs::mknodat(
-            rustix::fs::CWD,
-            &fifo,
-            rustix::fs::FileType::Fifo,
-            rustix::fs::Mode::RUSR | rustix::fs::Mode::WUSR,
-            0,
-        )
-        .unwrap();
+        assert!(
+            std::process::Command::new("mkfifo")
+                .args(["-m", "600"])
+                .arg(&fifo)
+                .status()
+                .unwrap()
+                .success()
+        );
         assert!(Store::resume(&fifo, &identity(), &[]).is_err());
         assert_eq!(std::fs::read(&path).unwrap(), original);
     }

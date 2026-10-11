@@ -317,14 +317,14 @@ mod tests {
         assert!(scope.read_text(&sibling.join("input")).is_err());
         assert!(scope.read_text(&allowed).is_err());
         let fifo = allowed.join("fifo");
-        rustix::fs::mknodat(
-            rustix::fs::CWD,
-            &fifo,
-            rustix::fs::FileType::Fifo,
-            rustix::fs::Mode::RUSR | rustix::fs::Mode::WUSR,
-            0,
-        )
-        .unwrap();
+        assert!(
+            std::process::Command::new("mkfifo")
+                .args(["-m", "600"])
+                .arg(&fifo)
+                .status()
+                .unwrap()
+                .success()
+        );
         assert!(scope.read_text(&fifo).is_err());
         assert!(
             Scope::new(

@@ -103,7 +103,7 @@ let
     meta = {
       description = "Semantic Unix filters for System One decision models";
       homepage = "https://github.com/jpetrucciani/loupe";
-      license = pkgs.lib.licenses.mit;
+      license = [ pkgs.lib.licenses.mit pkgs.lib.licenses.asl20 ];
       mainProgram = name;
       platforms = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
     };
@@ -151,6 +151,7 @@ let
         set -euo pipefail
         export LOUPE_TEST_TOKENIZER=${tokenizer}
         export LOUPE_TOKENIZER=${tokenizer}
+        export RUST_TEST_THREADS=1
         cargo fmt --all --check
         cargo clippy --locked --all --benches --tests --examples --all-features
         python -m unittest tools.test_package_release

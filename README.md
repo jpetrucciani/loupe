@@ -157,7 +157,10 @@ Detailed behavior is in the [CLI reference](docs/cli-reference.md) and
 
 The pinned Nix environment includes the toolchain and helper commands. Without
 Nix, building requires Rust 1.90 or newer plus the native build tools used by the
-dependencies.
+dependencies. Offline tests also require Python available as `python`, `mkfifo`,
+and the pinned tokenizer configured through `LOUPE_TEST_TOKENIZER` and
+`LOUPE_TOKENIZER`. The `loupe-check` helper configures the tokenizer and sets
+`RUST_TEST_THREADS=1` so subprocess test helpers also run serially.
 
 ```sh
 # Build CLI, MCP, review, and Parquet support.
@@ -171,11 +174,12 @@ nix shell -f default.nix scripts.loupe-dist --command loupe-dist
 ```
 
 [Offline CI](.github/workflows/check.yml) also regenerates the pinned Clef encoder
-fixtures and caches the Nix environment and Cargo build artifacts. Native Nix
-package builds are separate from lint/test CI. CI skips debug symbols and
-incremental compiler data to keep compilation and cache transfers smaller, saves
-compiled artifacts even when checks fail, and cancels superseded runs. Live
-inference tests are opt-in.
+fixtures and caches the Nix environment and Cargo build artifacts. Focused native
+macOS checks cover terminal I/O, PTY restoration, FIFO rejection, and crash
+recovery before release. Native Nix package builds are separate from lint/test CI.
+CI skips debug symbols and incremental compiler data to keep compilation and
+cache transfers smaller, saves compiled artifacts even when checks fail, and
+cancels superseded runs. Live inference tests are opt-in.
 [Build notes](docs/rust-builds.md) explain Crane dependency reuse and compilation settings.
 
 The [release workflow](.github/workflows/release.yml) runs on pushed `v*` tags.

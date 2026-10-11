@@ -1,6 +1,7 @@
 //! Cancellable Unix I/O without Tokio's blocking standard-input worker.
 
 use rustix::fs::{FileType, OFlags, fcntl_getfl, fcntl_setfl, fstat};
+use std::future::Future;
 use std::io;
 use std::os::fd::{AsFd, AsRawFd, OwnedFd, RawFd};
 use std::pin::Pin;
@@ -29,6 +30,7 @@ impl Drop for Descriptor {
 enum Handle {
     Ready(AsyncFd<Descriptor>),
     File(Descriptor),
+    Timed(Descriptor, Pin<Box<tokio::time::Sleep>>),
 }
 
 pub struct Stream {
@@ -40,12 +42,18 @@ impl Stream {
         let fd = rustix::io::fcntl_dupfd_cloexec(source, 3)?;
         let original = fcntl_getfl(&fd)?;
         let descriptor = Descriptor { fd, original };
-        let regular =
-            FileType::from_raw_mode(fstat(&descriptor.fd)?.st_mode) == FileType::RegularFile;
+        let kind = FileType::from_raw_mode(fstat(&descriptor.fd)?.st_mode);
         fcntl_setfl(&descriptor.fd, original | OFlags::NONBLOCK)?;
-        let handle = if regular {
+        let handle = if kind == FileType::RegularFile {
             // Regular files cannot be registered with epoll/kqueue.
             Handle::File(descriptor)
+        } else if cfg!(target_os = "macos") && kind == FileType::CharacterDevice {
+            // Darwin's /dev/tty cannot be registered with kqueue. Keep reads
+            // nonblocking and cancellable by retrying on a Tokio timer.
+            Handle::Timed(
+                descriptor,
+                Box::pin(tokio::time::sleep(std::time::Duration::ZERO)),
+            )
         } else {
             Handle::Ready(AsyncFd::new(descriptor)?)
         };
@@ -55,7 +63,7 @@ impl Stream {
 
 impl AsyncRead for Stream {
     fn poll_read(
-        self: Pin<&mut Self>,
+        mut self: Pin<&mut Self>,
         context: &mut Context<'_>,
         buffer: &mut ReadBuf<'_>,
     ) -> Poll<io::Result<()>> {
@@ -63,7 +71,7 @@ impl AsyncRead for Stream {
             return Poll::Ready(Ok(()));
         }
         loop {
-            let read = match &self.handle {
+            let read = match &mut self.handle {
                 Handle::Ready(handle) => {
                     let mut readiness = ready!(handle.poll_read_ready(context))?;
                     match readiness.try_io(|handle| {
@@ -77,6 +85,20 @@ impl AsyncRead for Stream {
                 Handle::File(descriptor) => {
                     rustix::io::read(&descriptor.fd, buffer.initialize_unfilled())
                         .map_err(io::Error::from)
+                }
+                Handle::Timed(descriptor, retry) => {
+                    match rustix::io::read(&descriptor.fd, buffer.initialize_unfilled())
+                        .map_err(io::Error::from)
+                    {
+                        Err(error) if error.kind() == io::ErrorKind::WouldBlock => {
+                            ready!(retry.as_mut().poll(context));
+                            retry.as_mut().reset(
+                                tokio::time::Instant::now() + std::time::Duration::from_millis(10),
+                            );
+                            continue;
+                        }
+                        result => result,
+                    }
                 }
             };
             match read {
@@ -93,12 +115,12 @@ impl AsyncRead for Stream {
 
 impl AsyncWrite for Stream {
     fn poll_write(
-        self: Pin<&mut Self>,
+        mut self: Pin<&mut Self>,
         context: &mut Context<'_>,
         bytes: &[u8],
     ) -> Poll<io::Result<usize>> {
         loop {
-            let written = match &self.handle {
+            let written = match &mut self.handle {
                 Handle::Ready(handle) => {
                     let mut readiness = ready!(handle.poll_write_ready(context))?;
                     match readiness.try_io(|handle| {
@@ -110,6 +132,18 @@ impl AsyncWrite for Stream {
                 }
                 Handle::File(descriptor) => {
                     rustix::io::write(&descriptor.fd, bytes).map_err(io::Error::from)
+                }
+                Handle::Timed(descriptor, retry) => {
+                    match rustix::io::write(&descriptor.fd, bytes).map_err(io::Error::from) {
+                        Err(error) if error.kind() == io::ErrorKind::WouldBlock => {
+                            ready!(retry.as_mut().poll(context));
+                            retry.as_mut().reset(
+                                tokio::time::Instant::now() + std::time::Duration::from_millis(10),
+                            );
+                            continue;
+                        }
+                        result => result,
+                    }
                 }
             };
             match written {
@@ -169,6 +203,11 @@ mod tests {
         stream.read_to_string(&mut text).await.unwrap();
         assert_eq!(text, "protocol\n");
         drop(stream);
-        assert_eq!(fcntl_getfl(&file).unwrap(), original);
+        // Darwin also reports the kernel's FWASWRITTEN bit after file writes.
+        // Check restoration of the nonblocking flag controlled by Stream.
+        assert_eq!(
+            fcntl_getfl(&file).unwrap() & OFlags::NONBLOCK,
+            original & OFlags::NONBLOCK,
+        );
     }
 }
