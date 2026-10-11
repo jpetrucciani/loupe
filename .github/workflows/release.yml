@@ -36,7 +36,10 @@ jobs:
               output.write(f'prerelease={str("-" in version.split("+", 1)[0]).lower()}\n')
           PY
       - name: Run offline checks
-        run: nix-shell default.nix -A checkShell --run 'loupe-check -- --workspace --all-features -- --test-threads=1'
+        run: |
+          NIX_BUILD_SHELL="$(nix eval --impure --raw -f default.nix checkShell.stdenv.shell)"
+          export NIX_BUILD_SHELL
+          nix-shell default.nix -A checkShell --run 'loupe-check -- --workspace --all-features -- --test-threads=1'
       - name: Prepare draft release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -81,7 +84,10 @@ jobs:
           persist-credentials: false
       - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
       - name: Build and package native binary
-        run: nix-shell default.nix -A distShell --run loupe-dist
+        run: |
+          NIX_BUILD_SHELL="$(nix eval --impure --raw -f default.nix distShell.stdenv.shell)"
+          export NIX_BUILD_SHELL
+          nix-shell default.nix -A distShell --run loupe-dist
       - name: Smoke-test packaged binary
         run: |
           cd dist

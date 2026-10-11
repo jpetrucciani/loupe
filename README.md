@@ -163,14 +163,15 @@ and the pinned tokenizer configured through `LOUPE_TEST_TOKENIZER` and
 `RUST_TEST_THREADS=1` so subprocess test helpers also run serially.
 
 ```sh
-# Build CLI, MCP, review, and Parquet support.
-nix shell -f default.nix --command cargo build --features mcp,parquet
+# Select the pinned Bash for build shells, including on macOS.
+NIX_BUILD_SHELL="$(nix eval --impure --raw -f default.nix checkShell.stdenv.shell)"
+export NIX_BUILD_SHELL
 
 # Match CI: format, full-feature Clippy, and offline tests.
 nix-shell default.nix -A checkShell --run 'loupe-check -- --workspace --all-features -- --test-threads=1'
 
 # Build the current platform's archive and checksum in dist/.
-nix shell -f default.nix scripts.loupe-dist --command loupe-dist
+nix-shell default.nix -A distShell --run loupe-dist
 ```
 
 [Offline CI](.github/workflows/check.yml) also regenerates the pinned Clef encoder
