@@ -281,8 +281,9 @@ fn db_error(error: impl std::fmt::Display) -> Error {
 mod tests {
     use crate::trigger_state::Store;
     use serde_json::json;
-    use std::io::{BufRead, BufReader, Write};
+    use std::io::{BufRead, BufReader, Read, Write};
     use std::os::unix::fs::{MetadataExt, PermissionsExt};
+    use std::os::unix::process::ExitStatusExt;
     use std::process::{Command, Stdio};
 
     #[test]
@@ -422,16 +423,16 @@ mod tests {
             &[],
         )
         .unwrap();
-        let stop = || {
+        let wait_for_kill = || {
             println!("\nready");
             std::io::stdout().flush().unwrap();
-            rustix::process::kill_process(rustix::process::getpid(), rustix::process::Signal::STOP)
-                .unwrap();
+            // The parent keeps the pipe open without writing until it kills the child.
+            std::io::stdin().read_exact(&mut [0]).unwrap();
         };
         if store
             .claim_with(&[7; 32], 1, 1, |committed| {
                 if (committed && phase == "committed") || (!committed && phase == "pending") {
-                    stop();
+                    wait_for_kill();
                 }
             })
             .unwrap()
@@ -445,7 +446,7 @@ mod tests {
             file.sync_all().unwrap();
         }
         if phase == "effect" {
-            stop();
+            wait_for_kill();
         }
     }
 
@@ -462,6 +463,7 @@ mod tests {
                 ])
                 .env("LOUPE_STATE_TEST_DIR", dir.path())
                 .env("LOUPE_STATE_TEST_PHASE", phase)
+                .stdin(Stdio::piped())
                 .stdout(Stdio::piped())
                 .stderr(Stdio::piped())
                 .spawn()
@@ -476,7 +478,10 @@ mod tests {
                 }
             }
             child.kill().unwrap();
-            child.wait().unwrap();
+            assert_eq!(
+                child.wait().unwrap().signal(),
+                Some(rustix::process::Signal::KILL.as_raw())
+            );
             let store = Store::open(
                 &dir.path().join("state"),
                 &json!({"test":"crash"}),
